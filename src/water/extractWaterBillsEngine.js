@@ -3,7 +3,7 @@ import path from "path";
 import { execSync } from "child_process";
 import sharp from "sharp";
 import { createWorker } from "tesseract.js";
-import * as pdfjsLibRaw from "pdfjs-dist/legacy/build/pdf.mjs";
+import * as pdfjsLibRaw from "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 import { fileURLToPath } from "url";
 import { processTemplateOCR } from "./modules/processTemplateOCR.js";
 import dotenv from "dotenv";
@@ -17,7 +17,7 @@ const pdfjsLib = pdfjsLibRaw.default ?? pdfjsLibRaw;
 // ✅ Worker setup for pdfjs
 if (pdfjsLib.GlobalWorkerOptions) {
   const workerPath = path
-    .resolve(__dirname, "./node_modules/pdfjs-dist/legacy/build/pdf.worker.js")
+    .resolve(__dirname, "../node_modules/pdfjs-dist/legacy/build/pdf.worker.js")
     .replace(/\\/g, "/");
   pdfjsLib.GlobalWorkerOptions.workerSrc = workerPath;
 }
