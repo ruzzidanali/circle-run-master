@@ -1,19 +1,24 @@
 import fs from "fs";
 import path from "path";
-import { getDocument, getDocument, getDocument } from "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
+
+const possiblePaths = [
+  path.resolve("./node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
+  path.resolve("../node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
+  path.resolve("/opt/render/project/src/node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
+];
+
+for (const p of possiblePaths) {
+  if (fs.existsSync(p)) {
+    GlobalWorkerOptions.workerSrc = p;
+    console.log("✅ PDF.js worker found:", p);
+    break;
+  }
+}
 
 const outputFolder = "../uploads";
 if (!fs.existsSync(outputFolder))
   fs.mkdirSync(outputFolder, { recursive: true });
-
-const getDocument = getDocument.default ?? getDocument;
-if (getDocument.GlobalWorkerOptions) {
-  const workerPath = path
-    .resolve(__dirname, "../node_modules/pdfjs-dist/legacy/build/pdf.worker.js")
-    .replace(/\\/g, "/");
-  getDocument.GlobalWorkerOptions.workerSrc = workerPath;
-}
-
 
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });

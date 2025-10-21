@@ -1,6 +1,6 @@
 import express from "express";
 import fs from "fs";
-import processAllPdfs from "./src/proofOfConceptDataExtractionV1.js";
+import processAllPdfs from "./src/electricity/proofOfConceptDataExtractionV1.js";
 import { waterRouter } from "./src/water/extractWaterBillsAPI.js";
 
 const app = express();
