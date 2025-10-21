@@ -1,10 +1,19 @@
 import fs from "fs";
 import path from "path";
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument, getDocument, getDocument } from "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 
 const outputFolder = "../uploads";
 if (!fs.existsSync(outputFolder))
   fs.mkdirSync(outputFolder, { recursive: true });
+
+const getDocument = getDocument.default ?? getDocument;
+if (getDocument.GlobalWorkerOptions) {
+  const workerPath = path
+    .resolve(__dirname, "../node_modules/pdfjs-dist/legacy/build/pdf.worker.js")
+    .replace(/\\/g, "/");
+  getDocument.GlobalWorkerOptions.workerSrc = workerPath;
+}
+
 
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
