@@ -1,3 +1,5 @@
+process.env["PDFJS_DISABLE_WORKER"] = "true";
+
 import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
@@ -9,7 +11,6 @@ import { processTemplateOCR } from "./modules/processTemplateOCR.js";
 import dotenv from "dotenv";
 
 dotenv.config();
-process.env["PDFJS_DISABLE_WORKER"] = "true";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,13 +25,12 @@ const pdfjsLib = pdfjsLibRaw.default ?? pdfjsLibRaw;
 // }
 
 // ✅ Worker setup (Node-safe: disable)
-if (pdfjsLib.GlobalWorkerOptions) {
-  try {
-    delete pdfjsLib.GlobalWorkerOptions.workerSrc;
-    console.log("✅ PDF.js workerSrc removed (Node environment)");
-  } catch {
-    console.log("⚠️ Unable to delete workerSrc, continuing without worker.");
-  }
+try {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = null;
+  pdfjsLib.WorkerMessageHandler = null;
+  console.log("✅ PDF.js worker fully disabled (Node-only mode).");
+} catch (err) {
+  console.warn("⚠️ Worker disable failed (non-fatal):", err.message);
 }
 
 
