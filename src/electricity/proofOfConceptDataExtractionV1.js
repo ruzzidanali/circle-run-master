@@ -2,16 +2,9 @@ import fs from "fs";
 import path from "path";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts") + "/";
-
-const outputFolder = path.resolve("./uploads");
-if (!fs.existsSync(outputFolder)) {
+const outputFolder = "../uploads";
+if (!fs.existsSync(outputFolder))
   fs.mkdirSync(outputFolder, { recursive: true });
-}
-
-console.log("✅ PDF.js worker disabled (Node-safe mode)");
-console.log("📁 Standard font path:", standardFontDir);
-  
 
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
@@ -205,7 +198,7 @@ async function extractFromPdf(pdfPath) {
   const data = new Uint8Array(fs.readFileSync(pdfPath));
   const pdf = await getDocument({
     data,
-    standardFontDataUrl: standardFontDir,
+    standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
