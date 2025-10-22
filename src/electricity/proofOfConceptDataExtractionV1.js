@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts/");
+const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts") + "/";
 
 const outputFolder = path.resolve("./uploads");
 if (!fs.existsSync(outputFolder)) {
