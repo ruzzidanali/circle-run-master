@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
-
-GlobalWorkerOptions.workerSrc = undefined;
+import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts/");
 
