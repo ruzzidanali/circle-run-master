@@ -9,6 +9,7 @@ import { processTemplateOCR } from "./modules/processTemplateOCR.js";
 import dotenv from "dotenv";
 
 dotenv.config();
+process.env["PDFJS_DISABLE_WORKER"] = "true";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,9 +25,12 @@ const pdfjsLib = pdfjsLibRaw.default ?? pdfjsLibRaw;
 
 // ✅ Worker setup (Node-safe: disable)
 if (pdfjsLib.GlobalWorkerOptions) {
-  // Disable worker in Node.js; pdf.js will use main thread
-  pdfjsLib.GlobalWorkerOptions.workerSrc = undefined;
-  console.log("✅ PDF.js worker disabled (Node environment)");
+  try {
+    delete pdfjsLib.GlobalWorkerOptions.workerSrc;
+    console.log("✅ PDF.js workerSrc removed (Node environment)");
+  } catch {
+    console.log("⚠️ Unable to delete workerSrc, continuing without worker.");
+  }
 }
 
 
