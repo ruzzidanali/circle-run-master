@@ -32,83 +32,83 @@ app.post("/run", async (req, res) => {
   }
 });
 
-app.use("/TM", express.raw({ type: "application/pdf", limit: "200mb" }));
+// app.use("/TM", express.raw({ type: "application/pdf", limit: "200mb" }));
 
-app.post("/TM", async (req, res) => {
-  try {
-    console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
+// app.post("/TM", async (req, res) => {
+//   try {
+//     console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
 
-    // req.body is a Buffer containing PDF binary
-    const pdfBuffer = req.body;
+//     // req.body is a Buffer containing PDF binary
+//     const pdfBuffer = req.body;
 
-    if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
-      return res.status(400).json({ success: false, error: "No valid PDF binary received." });
-    }
-
-    
-    // Optionally, write file to disk (for debug)
-    // fs.writeFileSync("uploaded.pdf", pdfBuffer);
-
-    const result = await processAllPdfs([{ data: pdfBuffer }]);
-
-    res.json({ success: true, data: result });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.use("/MAXIS", express.raw({ type: "application/pdf", limit: "200mb" }));
-
-app.post("/MAXIS", async (req, res) => {
-  try {
-    console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
-
-    // req.body is a Buffer containing PDF binary
-    const pdfBuffer = req.body;
-
-    if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
-      return res.status(400).json({ success: false, error: "No valid PDF binary received." });
-    }
+//     if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
+//       return res.status(400).json({ success: false, error: "No valid PDF binary received." });
+//     }
 
     
-    // Optionally, write file to disk (for debug)
-    // fs.writeFileSync("uploaded.pdf", pdfBuffer);
+//     // Optionally, write file to disk (for debug)
+//     // fs.writeFileSync("uploaded.pdf", pdfBuffer);
 
-    const result = await processAllPdfs([{ data: pdfBuffer }]);
+//     const result = await processAllPdfs([{ data: pdfBuffer }]);
 
-    res.json({ success: true, data: result });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+//     res.json({ success: true, data: result });
+//   } catch (err) {
+//     console.error("Error:", err);
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// });
 
-app.use("/SEWERAGE", express.raw({ type: "application/pdf", limit: "200mb" }));
+// app.use("/MAXIS", express.raw({ type: "application/pdf", limit: "200mb" }));
 
-app.post("/SEWERAGE", async (req, res) => {
-  try {
-    console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
+// app.post("/MAXIS", async (req, res) => {
+//   try {
+//     console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
 
-    // req.body is a Buffer containing PDF binary
-    const pdfBuffer = req.body;
+//     // req.body is a Buffer containing PDF binary
+//     const pdfBuffer = req.body;
 
-    if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
-      return res.status(400).json({ success: false, error: "No valid PDF binary received." });
-    }
+//     if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
+//       return res.status(400).json({ success: false, error: "No valid PDF binary received." });
+//     }
 
     
-    // Optionally, write file to disk (for debug)
-    // fs.writeFileSync("uploaded.pdf", pdfBuffer);
+//     // Optionally, write file to disk (for debug)
+//     // fs.writeFileSync("uploaded.pdf", pdfBuffer);
 
-    const result = await processAllPdfs([{ data: pdfBuffer }]);
+//     const result = await processAllPdfs([{ data: pdfBuffer }]);
 
-    res.json({ success: true, data: result });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+//     res.json({ success: true, data: result });
+//   } catch (err) {
+//     console.error("Error:", err);
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// });
+
+// app.use("/SEWERAGE", express.raw({ type: "application/pdf", limit: "200mb" }));
+
+// app.post("/SEWERAGE", async (req, res) => {
+//   try {
+//     console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
+
+//     // req.body is a Buffer containing PDF binary
+//     const pdfBuffer = req.body;
+
+//     if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
+//       return res.status(400).json({ success: false, error: "No valid PDF binary received." });
+//     }
+
+    
+//     // Optionally, write file to disk (for debug)
+//     // fs.writeFileSync("uploaded.pdf", pdfBuffer);
+
+//     const result = await processAllPdfs([{ data: pdfBuffer }]);
+
+//     res.json({ success: true, data: result });
+//   } catch (err) {
+//     console.error("Error:", err);
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// });
 
 app.use("/water-bills", waterRouter);
 
