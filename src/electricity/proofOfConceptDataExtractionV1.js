@@ -2,23 +2,18 @@ import fs from "fs";
 import path from "path";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-const possiblePaths = [
-  path.resolve("./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
-  path.resolve("../node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
-  path.resolve("/opt/render/project/src/node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
-];
+GlobalWorkerOptions.workerSrc = false;
 
-for (const p of possiblePaths) {
-  if (fs.existsSync(p)) {
-    GlobalWorkerOptions.workerSrc = p;
-    console.log("✅ PDF.mjs worker found:", p);
-    break;
-  }
+const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts/");
+
+const outputFolder = path.resolve("./uploads");
+if (!fs.existsSync(outputFolder)) {
+  fs.mkdirSync(outputFolder, { recursive: true });
 }
 
-const outputFolder = "../uploads";
-if (!fs.existsSync(outputFolder))
-  fs.mkdirSync(outputFolder, { recursive: true });
+console.log("✅ PDF.js worker disabled (Node-safe mode)");
+console.log("📁 Standard font path:", standardFontDir);
+  
 
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
@@ -212,7 +207,7 @@ async function extractFromPdf(pdfPath) {
   const data = new Uint8Array(fs.readFileSync(pdfPath));
   const pdf = await getDocument({
     data,
-    standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
+    standardFontDataUrl: standardFontDir,
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
