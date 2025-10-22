@@ -17,7 +17,7 @@ const pdfjsLib = pdfjsLibRaw.default ?? pdfjsLibRaw;
 // ✅ Worker setup for pdfjs
 if (pdfjsLib.GlobalWorkerOptions) {
   const workerPath = path
-    .resolve(__dirname, "../node_modules/pdfjs-dist/legacy/build/pdf.worker.js")
+    .resolve(__dirname, "../node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs")
     .replace(/\\/g, "/");
   pdfjsLib.GlobalWorkerOptions.workerSrc = workerPath;
 }
