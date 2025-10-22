@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-GlobalWorkerOptions.workerSrc = false;
+GlobalWorkerOptions.workerSrc = undefined;
 
 const standardFontDir = path.resolve("node_modules/pdfjs-dist/standard_fonts/");
 
