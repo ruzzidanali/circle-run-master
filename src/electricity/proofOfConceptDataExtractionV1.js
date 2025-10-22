@@ -3,15 +3,15 @@ import path from "path";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const possiblePaths = [
-  path.resolve("./node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
-  path.resolve("../node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
-  path.resolve("/opt/render/project/src/node_modules/pdfjs-dist/legacy/build/pdf.worker.js"),
+  path.resolve("./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
+  path.resolve("../node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
+  path.resolve("/opt/render/project/src/node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"),
 ];
 
 for (const p of possiblePaths) {
   if (fs.existsSync(p)) {
     GlobalWorkerOptions.workerSrc = p;
-    console.log("✅ PDF.js worker found:", p);
+    console.log("✅ PDF.mjs worker found:", p);
     break;
   }
 }
