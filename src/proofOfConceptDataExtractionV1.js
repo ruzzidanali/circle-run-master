@@ -81,6 +81,25 @@ const boxes_AK_KWTBB = [
   ],
 ];
 
+const boxes_AK_KWTBB_2TARIF = [
+  [
+    { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 782.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 747.68 },
+    { xMin: 250, xMax: 350, yMin: 672.68, yMax: 707.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 782.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 525 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 525 },
+    { xMin: 32, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [],
+  [
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
+    { xMin: 390, xMax: 435, yMin: 359, yMax: 369 },
+    { xMin: 340, xMax: 430, yMin: 235, yMax: 250 },
+  ],
+];
+
 const boxes_Normal = [
   [
     { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
@@ -238,7 +257,11 @@ async function extractFromPdf(pdfPath) {
     .replace(
       /(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi,
       "kwtbb"
-    );
+    )
+    .replace(/jumlah[\s\u00A0\u2000-\u3000-]*\(a\)/gi, "jumlahA")
+    .replace(/jumlah[\s\u00A0\u2000-\u3000-]*\(b\)/gi, "jumlahB")
+    .replace(/caj[\s\u00A0\u2000-\u3000-]*semasa[\s\u00A0\u2000-\u3000-]*\(a\+b\)/gi, "cajsemasajumlah");
+
 
   // 🧠 Detection Flags
   const hasAngkadar = /\bangkadarkuasa\b/.test(text);
@@ -259,6 +282,9 @@ async function extractFromPdf(pdfPath) {
     /\binsentif[\s\S]{0,10}cekap[\s\S]{0,10}tenaga\b/.test(text) ||
     /\befficient[\s\S]{0,10}energy[\s\S]{0,10}incentive\b/.test(text);
   const hasCagaran = /\bdiliputicagaran\b/.test(text);
+  const hasJumlahA = /\bjumlahA\b/.test(text);
+  const hasJumlahB = /\bjumlahB\b/.test(text);
+  const hasCajJumlahSemasa = /\bcajsemasajumlah\b/.test(text);
 
   // --- Select boxes based on flags ---
   let selectedBoxes = [];
@@ -309,8 +335,13 @@ async function extractFromPdf(pdfPath) {
       break;
 
     case hasAngkadar && hasKWTBB:
-      selectedBoxes = boxes_AK_KWTBB;
-      conditionUsed = "Angkadar Kuasa + KWTBB";
+      if (hasJumlahA && hasJumlahB && hasCajSemasaJumlah){
+        selectedBoxes = boxes_AK_KWTBB_2TARIF;
+        conditionUsed = "Angkadar Kuasa + KWTBB (Dual Tarif)"
+      } else {
+        selectedBoxes = boxes_AK_KWTBB;
+        conditionUsed = "Angkadar Kuasa + KWTBB";
+      }
       break;
 
     // ===== SINGLE-FLAG COMBINATIONS =====
