@@ -258,9 +258,37 @@ async function extractFromPdf(pdfPath) {
       /(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi,
       "kwtbb"
     )
-    .replace(/jumlah[\s\u00A0\u2000-\u3000-]*\(a\)/gi, "jumlahA")
-    .replace(/jumlah[\s\u00A0\u2000-\u3000-]*\(b\)/gi, "jumlahB")
-    .replace(/caj[\s\u00A0\u2000-\u3000-]*semasa[\s\u00A0\u2000-\u3000-]*\(a\+b\)/gi, "cajsemasajumlah");
+    // Dual-tarif merging
+    .replace(
+      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi,
+      "jumlahA_tariflama"
+    )
+    .replace(
+      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi,
+      "jumlahB_tarifbaharu"
+    )
+    .replace(
+      /caj[\s\u00A0\u2000-\u3000\-]*semasa[\s\u00A0\u2000-\u3000\-]*\(?a\+b\)?[\s:;,.]*/gi,
+      "cajsemasajumlah"
+    )
+    // Fallbacks
+    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:;,.]*/gi, "jumlahA")
+    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:;,.]*/gi, "jumlahB");
+
+
+    console.log("=== TEXT PREVIEW ===");
+    console.log(
+      text.slice(text.indexOf("Jumlah"), text.indexOf("Jumlah") + 200)
+    );
+    console.log({
+      hasJumlahA: /\bjumlahA(?:_tariflama)?\b/.test(text),
+      hasJumlahB: /\bjumlahB(?:_tarifbaharu)?\b/.test(text),
+      hasCajSemasaJumlah: /\bcajsemasajumlah\b/.test(text),
+    });
+
+
+
+
 
 
   // 🧠 Detection Flags
@@ -282,9 +310,9 @@ async function extractFromPdf(pdfPath) {
     /\binsentif[\s\S]{0,10}cekap[\s\S]{0,10}tenaga\b/.test(text) ||
     /\befficient[\s\S]{0,10}energy[\s\S]{0,10}incentive\b/.test(text);
   const hasCagaran = /\bdiliputicagaran\b/.test(text);
-  const hasJumlahA = /\bjumlahA\b/.test(text);
-  const hasJumlahB = /\bjumlahB\b/.test(text);
-  const hasCajJumlahSemasa = /\bcajsemasajumlah\b/.test(text);
+  const hasJumlahA = /\bjumlahA(?:_tariflama)?\b/.test(text);
+  const hasJumlahB = /\bjumlahB(?:_tarifbaharu)?\b/.test(text);
+  const hasCajSemasaJumlah = /\bcajsemasajumlah\b/.test(text);
 
   // --- Select boxes based on flags ---
   let selectedBoxes = [];
@@ -335,9 +363,9 @@ async function extractFromPdf(pdfPath) {
       break;
 
     case hasAngkadar && hasKWTBB:
-      if (hasJumlahA && hasJumlahB && hasCajSemasaJumlah){
+      if (hasJumlahA && hasJumlahB && hasCajSemasaJumlah) {
         selectedBoxes = boxes_AK_KWTBB_2TARIF;
-        conditionUsed = "Angkadar Kuasa + KWTBB (Dual Tarif)"
+        conditionUsed = "Dual Tarif (Jumlah A + Jumlah B + Caj Semasa A+B)";
       } else {
         selectedBoxes = boxes_AK_KWTBB;
         conditionUsed = "Angkadar Kuasa + KWTBB";
