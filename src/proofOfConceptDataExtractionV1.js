@@ -9,6 +9,8 @@ if (!fs.existsSync(outputFolder))
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
 
+
+// Normal 2 pages bills
 const boxes_AFA_AK = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
@@ -45,6 +47,26 @@ const boxes_AFA_AK_DUAL = [
   ],
 ];
 
+//Baru
+const boxes_AFADual_ST_KWTBB = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },  // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },  // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },  // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },  // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },        // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },        // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },        // 45, 10 (KWHR)
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },        // 45, 10 (Service Tax)
+    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 },        // 45, 10 (KWTBB)
+    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 },        // 40, 15 (Penggunaan)
+  ],
+];
+
+
 const boxes_Insentif_ST_AFA_KWTBB = [
   [
     { xMin: 250, xMax: 300, yMin: 754.68, yMax: 764.68 },
@@ -63,9 +85,27 @@ const boxes_Insentif_ST_AFA_KWTBB = [
   ],
 ];
 
+const boxes_Insentif_ST = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
+    // { xMin: 385, xMax: 430, yMin: 356, yMax: 366 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 267, yMax: 282 }, // 40, 15
+  ],
+];
+
 const boxes_AK_KWTBB = [
   [
-    { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
+    // { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 782.68 },
     { xMin: 250, xMax: 350, yMin: 712.68, yMax: 747.68 },
     { xMin: 250, xMax: 350, yMin: 672.68, yMax: 707.68 },
@@ -81,35 +121,15 @@ const boxes_AK_KWTBB = [
   ],
 ];
 
-const boxes_AK_KWTBB_2TARIF = [
-  [
-    { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 782.68 },
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 747.68 },
-    { xMin: 250, xMax: 350, yMin: 672.68, yMax: 707.68 },
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 782.68 },
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 525 },
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 525 },
-    { xMin: 32, xMax: 262, yMin: 61, yMax: 71 },
-  ],
-  [],
-  [
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
-    { xMin: 390, xMax: 435, yMin: 359, yMax: 369 },
-    { xMin: 340, xMax: 430, yMin: 235, yMax: 250 },
-  ],
-];
-
 const boxes_Normal = [
   [
-    { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 782.68 },
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 747.68 },
-    { xMin: 250, xMax: 350, yMin: 672.68, yMax: 707.68 },
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 782.68 },
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 525 },
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 525 },
-    { xMin: 32, xMax: 262, yMin: 61, yMax: 71 },
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },  // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },  // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },  // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },  // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },        // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, 
   ],
   [
     { xMin: 385, xMax: 430, yMin: 396, yMax: 406 },
@@ -209,6 +229,65 @@ const boxes_Cagaran_AK = [
   ],
 ];
 
+// 3 pages bill
+const boxes_Notis_AFADual_KWTBB = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },   // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },   // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },   // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },   // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },         // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },         // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },         // 45, 10
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },         // 45, 10
+  ],
+  [
+    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 },         // 40, 15
+  ],
+];
+
+const boxes_Notis_AFADual_Insentif_KWTBB = [
+[
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 }, // 45, 10
+  ],
+  [
+    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
+  ],
+];
+
+const boxes_Notis_AFADual_Insentif_KWTBB_Surcaj = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 343, yMax: 353 }, // 45, 10
+  ],
+  [
+    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
+  ],
+];
+
 // ============================================
 // 🔍 Process a single PDF
 // ============================================
@@ -238,57 +317,29 @@ async function extractFromPdf(pdfPath) {
     .normalize("NFKC")
     .replace(/\s+/g, " ")
     .replace(/[\u00A0\u1680\u180E\u2000-\u200D\u202F\u205F\u3000]/g, "")
-    .replace(
-      /sur[\s\u00A0\u2000-\u3000-]*caj[\s\u00A0\u2000-\u3000-]*angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi,
-      "surcajangkadarkuasa"
-    )
-    .replace(
-      /surcharge[\s\u00A0\u2000-\u3000-]*power[\s\u00A0\u2000-\u3000-]*factor/gi,
-      "surcajangkadarkuasa"
-    )
+    .replace(/sur[\s\u00A0\u2000-\u3000-]*caj[\s\u00A0\u2000-\u3000-]*angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi, "surcajangkadarkuasa")
+    .replace(/surcharge[\s\u00A0\u2000-\u3000-]*power[\s\u00A0\u2000-\u3000-]*factor/gi, "surcajangkadarkuasa")
     .replace(/angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi, "angkadarkuasa")
     .replace(/power[\s\u00A0\u2000-\u3000-]*factor/gi, "powerfactor")
     .replace(/service[\s\u00A0\u2000-\u3000-]*tax/gi, "servicetax")
-    .replace(
-      /efficient[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*incentive/gi,
-      "insentifcekaptenaga"
-    )
+    .replace(/efficient[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*incentive/gi, "insentifcekaptenaga")
     .replace(/diliputi[\s\u00A0\u2000-\u3000-]*cagaran/gi, "diliputicagaran")
-    .replace(
-      /(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi,
-      "kwtbb"
-    )
+    .replace(/(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi, "kwtbb")
     // Dual-tarif merging
-    .replace(
-      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi,
-      "jumlahA_tariflama"
-    )
-    .replace(
-      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi,
-      "jumlahB_tarifbaharu"
-    )
-    .replace(
-      /caj[\s\u00A0\u2000-\u3000\-]*semasa[\s\u00A0\u2000-\u3000\-]*\(?a\+b\)?[\s:;,.]*/gi,
-      "cajsemasajumlah"
-    )
+    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi, "jumlahA_tariflama")
+    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi, "jumlahB_tarifbaharu")
+    // .replace(
+    //   /caj[\s\u00A0\u2000-\u3000\-]*semasa[\s\u00A0\u2000-\u3000\-]*\(?a\+b\)?[\s:;,.]*/gi,
+    //   "cajsemasajumlah"
+    // )
     // Fallbacks
     .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:;,.]*/gi, "jumlahA")
-    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:;,.]*/gi, "jumlahB");
-
-
-    console.log("=== TEXT PREVIEW ===");
-    console.log(
-      text.slice(text.indexOf("Jumlah"), text.indexOf("Jumlah") + 200)
-    );
-    console.log({
-      hasJumlahA: /\bjumlahA(?:_tariflama)?\b/.test(text),
-      hasJumlahB: /\bjumlahB(?:_tarifbaharu)?\b/.test(text),
-      hasCajSemasaJumlah: /\bcajsemasajumlah\b/.test(text),
-    });
-
-
-
-
+    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:;,.]*/gi, "jumlahB")
+.replace(
+  /sur[\s\u00A0\u2000-\u3000\-]*caj[\s\u00A0\u2000-\u3000\-]*lewat[\s\u00A0\u2000-\u3000\-]*bayar/gi,
+  "surcajlewatbayar"
+)
+    .replace(/notis[\s\u00A0\u2000-\u3000-]*pemotongan[\s\u00A0\u2000-\u3000-]*bekalan[\s\u00A0\u2000-\u3000-]*elektrik/gi, "notispemotongan");
 
 
   // 🧠 Detection Flags
@@ -312,7 +363,9 @@ async function extractFromPdf(pdfPath) {
   const hasCagaran = /\bdiliputicagaran\b/.test(text);
   const hasJumlahA = /\bjumlahA(?:_tariflama)?\b/.test(text);
   const hasJumlahB = /\bjumlahB(?:_tarifbaharu)?\b/.test(text);
-  const hasCajSemasaJumlah = /\bcajsemasajumlah\b/.test(text);
+  // const hasCajSemasaJumlah = /\bcajsemasajumlah\b/.test(text);
+const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
+  const hasNotisPemotongan = /\bnotispemotongan\b/.test(text);
 
   // --- Select boxes based on flags ---
   let selectedBoxes = [];
@@ -363,7 +416,7 @@ async function extractFromPdf(pdfPath) {
       break;
 
     case hasAngkadar && hasKWTBB:
-      if (hasJumlahA && hasJumlahB && hasCajSemasaJumlah) {
+      if (hasJumlahA && hasJumlahB) {
         selectedBoxes = boxes_AK_KWTBB_2TARIF;
         conditionUsed = "Dual Tarif (Jumlah A + Jumlah B + Caj Semasa A+B)";
       } else {
@@ -371,6 +424,31 @@ async function extractFromPdf(pdfPath) {
         conditionUsed = "Angkadar Kuasa + KWTBB";
       }
       break;
+
+    case hasMultipleAFA && hasServiceTax && hasKWTBB:
+      selectedBoxes = boxes_AFADual_ST_KWTBB;
+      conditionUsed = "AFA Dual + Service Tax + KWTBB";
+      break;
+
+    case hasInsentif && hasServiceTax:
+      selectedBoxes = boxes_Insentif_ST;
+      conditionUsed = "Insentif + Service Tax";
+      break;
+
+    case hasNotisPemotongan:
+      if (hasMultipleAFA && hasInsentif && hasKWTBB && hasSurcajLewatBayar) {
+        selectedBoxes = boxes_Notis_AFADual_Insentif_KWTBB_Surcaj;
+        conditionUsed = "Notis + AFA Dual + Insentif + KWTBB + Surcaj";
+        break;
+      } else if (hasMultipleAFA && hasInsentif && hasKWTBB) {
+        selectedBoxes = boxes_Notis_AFADual_Insentif_KWTBB;
+        conditionUsed = "Notis + AFA Dual + Insentif + KWTBB";
+        break;
+      } else if (hasMultipleAFA && hasKWTBB) {
+        selectedBoxes = boxes_Notis_AFADual_KWTBB;
+        conditionUsed = "Notis + AFA Dual + KWTBB";
+        break;
+      }
 
     // ===== SINGLE-FLAG COMBINATIONS =====
 
@@ -447,6 +525,54 @@ async function extractFromPdf(pdfPath) {
     "2_3": "PENGGUNAAN",
   };
 
+  if (conditionUsed === "Notis + AFA Dual + Insentif + KWTBB + Surcaj") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "2_3": "SURCAJ",
+      "3_1": "PENGGUNAAN"
+    }
+  }
+
+  if (conditionUsed === "Notis + AFA Dual + Insentif + KWTBB") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "3_1": "PENGGUNAAN"
+    }
+  }
+
+  if (conditionUsed === "Notis + AFA Dual + KWTBB") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "3_1": "PENGGUNAAN"
+    }
+  }
+
+
+  if (conditionUsed === "Insentif + Service Tax") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "SERVICE TAX",
+      "2_3": "PENGGUNAAN",
+    }
+  }
+
+  if (conditionUsed === "AFA Dual + Service Tax + KWTBB") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "SERVICE TAX",
+      "2_3": "KWTBB",
+      "2_4": "PENGGUNAAN",
+    };
+  }
+
   // --- Apply special mapping for specific condition ---
   if (conditionUsed === "Insentif + Service Tax + Cagaran") {
     boxNameMap = {
@@ -476,6 +602,15 @@ async function extractFromPdf(pdfPath) {
       ...boxNameMap, // keep all existing mappings
       "2_1": "KWHR",
       "2_2": "PENGGUNAAN",
+    };
+  }
+
+  if (conditionUsed === "Dual Tarif (Jumlah A + Jumlah B + Caj Semasa A+B)") {
+    boxNameMap = {
+      ...boxNameMap,
+      "3_1": "KWHR",
+      "3_2": "KWTBB",
+      "3_3" : "PENGGUNAAN",
     };
   }
 
