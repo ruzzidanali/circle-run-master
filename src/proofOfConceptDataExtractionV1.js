@@ -9,7 +9,6 @@ if (!fs.existsSync(outputFolder))
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
 
-
 // Normal 2 pages bills
 const boxes_AFA_AK = [
   [
@@ -47,25 +46,61 @@ const boxes_AFA_AK_DUAL = [
   ],
 ];
 
-//Baru
-const boxes_AFADual_ST_KWTBB = [
+const boxes_AFADual_AK_KWTBB_BLACK = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },  // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },  // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },  // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },  // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },        // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },        // 90, 20
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },        // 45, 10 (KWHR)
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },        // 45, 10 (Service Tax)
-    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 },        // 45, 10 (KWTBB)
-    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 },        // 40, 15 (Penggunaan)
+    { xMin: 385, xMax: 430, yMin: 405, yMax: 415 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 285, yMax: 300 }, // 40, 15
   ],
 ];
 
+const boxes_AFADual_AK_KWTBB_BLUE = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },   // 50, 10
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },   // 100, 10
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },   // 100, 10
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },   // 100, 10
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },         // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },         // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },           // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },         // 45, 10
+    { xMin: 385, xMax: 430, yMin: 359, yMax: 369 },         // 45, 10
+    { xMin: 340, xMax: 380, yMin: 255, yMax: 270 },         // 40, 15
+  ],
+];
+
+
+//Baru
+const boxes_AFADual_ST_KWTBB = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 }, // 45, 10 (KWHR)
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 }, // 45, 10 (Service Tax)
+    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 }, // 45, 10 (KWTBB)
+    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 }, // 40, 15 (Penggunaan)
+  ],
+];
 
 const boxes_Insentif_ST_AFA_KWTBB = [
   [
@@ -123,13 +158,13 @@ const boxes_AK_KWTBB = [
 
 const boxes_Normal = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },  // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },  // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },  // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },  // 100, 18
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },        // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, 
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 396, yMax: 406 },
@@ -232,25 +267,25 @@ const boxes_Cagaran_AK = [
 // 3 pages bill
 const boxes_Notis_AFADual_KWTBB = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },   // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },   // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },   // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },   // 100, 18
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },         // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },         // 90, 20
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },         // 45, 10
-    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },         // 45, 10
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
   ],
   [
-    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 },         // 40, 15
+    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
   ],
 ];
 
 const boxes_Notis_AFADual_Insentif_KWTBB = [
-[
+  [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
     { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
     { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
@@ -302,9 +337,11 @@ async function extractFromPdf(pdfPath) {
   const totalPages = pdf.numPages;
   // --- Extract text for detection flags ---
   let text = "";
+  const allPageContents = [];
   for (let i = 1; i <= totalPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
+    allPageContents.push(content);
     text +=
       " " +
       content.items
@@ -317,17 +354,35 @@ async function extractFromPdf(pdfPath) {
     .normalize("NFKC")
     .replace(/\s+/g, " ")
     .replace(/[\u00A0\u1680\u180E\u2000-\u200D\u202F\u205F\u3000]/g, "")
-    .replace(/sur[\s\u00A0\u2000-\u3000-]*caj[\s\u00A0\u2000-\u3000-]*angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi, "surcajangkadarkuasa")
-    .replace(/surcharge[\s\u00A0\u2000-\u3000-]*power[\s\u00A0\u2000-\u3000-]*factor/gi, "surcajangkadarkuasa")
+    .replace(
+      /sur[\s\u00A0\u2000-\u3000-]*caj[\s\u00A0\u2000-\u3000-]*angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi,
+      "surcajangkadarkuasa"
+    )
+    .replace(
+      /surcharge[\s\u00A0\u2000-\u3000-]*power[\s\u00A0\u2000-\u3000-]*factor/gi,
+      "surcajangkadarkuasa"
+    )
     .replace(/angkadar[\s\u00A0\u2000-\u3000-]*kuasa/gi, "angkadarkuasa")
     .replace(/power[\s\u00A0\u2000-\u3000-]*factor/gi, "powerfactor")
     .replace(/service[\s\u00A0\u2000-\u3000-]*tax/gi, "servicetax")
-    .replace(/efficient[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*incentive/gi, "insentifcekaptenaga")
+    .replace(
+      /efficient[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*incentive/gi,
+      "insentifcekaptenaga"
+    )
     .replace(/diliputi[\s\u00A0\u2000-\u3000-]*cagaran/gi, "diliputicagaran")
-    .replace(/(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi, "kwtbb")
+    .replace(
+      /(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi,
+      "kwtbb"
+    )
     // Dual-tarif merging
-    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi, "jumlahA_tariflama")
-    .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi, "jumlahB_tarifbaharu")
+    .replace(
+      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi,
+      "jumlahA_tariflama"
+    )
+    .replace(
+      /jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi,
+      "jumlahB_tarifbaharu"
+    )
     // .replace(
     //   /caj[\s\u00A0\u2000-\u3000\-]*semasa[\s\u00A0\u2000-\u3000\-]*\(?a\+b\)?[\s:;,.]*/gi,
     //   "cajsemasajumlah"
@@ -335,14 +390,54 @@ async function extractFromPdf(pdfPath) {
     // Fallbacks
     .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:;,.]*/gi, "jumlahA")
     .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:;,.]*/gi, "jumlahB")
-.replace(
-  /sur[\s\u00A0\u2000-\u3000\-]*caj[\s\u00A0\u2000-\u3000\-]*lewat[\s\u00A0\u2000-\u3000\-]*bayar/gi,
-  "surcajlewatbayar"
-)
-    .replace(/notis[\s\u00A0\u2000-\u3000-]*pemotongan[\s\u00A0\u2000-\u3000-]*bekalan[\s\u00A0\u2000-\u3000-]*elektrik/gi, "notispemotongan");
+    .replace(
+      /sur[\s\u00A0\u2000-\u3000\-]*caj[\s\u00A0\u2000-\u3000\-]*lewat[\s\u00A0\u2000-\u3000\-]*bayar/gi,
+      "surcajlewatbayar"
+    )
+    .replace(
+      /notis[\s\u00A0\u2000-\u3000-]*pemotongan[\s\u00A0\u2000-\u3000-]*bekalan[\s\u00A0\u2000-\u3000-]*elektrik/gi,
+      "notispemotongan"
+    );
 
+  // ==========================================================
+  // 🔍 Detect AFA kWh values (Blue = >0 kWh, Black = 0 kWh)
+  // ==========================================================
+  const afaBlocks = [...text.matchAll(/afa\s*\(\s*([\d,\.]+)\s*kwh/gi)];
+  let hasAFABlue = false;
+  let hasAFABlack = false;
 
+  console.log("🔍 AFA text matches found:");
+  afaBlocks.forEach((m, i) => {
+    const val = parseFloat(m[1].replace(/,/g, ""));
+    console.log(`  #${i + 1} → "${m[0]}" → raw: "${m[1]}" → parsed: ${val}`);
+  });
+
+  for (const match of afaBlocks) {
+    const kwhValue = parseFloat(match[1].replace(/,/g, ""));
+    if (!isNaN(kwhValue)) {
+      if (kwhValue > 0) {
+        hasAFABlue = true;
+      } else {
+        hasAFABlack = true;
+      }
+    }
+  }
+
+  if (!hasAFABlue && !hasAFABlack && /afa\s*\(/i.test(text)) {
+    hasAFABlack = true;
+  }
+
+  const hasMultipleAFA = afaBlocks.length >= 2;
+
+  console.log("✅ AFA Detection Summary →", {
+    hasAFABlue,
+    hasAFABlack,
+    hasMultipleAFA,
+  });
+
+  // ==========================================================
   // 🧠 Detection Flags
+  // ==========================================================
   const hasAngkadar = /\bangkadarkuasa\b/.test(text);
   const hasPowerFactor = /\bpowerfactor\b/.test(text);
   const hasSurcaj = /\bsurcajangkadarkuasa\b/.test(text);
@@ -351,7 +446,6 @@ async function extractFromPdf(pdfPath) {
   const afaMatches = [
     ...text.matchAll(/a[\s\u00A0\u2000-\u3000-]*f[\s\u00A0\u2000-\u3000-]*a/gi),
   ];
-  const hasMultipleAFA = afaMatches.length > 2;
   const hasAFA =
     afaMatches.length > 0 &&
     /a[\s\u00A0\u2000-\u3000-]*f[\s\u00A0\u2000-\u3000-]*a[\s\S]{0,40}(mulai|from)/gi.test(
@@ -363,66 +457,97 @@ async function extractFromPdf(pdfPath) {
   const hasCagaran = /\bdiliputicagaran\b/.test(text);
   const hasJumlahA = /\bjumlahA(?:_tariflama)?\b/.test(text);
   const hasJumlahB = /\bjumlahB(?:_tarifbaharu)?\b/.test(text);
-  // const hasCajSemasaJumlah = /\bcajsemasajumlah\b/.test(text);
-const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
+  const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
   const hasNotisPemotongan = /\bnotispemotongan\b/.test(text);
 
-  // --- Select boxes based on flags ---
+  // ==========================================================
+  // 📦 Select boxes based on condition flags
+  // ==========================================================
   let selectedBoxes = [];
   let conditionUsed = "";
 
   switch (true) {
-    // ===== 4-FLAG COMBINATIONS =====
+    // ======================================================
+    // ⚡️ AFA + ANGKADAR KUASA + KWTBB  (Main Malay Layouts)
+    // ======================================================
+    case hasKWTBB && hasAngkadar:
+      if (hasMultipleAFA) {
+        // 🔹 Dual AFA (2 AFA)
+        if (hasAFABlue) {
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
+          conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue)";
+        } else if (hasAFABlack) {
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK;
+          conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Black)";
+        } else {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB";
+        }
+      } else {
+        // 🔸 Single AFA (1 AFA)
+        if (hasAFABlue) {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
+        } else if (hasAFABlack) {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Black)";
+        } else {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Angkadar Kuasa + KWTBB";
+        }
+      }
+      break;
+
+    // ======================================================
+    // ⚡️ AFA + POWER FACTOR + KWTBB  (English Layouts)
+    // ======================================================
+    case hasKWTBB && hasPowerFactor:
+      if (hasMultipleAFA) {
+        // 🔹 Dual AFA (2 AFA)
+        if (hasAFABlue) {
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
+          conditionUsed = "2 AFA + Power Factor + KWTBB (Blue - English)";
+        } else if (hasAFABlack) {
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK;
+          conditionUsed = "2 AFA + Power Factor + KWTBB (Black - English)";
+        } else {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "2 AFA + Power Factor + KWTBB (English)";
+        }
+      } else {
+        // 🔸 Single AFA (1 AFA)
+        if (hasAFABlue) {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Power Factor + KWTBB (Blue - English)";
+        } else if (hasAFABlack) {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Power Factor + KWTBB (Black - English)";
+        } else {
+          selectedBoxes = boxes_AFA_AK_KWTBB;
+          conditionUsed = "AFA + Power Factor + KWTBB (English)";
+        }
+      }
+      break;
+
+    // ======================================================
+    // ⚡️ DUAL TARIF CASES
+    // ======================================================
+    case hasAngkadar && hasKWTBB && hasJumlahA && hasJumlahB:
+      selectedBoxes = boxes_AK_KWTBB_2TARIF;
+      conditionUsed = "Dual Tarif (Jumlah A + Jumlah B + Caj Semasa A+B)";
+      break;
+
+    // ======================================================
+    // ⚡️ SERVICE TAX / INSENTIF / CAGARAN
+    // ======================================================
     case hasAFA && hasInsentif && hasServiceTax && hasKWTBB:
       selectedBoxes = boxes_Insentif_ST_AFA_KWTBB;
       conditionUsed = "AFA + Service Tax + Insentif + KWTBB";
       break;
 
-    // ===== 3-FLAG COMBINATIONS =====
     case hasInsentif && hasCagaran && hasServiceTax:
       selectedBoxes = boxes_Cagaran_ST_Insentif;
       conditionUsed = "Insentif + Service Tax + Cagaran";
-      break;
-
-    case hasAFA && hasAngkadar && hasKWTBB:
-      selectedBoxes = boxes_AFA_AK_KWTBB;
-      conditionUsed = "AFA + Angkadar Kuasa + KWTBB";
-      break;
-
-    case hasAFA && hasPowerFactor && hasKWTBB:
-      selectedBoxes = boxes_AFA_AK_KWTBB_English;
-      conditionUsed = "AFA + Angkadar Kuasa + KWTBB";
-      break;
-
-    case hasCagaran && hasKWTBB && hasAngkadar:
-      selectedBoxes = boxes_Cagaran_KWTBB_AK;
-      conditionUsed = "Cagaran + KWTBB + Angkadar Kuasa";
-      break;
-
-    // ===== 2-FLAG COMBINATIONS =====
-    case hasAFA && hasAngkadar:
-      if (hasMultipleAFA) {
-        selectedBoxes = boxes_AFA_AK_DUAL;
-        conditionUsed = "AFA + Angkadar Kuasa (Dual AFA)";
-      } else {
-        selectedBoxes = boxes_AFA_AK;
-        conditionUsed = "AFA + Angkadar Kuasa";
-      }
-      break;
-
-    case hasCagaran && hasAngkadar:
-      selectedBoxes = boxes_Cagaran_AK;
-      conditionUsed = "Cagaran + Angkadar Kuasa";
-      break;
-
-    case hasAngkadar && hasKWTBB:
-      if (hasJumlahA && hasJumlahB) {
-        selectedBoxes = boxes_AK_KWTBB_2TARIF;
-        conditionUsed = "Dual Tarif (Jumlah A + Jumlah B + Caj Semasa A+B)";
-      } else {
-        selectedBoxes = boxes_AK_KWTBB;
-        conditionUsed = "Angkadar Kuasa + KWTBB";
-      }
       break;
 
     case hasMultipleAFA && hasServiceTax && hasKWTBB:
@@ -435,29 +560,57 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       conditionUsed = "Insentif + Service Tax";
       break;
 
+    // ======================================================
+    // ⚡️ NOTIS PEMOTONGAN (Disconnection Notice)
+    // ======================================================
     case hasNotisPemotongan:
       if (hasMultipleAFA && hasInsentif && hasKWTBB && hasSurcajLewatBayar) {
         selectedBoxes = boxes_Notis_AFADual_Insentif_KWTBB_Surcaj;
         conditionUsed = "Notis + AFA Dual + Insentif + KWTBB + Surcaj";
-        break;
       } else if (hasMultipleAFA && hasInsentif && hasKWTBB) {
         selectedBoxes = boxes_Notis_AFADual_Insentif_KWTBB;
         conditionUsed = "Notis + AFA Dual + Insentif + KWTBB";
-        break;
       } else if (hasMultipleAFA && hasKWTBB) {
         selectedBoxes = boxes_Notis_AFADual_KWTBB;
         conditionUsed = "Notis + AFA Dual + KWTBB";
-        break;
+      } else {
+        selectedBoxes = boxes_Normal;
+        conditionUsed = "Notis (Default)";
       }
+      break;
 
-    // ===== SINGLE-FLAG COMBINATIONS =====
+    // ======================================================
+    // ⚡️ OTHER GENERIC FALLBACKS
+    // ======================================================
+    case hasCagaran && hasKWTBB && hasAngkadar:
+      selectedBoxes = boxes_Cagaran_KWTBB_AK;
+      conditionUsed = "Cagaran + KWTBB + Angkadar Kuasa";
+      break;
 
-    // ===== DEFAULT =====
+    case hasCagaran && hasAngkadar:
+      selectedBoxes = boxes_Cagaran_AK;
+      conditionUsed = "Cagaran + Angkadar Kuasa";
+      break;
+
+    case hasAFA && hasAngkadar:
+      if (hasMultipleAFA) {
+        selectedBoxes = boxes_AFA_AK_DUAL;
+        conditionUsed = "AFA + Angkadar Kuasa (Dual AFA)";
+      } else {
+        selectedBoxes = boxes_AFA_AK;
+        conditionUsed = "AFA + Angkadar Kuasa";
+      }
+      break;
+
+    // ======================================================
+    // 🧱 DEFAULT CASE
+    // ======================================================
     default:
       selectedBoxes = boxes_Normal;
       conditionUsed = "Default (Normal)";
       break;
   }
+
   // --- Extract text inside boxes ---
   const results = [];
 
@@ -531,8 +684,8 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       "2_1": "KWHR",
       "2_2": "KWTBB",
       "2_3": "SURCAJ",
-      "3_1": "PENGGUNAAN"
-    }
+      "3_1": "PENGGUNAAN",
+    };
   }
 
   if (conditionUsed === "Notis + AFA Dual + Insentif + KWTBB") {
@@ -540,8 +693,8 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       ...boxNameMap,
       "2_1": "KWHR",
       "2_2": "KWTBB",
-      "3_1": "PENGGUNAAN"
-    }
+      "3_1": "PENGGUNAAN",
+    };
   }
 
   if (conditionUsed === "Notis + AFA Dual + KWTBB") {
@@ -549,10 +702,9 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       ...boxNameMap,
       "2_1": "KWHR",
       "2_2": "KWTBB",
-      "3_1": "PENGGUNAAN"
-    }
+      "3_1": "PENGGUNAAN",
+    };
   }
-
 
   if (conditionUsed === "Insentif + Service Tax") {
     boxNameMap = {
@@ -560,7 +712,7 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       "2_1": "KWHR",
       "2_2": "SERVICE TAX",
       "2_3": "PENGGUNAAN",
-    }
+    };
   }
 
   if (conditionUsed === "AFA Dual + Service Tax + KWTBB") {
@@ -584,7 +736,7 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
     };
   }
 
-    if (conditionUsed === "AFA + Service Tax + Insentif + KWTBB") {
+  if (conditionUsed === "AFA + Service Tax + Insentif + KWTBB") {
     boxNameMap = {
       ...boxNameMap, // keep all existing mappings
       "2_1": "KWHR",
@@ -610,7 +762,7 @@ const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
       ...boxNameMap,
       "3_1": "KWHR",
       "3_2": "KWTBB",
-      "3_3" : "PENGGUNAAN",
+      "3_3": "PENGGUNAAN",
     };
   }
 
