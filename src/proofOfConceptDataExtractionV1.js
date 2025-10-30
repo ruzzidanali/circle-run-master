@@ -175,6 +175,62 @@ const boxes_AFADual_AK_KWTBB_BLUE_Insentif = [
   ],
 ];
 
+const boxes_AFADual_AK_KWTBB_BLUE_PG_Surcaj = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 340, xMax: 380, yMin: 237, yMax: 252 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_Prorata = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 366, yMax: 376 },
+    { xMin: 385, xMax: 430, yMin: 351, yMax: 361 },
+    { xMin: 340, xMax: 380, yMin: 246, yMax: 261 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 335, yMax: 345 },
+    { xMin: 385, xMax: 430, yMin: 320, yMax: 330 },
+    { xMin: 340, xMax: 380, yMin: 200, yMax: 215 },
+  ],
+];
+
+
+
 // ====================== //
 // ====================== //
 
@@ -600,10 +656,9 @@ async function extractFromPdf(pdfPath) {
       /jumlah[\s\u00A0\u2000-\u3000\-]*anggaran[\s\u00A0\u2000-\u3000\-]*bil[\s\u00A0\u2000-\u3000\-]*terdahulu/gi,
       "jumlahanggaranbil"
     )
-    .replace(
-      /penggunaan[\s\u00A0\u2000-\u3000\-]*puncak/gi,
-      "penggunaanpuncak"
-    );
+    .replace(/penggunaan[\s\u00A0\u2000-\u3000\-]*puncak/gi, "penggunaanpuncak")
+    .replace(/faktor[\s\u00A0\u2000-\u3000\-]*prorata/gi, "faktorprorata");
+
 
   const page2Text = pageTexts[1] || "";
 
@@ -685,6 +740,7 @@ async function extractFromPdf(pdfPath) {
   const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
   const hasNotisPemotongan = /\bnotispemotongan\b/.test(text);
   const hasPenggunaanPuncak = /\bpenggunaanpuncak\b/.test(text);
+  const hasFaktorProrata = /\bfaktorprorata\b/.test(text);
   // const hasPelarasanPenggenapan = /\bpelarasanpenggenapan\b/.test(text);
   // const hasJumlahAnggaranBil = /\bjumlahanggaranbil\b/.test(text);
 
@@ -702,17 +758,31 @@ async function extractFromPdf(pdfPath) {
       if (hasMultipleAFA) {
         // 🔹 Dual AFA (2 AFA)
         if (hasAFABlue) {
-          if (hasPelarasanPenggenapan && !hasInsentif) {
-            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PG;
+          if (hasJumlahAnggaranBil && hasPelarasanPenggenapan && hasFaktorProrata) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata;
             conditionUsed =
-              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Pelarasan Penggenapan)";
+              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Anggaran + Pelarasan + Prorata)";
+          } else if (hasPelarasanPenggenapan) {
+            if (hasInsentif) {
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif;
+              conditionUsed =
+                "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+            } else if (hasSurcaj) {
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PG_Surcaj;
+              conditionUsed = conditionUsed =
+                "2 AFA + Angkadar Kuasa + KWTBB + Surcaj (Blue + Pelarasan Penggenapan)";
+            } else {
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PG;
+              conditionUsed =
+                "2 AFA + Angkadar Kuasa + KWTBB (Blue + Pelarasan Penggenapan)";
+            }
           } else if (hasJumlahAnggaranBil) {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil;
             conditionUsed =
               "2 AFA + Angkadar Kuasa + KWTBB (Blue + Jumlah Anggaran Bil Terdahulu)";
-          } else if (hasInsentif && hasPelarasanPenggenapan) {
-            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif;
-            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+          } else if (hasFaktorProrata) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Prorata;
+            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Prorata)";
           } else {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
             conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue)";
