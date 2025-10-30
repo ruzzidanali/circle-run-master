@@ -46,7 +46,28 @@ const boxes_AFA_AK_DUAL = [
   ],
 ];
 
+// ====================== //
+// Dual AFA + AK + KWTBB //
+// ====================== //
 const boxes_AFADual_AK_KWTBB_BLACK = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 405, yMax: 415 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 285, yMax: 300 }, // 40, 15
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLACK_English = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
     { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
@@ -66,22 +87,96 @@ const boxes_AFADual_AK_KWTBB_BLACK = [
 
 const boxes_AFADual_AK_KWTBB_BLUE = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },   // 50, 10
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },   // 100, 10
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },   // 100, 10
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },   // 100, 10
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },         // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },         // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },           // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },         // 45, 10
-    { xMin: 385, xMax: 430, yMin: 359, yMax: 369 },         // 45, 10
-    { xMin: 340, xMax: 380, yMin: 255, yMax: 270 },         // 40, 15
+    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 },
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 340, xMax: 380, yMin: 270, yMax: 285 },
   ],
 ];
 
+const boxes_AFADual_AK_KWTBB_BLUE_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 359, yMax: 369 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 255, yMax: 270 }, // 40, 15
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_PG = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 },
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 340, xMax: 380, yMin: 253, yMax: 285 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 350, yMax: 360 },
+    { xMin: 385, xMax: 430, yMin: 335, yMax: 345 },
+    { xMin: 340, xMax: 380, yMin: 230, yMax: 245 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_Insentif = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 340, xMax: 380, yMin: 237, yMax: 252 },
+  ],
+];
+
+// ====================== //
+// ====================== //
 
 //Baru
 const boxes_AFADual_ST_KWTBB = [
@@ -138,6 +233,9 @@ const boxes_Insentif_ST = [
   ],
 ];
 
+// ====================== //
+// AK + KWTBB //
+// ====================== //
 const boxes_AK_KWTBB = [
   [
     // { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
@@ -155,7 +253,12 @@ const boxes_AK_KWTBB = [
     { xMin: 340, xMax: 430, yMin: 278, yMax: 293 },
   ],
 ];
+// ====================== //
+// ====================== //
 
+// ====================== //
+// Normal //
+// ====================== //
 const boxes_Normal = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
@@ -172,8 +275,49 @@ const boxes_Normal = [
     { xMin: 340, xMax: 430, yMin: 278, yMax: 293 },
   ],
 ];
+// ====================== //
+// ====================== //
 
-const boxes_AFA_AK_KWTBB = [
+// ====================== //
+// AFA + AK + KWTBB //
+// ====================== //
+const boxes_AFA_AK_KWTBB_BLUE = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+  ],
+];
+
+const boxes_AFA_AK_KWTBB_BLUE_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+  ],
+];
+
+const boxes_AFA_AK_KWTBB_BLUE_PUNCAK = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
     { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
@@ -185,29 +329,67 @@ const boxes_AFA_AK_KWTBB = [
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 396, yMax: 406 },
-    { xMin: 385, xMax: 430, yMin: 380, yMax: 390 },
-    { xMin: 340, xMax: 380, yMin: 278, yMax: 293 },
+    { xMin: 385, xMax: 430, yMin: 350, yMax: 360 },
+    { xMin: 385, xMax: 430, yMin: 335, yMax: 345 },
+    { xMin: 385, xMax: 425, yMin: 545, yMax: 560 },
   ],
 ];
 
-const boxes_AFA_AK_KWTBB_English = [
+const boxes_AFA_AK_KWTBB_BLUE_Insentif = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
-    { xMin: 340, xMax: 380, yMin: 270, yMax: 285 },
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 385, xMax: 430, yMin: 381, yMax: 391 },
+    { xMin: 340, xMax: 380, yMin: 277, yMax: 292 },
   ],
 ];
+
+const boxes_AFA_AK_KWTBB_BLACK = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+  ],
+];
+
+const boxes_AFA_AK_KWTBB_BLACK_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+  ],
+];
+// ====================== //
+// ====================== //
 
 const boxes_Cagaran_ST_Insentif = [
   [
@@ -335,6 +517,18 @@ async function extractFromPdf(pdfPath) {
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
+
+  const pageTexts = [];
+  for (let i = 1; i <= totalPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const pageText = content.items
+      .map((i) => i.str)
+      .join(" ")
+      .toLowerCase();
+    pageTexts.push(pageText);
+  }
+
   // --- Extract text for detection flags ---
   let text = "";
   const allPageContents = [];
@@ -397,7 +591,38 @@ async function extractFromPdf(pdfPath) {
     .replace(
       /notis[\s\u00A0\u2000-\u3000-]*pemotongan[\s\u00A0\u2000-\u3000-]*bekalan[\s\u00A0\u2000-\u3000-]*elektrik/gi,
       "notispemotongan"
+    )
+    .replace(
+      /pelarasan[\s\u00A0\u2000-\u3000\-]*penggenapan/gi,
+      "pelarasanpenggenapan"
+    )
+    .replace(
+      /jumlah[\s\u00A0\u2000-\u3000\-]*anggaran[\s\u00A0\u2000-\u3000\-]*bil[\s\u00A0\u2000-\u3000\-]*terdahulu/gi,
+      "jumlahanggaranbil"
+    )
+    .replace(
+      /penggunaan[\s\u00A0\u2000-\u3000\-]*puncak/gi,
+      "penggunaanpuncak"
     );
+
+  const page2Text = pageTexts[1] || "";
+
+  const hasPelarasanPenggenapan_Page2 =
+    /\bpelarasan[\s\u00A0\u2000-\u3000-]*penggenapan\b/i.test(page2Text);
+  const hasJumlahAnggaranBil_Page2 =
+    /\bjumlah[\s\u00A0\u2000-\u3000-]*anggaran[\s\u00A0\u2000-\u3000-]*bil[\s\u00A0\u2000-\u3000-]*terdahulu\b/i.test(
+      page2Text
+    );
+
+  // console.log("📄 Page-specific checks (page 2):", {
+  //   hasPelarasanPenggenapan_Page2,
+  //   hasJumlahAnggaranBil_Page2,
+  // });
+
+  const hasPelarasanPenggenapan =
+    hasPelarasanPenggenapan_Page2 === true ? true : false;
+  const hasJumlahAnggaranBil =
+    hasJumlahAnggaranBil_Page2 === true ? true : false;
 
   // ==========================================================
   // 🔍 Detect AFA kWh values (Blue = >0 kWh, Black = 0 kWh)
@@ -459,6 +684,9 @@ async function extractFromPdf(pdfPath) {
   const hasJumlahB = /\bjumlahB(?:_tarifbaharu)?\b/.test(text);
   const hasSurcajLewatBayar = /\bsurcajlewatbayar\b/.test(text);
   const hasNotisPemotongan = /\bnotispemotongan\b/.test(text);
+  const hasPenggunaanPuncak = /\bpenggunaanpuncak\b/.test(text);
+  // const hasPelarasanPenggenapan = /\bpelarasanpenggenapan\b/.test(text);
+  // const hasJumlahAnggaranBil = /\bjumlahanggaranbil\b/.test(text);
 
   // ==========================================================
   // 📦 Select boxes based on condition flags
@@ -474,25 +702,47 @@ async function extractFromPdf(pdfPath) {
       if (hasMultipleAFA) {
         // 🔹 Dual AFA (2 AFA)
         if (hasAFABlue) {
-          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
-          conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue)";
+          if (hasPelarasanPenggenapan && !hasInsentif) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PG;
+            conditionUsed =
+              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Pelarasan Penggenapan)";
+          } else if (hasJumlahAnggaranBil) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil;
+            conditionUsed =
+              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Jumlah Anggaran Bil Terdahulu)";
+          } else if (hasInsentif && hasPelarasanPenggenapan) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif;
+            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+          } else {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
+            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue)";
+          }
         } else if (hasAFABlack) {
           selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK;
           conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Black)";
         } else {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
           conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB";
         }
       } else {
         // 🔸 Single AFA (1 AFA)
         if (hasAFABlue) {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
-          conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
+          if (hasPenggunaanPuncak) {
+            selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK;
+            conditionUsed =
+              "AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak)";
+          } else if (hasInsentif) {
+            selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_Insentif;
+            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+          } else {
+            selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
+            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
+          }
         } else if (hasAFABlack) {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLACK;
           conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Black)";
         } else {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
           conditionUsed = "AFA + Angkadar Kuasa + KWTBB";
         }
       }
@@ -505,25 +755,25 @@ async function extractFromPdf(pdfPath) {
       if (hasMultipleAFA) {
         // 🔹 Dual AFA (2 AFA)
         if (hasAFABlue) {
-          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_English;
           conditionUsed = "2 AFA + Power Factor + KWTBB (Blue - English)";
         } else if (hasAFABlack) {
-          selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK;
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK_English;
           conditionUsed = "2 AFA + Power Factor + KWTBB (Black - English)";
         } else {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_English;
           conditionUsed = "2 AFA + Power Factor + KWTBB (English)";
         }
       } else {
         // 🔸 Single AFA (1 AFA)
         if (hasAFABlue) {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
           conditionUsed = "AFA + Power Factor + KWTBB (Blue - English)";
         } else if (hasAFABlack) {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLACK;
           conditionUsed = "AFA + Power Factor + KWTBB (Black - English)";
         } else {
-          selectedBoxes = boxes_AFA_AK_KWTBB;
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
           conditionUsed = "AFA + Power Factor + KWTBB (English)";
         }
       }
