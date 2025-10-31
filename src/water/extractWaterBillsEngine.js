@@ -153,7 +153,7 @@ async function detectRegionHybrid(filePath, text) {
 -------------------------------------------------- */
 async function detectSelangorLayout(region, imagePath) {
   if (region !== "Selangor") return region;
-  const sampleBox = { left: 1600, top: 250, width: 800, height: 250 };
+  const sampleBox = { left: 1600, top: 250, width: 800, height: 300 };
   const worker = await createWorker("eng");
   const tempCrop = path.join(debugDir, "layout_temp.png");
   await sharp(imagePath).extract(sampleBox).toFile(tempCrop);
