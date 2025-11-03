@@ -158,8 +158,28 @@ async function detectSelangorLayout(region, imagePath) {
   const tempCrop = path.join(debugDir, "layout_temp.png");
   await sharp(imagePath).extract(sampleBox).toFile(tempCrop);
   const res = await worker.recognize(tempCrop);
-  await worker.terminate();
   const ocr = res.data.text.toLowerCase();
+  const qrCropPath = path.join(debugDir, "layout_qr.png");
+  const qrBox = { left: 1140, top: 450, width: 350, height: 450 };
+  await sharp(imagePath).extract(qrBox).toFile(qrCropPath);
+  const qrRes = await worker.recognize(qrCropPath);
+  const qrText = qrRes.data.text.toLowerCase();
+  if (
+    qrText.includes("qr") ||
+    qrText.includes("kod qr") ||
+    qrText.includes("imbas") ||
+    qrText.includes("scan untuk bayar") ||
+    qrText.includes("e-invois") ||
+    qrText.includes("einvois") ||
+    qrText.includes("e-lnvois") ||
+    qrText.includes("e lnvois") ||
+    qrText.includes("e lnvoise") ||
+    qrText.includes("invois elektronik")
+  ) {
+    await worker.terminate();
+    return "SelangorQr";
+  }
+  await worker.terminate();
   if (ocr.includes("baharu") && ocr.includes("lama")) return "Selangor2";
   return "Selangor";
 }
