@@ -80,10 +80,58 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
       height: Math.round(b.h * scaleY)
     };
     const addrCrop = path.join(cropsDir, "Address.png");
-    await sharp(imagePath).extract(cropRect).toFile(addrCrop);
+
+    // 🧠 Step 1: Preprocess + extract
+    await sharp(imagePath)
+      .extract(cropRect)
+      .grayscale()
+      .normalize()
+      .linear(1.1, 0)
+      .sharpen()
+      .toFile(addrCrop);
+
     const r = await worker.recognize(addrCrop);
-    addressText = cleanAddress(r.data.text.trim());
+    let rawText = r.data.text.trim();
+
+    // 🧠 Step 2: Retry if <6 lines (may have missed last line)
+    const lineCount = countAddressLines(rawText);
+    if (lineCount < 6) {
+      const retryRect = {
+        ...cropRect,
+        height: Math.min(
+          meta.height - cropRect.top,
+          cropRect.height + Math.round(100 * scaleY)
+        )
+      };
+      const addrCropRetry = path.join(cropsDir, "Address_retry.png");
+      await sharp(imagePath)
+        .extract(retryRect)
+        .grayscale()
+        .normalize()
+        .linear(1.1, 0)
+        .sharpen()
+        .toFile(addrCropRetry);
+
+      const r2 = await worker.recognize(addrCropRetry);
+      const retryText = r2.data.text.trim();
+
+      // 🧩 Keep retry only if better (more lines & valid stop word)
+      const cleanRaw = cleanAddress(rawText);
+      const cleanRetry = cleanAddress(retryText);
+      const stopRegion = /selangor|kuala lumpur|putrajaya|labuan/i;
+      if (
+        countAddressLines(cleanRetry) > countAddressLines(cleanRaw) &&
+        stopRegion.test(cleanRetry)
+      ) {
+        rawText = retryText;
+        console.log("🔁 Using taller retry crop for more complete address.");
+      }
+    }
+
+    // 🧠 Step 3: Final clean
+    addressText = cleanAddress(rawText);
     results["Address"] = addressText;
+    console.log("📜 Final Address OCR lines:", addressText.split(/\n+/));
   }
 
   const offsetY = -(6 - countAddressLines(addressText)) * 50;
