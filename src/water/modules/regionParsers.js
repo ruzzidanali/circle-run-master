@@ -64,10 +64,11 @@ export function parseJohorFields(results) {
   // 🧾 Jumlah Bil Semasa
   const jumlahBilRaw = results["Jumlah Bil Semasa Section"];
   if (jumlahBilRaw) {
-    const match = jumlahBilRaw.match(
-      /JUMLAH\s+BIL\s+SEMASA[^0-9]*([0-9]+(?:[.,][0-9]{1,2})?)/i
-    );
-    out["Jumlah Bil Semasa"] = match ? match[1].replace(",", ".") : "0.00";
+    const match = jumlahBilRaw.match(/(\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?)/);
+    if (match) {
+      const num = match[1].replace(/,/g, "");
+      out["Jumlah Bil Semasa"] = num;
+    }
   }
 
   // 🧾 Normalize No. Bil & No. Akaun
@@ -102,21 +103,24 @@ export function parseJohorFields(results) {
   // 🧾 Meter / Tarikh Bacaan / Penggunaan
   const meterRaw = results["No Meter, Tarikh, Penggunaan(m3) Section"] || "";
   if (meterRaw) {
-    // No Meter
-    // 🧾 No. Meter (handle spaces like "SAJ22A 131046")
-    const meterMatch = meterRaw.match(/(SAJ\s*[0-9A-Z]+\s*[0-9A-Z]*)/i);
-    if (meterMatch) {
-      out["No. Meter"] = meterMatch[1].replace(/\s+/g, "").trim(); // remove spaces
-    } else {
-      // fallback: if "SAJ" not found, try shorter pattern
-      const altMeter = meterRaw.match(/(S[A-Z0-9]{3,}\s*[0-9A-Z]+)/i);
-      out["No. Meter"] = altMeter ? altMeter[1].replace(/\s+/g, "").trim() : "";
-    }
+    const meterMatch = meterRaw.match(/(SAJ[0-9A-Z]+)/i);
+    out["No. Meter"] = meterMatch ? meterMatch[1].trim() : "";
+    // // No Meter
+    // // 🧾 No. Meter (handle spaces like "SAJ22A 131046")
+    // const meterMatch = meterRaw.match(/(SAJ\s*[0-9A-Z]+\s*[0-9A-Z]*)/i);
+    // if (meterMatch) {
+    //   out["No. Meter"] = meterMatch[1].replace(/\s+/g, "").trim(); // remove spaces
+    // } else {
+    //   // fallback: if "SAJ" not found, try shorter pattern
+    //   const altMeter = meterRaw.match(/(S[A-Z0-9]{3,}\s*[0-9A-Z]+)/i);
+    //   out["No. Meter"] = altMeter ? altMeter[1].replace(/\s+/g, "").trim() : "";
+    // }
 
-    // 🔍 Try to get line that contains the meter number
-    const meterLine = meterRaw
-      .split("\n")
-      .find(l => l.match(/SAJ/i)) || meterRaw;
+    // // 🔍 Try to get line that contains the meter number
+    // const meterLine = meterRaw
+    //   .split("\n")
+    //   .find(l => l.match(/SAJ/i)) || meterRaw;
+    const meterLine = meterRaw.split("\n").find((l) => l.includes("SAJ"));
 
     // 💧 Extract Penggunaan (supports 184.00 / 184 00 / 184)
     const usageMatch = meterLine.match(/(\d{1,5}(?:[.,\s]\d{1,2})?)\s*(?:m3|$)/i);
@@ -148,12 +152,13 @@ export function parseJohorFields(results) {
   // 🧾 Jumlah Caj Air Semasa
   const cajRaw = results["Jumlah Caj Air Semasa Section"];
   if (cajRaw) {
-    const match = cajRaw.match(
-      /JUMLAH\s+CAJ\s+AIR\s+SEMASA[^0-9]*([0-9]+(?:[.,][0-9]{1,2})?)/i
-    );
-    out["Jumlah Caj Air Semasa"] = match
-      ? match[1].replace(",", ".")
-      : "";
+    const match = cajRaw.match(/(\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?)/);
+    if (match) {
+      const num = match[1].replace(/,/g, "");
+      out["Jumlah Caj Air Semasa"] = num;
+    }
+
+    // out["Jumlah Caj Air Semasa"] = match ? match[1].replace(",", ".") : "";
   }
 
   // Default fallback
