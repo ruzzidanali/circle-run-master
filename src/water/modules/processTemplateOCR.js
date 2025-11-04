@@ -7,7 +7,7 @@ import {
   parseJohorFields,
   parseKedahFields,
   parseNegeriSembilanFields,
-  standardizeOutput
+  standardizeOutput,
 } from "./regionParsers.js";
 
 const debugDir = path.join(process.cwd(), "debug_text");
@@ -22,7 +22,7 @@ const designHeight = 3509;
 /* --------------------------------------------------
    📚 Utility Functions
 -------------------------------------------------- */
-const cleanNumeric = v =>
+const cleanNumeric = (v) =>
   !v
     ? "0.00"
     : v
@@ -31,23 +31,29 @@ const cleanNumeric = v =>
         .replace(",", ".")
         .trim();
 
-const cleanAddress = t => {
+const cleanAddress = (t) => {
   if (!t) return "";
-  let lines = t.split(/\n+/).map(l => l.trim()).filter(Boolean);
+  let lines = t
+    .split(/\n+/)
+    .map((l) => l.trim())
+    .filter(Boolean);
   const stopWords = ["selangor", "kuala lumpur", "putrajaya", "labuan"];
-  const idx = lines.findLastIndex(l =>
-    stopWords.some(c => l.toLowerCase().includes(c))
+  const idx = lines.findLastIndex((l) =>
+    stopWords.some((c) => l.toLowerCase().includes(c))
   );
   if (idx !== -1) lines = lines.slice(0, idx + 1);
   return lines.join("\n");
 };
 
-const countAddressLines = t =>
+const countAddressLines = (t) =>
   !t
     ? 6
-    : t.split(/\n+/).map(l => l.trim()).filter(l => l.length > 0).length;
+    : t
+        .split(/\n+/)
+        .map((l) => l.trim())
+        .filter((l) => l.length > 0).length;
 
-const normalizeDate = d => {
+const normalizeDate = (d) => {
   if (!d) return null;
   const m = d.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
   if (!m) return null;
@@ -59,7 +65,12 @@ const normalizeDate = d => {
 /* --------------------------------------------------
    ✂️ processTemplateOCR()
 -------------------------------------------------- */
-export async function processTemplateOCR(imagePath, template, fileName, region) {
+export async function processTemplateOCR(
+  imagePath,
+  template,
+  fileName,
+  region
+) {
   console.log(`🧩 OCR process start for ${region}`);
   const meta = await sharp(imagePath).metadata();
   const scaleX = meta.width / designWidth;
@@ -77,7 +88,7 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
       left: Math.round(b.x * scaleX),
       top: Math.round(b.y * scaleY),
       width: Math.round(b.w * scaleX),
-      height: Math.round(b.h * scaleY)
+      height: Math.round(b.h * scaleY),
     };
     const addrCrop = path.join(cropsDir, "Address.png");
 
@@ -101,7 +112,7 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
         height: Math.min(
           meta.height - cropRect.top,
           cropRect.height + Math.round(100 * scaleY)
-        )
+        ),
       };
       const addrCropRetry = path.join(cropsDir, "Address_retry.png");
       await sharp(imagePath)
@@ -143,11 +154,13 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
     "Baki Terdahulu",
     "Bil Semasa",
     "Jumlah Perlu Dibayar",
-    "Penggunaan (m3)"
+    "Penggunaan (m3)",
   ];
 
   // 🔲 Parallel OCR for all fields
-  const fieldEntries = Object.entries(template).filter(([k]) => k !== "Address");
+  const fieldEntries = Object.entries(template).filter(
+    ([k]) => k !== "Address"
+  );
 
   await Promise.all(
     fieldEntries.map(async ([key, box]) => {
@@ -157,7 +170,7 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
           left: Math.round(box.x * scaleX),
           top: Math.round((box.y + applyOffset) * scaleY),
           width: Math.round(box.w * scaleX),
-          height: Math.round(box.h * scaleY)
+          height: Math.round(box.h * scaleY),
         };
 
         const cropPath = path.join(cropsDir, `${key.replace(/\s+/g, "_")}.png`);
@@ -165,9 +178,13 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
         const ocrRes = await worker.recognize(cropPath);
         let text = ocrRes.data.text.trim();
         if (
-          ["Bil Semasa", "Jumlah Perlu Dibayar", "Baki Terdahulu", "Cagaran", "Penggunaan (m3)"].includes(
-            key
-          )
+          [
+            "Bil Semasa",
+            "Jumlah Perlu Dibayar",
+            "Baki Terdahulu",
+            "Cagaran",
+            "Penggunaan (m3)",
+          ].includes(key)
         )
           text = cleanNumeric(text);
         results[key] = text;
@@ -211,7 +228,7 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
     Region: region,
     ...results,
     ...(tempohBil ? { "Tempoh Bil": tempohBil } : {}),
-    ...(bilDays ? { "Bilangan Hari": bilDays } : {})
+    ...(bilDays ? { "Bilangan Hari": bilDays } : {}),
   };
 
   // 📊 Region-specific post-processing
@@ -227,8 +244,16 @@ export async function processTemplateOCR(imagePath, template, fileName, region) 
     final = {
       ...parseNegeriSembilanFields(results),
       "File Name": fileName,
-      Region: "Negeri-Sembilan"
+      Region: "Negeri-Sembilan",
     };
+  }
+
+  if (region.toLowerCase().includes("selangor") && final["No. Akaun"]) {
+    final["No. Akaun"] = final["No. Akaun"]
+      .replace(/\(.*?\)/g, "") // remove "(Baharu)"
+      .replace(/\bBaharu\b/gi, "") // remove word Baharu
+      .replace(/\s+/g, "") // remove spaces
+      .trim();
   }
 
   // 🧾 Standardize keys & fill defaults
