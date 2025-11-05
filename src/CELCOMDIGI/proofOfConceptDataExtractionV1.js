@@ -161,35 +161,18 @@ async function extractFromPdf(pdfPath) {
   });
 
   // 1️⃣ Format "BILL DATE" and any other date fields
-  const formatDate = (dateStr) => {
-    if (!dateStr) return null;
-    // detect DD/MM/YYYY
-    const match = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-    if (!match) return dateStr; // return unchanged if format unknown
-    const [_, dd, mm, yyyy] = match;
-    return `${dd}-${mm}-${yyyy}`;
-  };
-
-  // Apply new format for known date fields
-  if (boxMap["BILL DATE"]) {
-    boxMap["BILL DATE"] = formatDate(boxMap["BILL DATE"]);
-  }
-
-  // 2️⃣ Format and split "TEMPOH BILL"
+  // 2️⃣ Calculate total days (Bilangan Hari) from "TEMPOH BILL"
   if (boxMap["TEMPOH BILL"]) {
-    const tempoh = boxMap["TEMPOH BILL"];
-    // Split start and end dates
+    const tempoh = boxMap["TEMPOH BILL"].trim();
     const match = tempoh.match(
-      /(\d{2}\/\d{2}\/\d{4})\s*-\s*(\d{2}\/\d{2}\/\d{4})/
+      /(\d{2}[\/-]\d{2}[\/-]\d{4})\s*-\s*(\d{2}[\/-]\d{2}[\/-]\d{4})/
     );
     if (match) {
       const [_, startStr, endStr] = match;
-      const start = new Date(startStr.split("/").reverse().join("-"));
-      const end = new Date(endStr.split("/").reverse().join("-"));
-
-      const diffDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
-      // boxMap["TEMPOH BILL"] = `${formatDate(startStr)} - ${formatDate(endStr)}`;
-      boxMap["TEMPOH BILL"] = tempoh;
+      const [d1, m1, y1] = startStr.split(/[\/-]/).map(Number);
+      const [d2, m2, y2] = endStr.split(/[\/-]/).map(Number);
+      const diffMs = new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
+      const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
       boxMap["BILANGAN HARI"] = diffDays.toString();
     }
   }
