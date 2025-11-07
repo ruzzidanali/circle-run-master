@@ -9,7 +9,6 @@ if (!fs.existsSync(outputFolder))
 // create output folder if missing
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
 
-// Normal 2 pages bills
 const boxes_AFA_AK = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
@@ -46,42 +45,43 @@ const boxes_AFA_AK_DUAL = [
   ],
 ];
 
-// ====================== //
-// Dual AFA + AK + KWTBB //
-// ====================== //
+// ============================================
+// 2AFA + AK + KWTBB Boxes
+// ============================================
+
 const boxes_AFADual_AK_KWTBB_BLACK = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 405, yMax: 415 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 285, yMax: 300 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 405, yMax: 415 },
+    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 },
+    { xMin: 340, xMax: 380, yMin: 285, yMax: 300 },
   ],
 ];
 
 const boxes_AFADual_AK_KWTBB_BLACK_English = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 405, yMax: 415 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 389, yMax: 399 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 285, yMax: 300 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
+    { xMin: 340, xMax: 380, yMin: 270, yMax: 285 },
   ],
 ];
 
@@ -105,19 +105,19 @@ const boxes_AFADual_AK_KWTBB_BLUE = [
 
 const boxes_AFADual_AK_KWTBB_BLUE_English = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 }, // 50, 10
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 }, // 100, 10
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 }, // 100, 10
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 }, // 100, 10
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 359, yMax: 369 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 255, yMax: 270 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
+    { xMin: 385, xMax: 430, yMin: 359, yMax: 369 },
+    { xMin: 340, xMax: 380, yMin: 255, yMax: 270 },
   ],
 ];
 
@@ -157,7 +157,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil = [
   ],
 ];
 
-const boxes_AFADual_AK_KWTBB_BLUE_Insentif = [
+const boxes_AFADual_AK_KWTBB_BLUE_Insentif_PG = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
     { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
@@ -229,27 +229,183 @@ const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata = [
   ],
 ];
 
-
-
-// ====================== //
-// ====================== //
-
-//Baru
-const boxes_AFADual_ST_KWTBB = [
+const boxes_AFADual_AK_KWTBB_BLUE_PUNCAK_MAKSIMA = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 }, // 45, 10 (KWHR)
-    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 }, // 45, 10 (Service Tax)
-    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 }, // 45, 10 (KWTBB)
-    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 }, // 40, 15 (Penggunaan)
+    { xMin: 385, xMax: 430, yMin: 327, yMax: 337 },
+    { xMin: 385, xMax: 430, yMin: 312, yMax: 322 },
+    { xMin: 385, xMax: 425, yMin: 578, yMax: 588 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_PUNCAK = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 342, yMax: 352 },
+    { xMin: 385, xMax: 430, yMin: 327, yMax: 347 },
+    { xMin: 385, xMax: 425, yMin: 578, yMax: 588 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_S = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_Blue_Surcaj = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 340, xMax: 380, yMin: 252, yMax: 267 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_BLUE_Insentif = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 340, xMax: 380, yMin: 252, yMax: 267 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_Insentif_Surcaj = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 373, yMax: 383 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 340, xMax: 380, yMin: 236, yMax: 251 },
+  ],
+];
+
+const boxes_AFADual_AK_KWTBB_Insentif_Surcaj_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 352, yMax: 362 },
+    { xMin: 385, xMax: 430, yMin: 336, yMax: 346 },
+    { xMin: 340, xMax: 380, yMin: 216, yMax: 231 },
+  ],
+];
+
+const boxes_AFA_AK__KWTBB_BLUE_PUNCAK_Insentif = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 334, yMax: 344 },
+    { xMin: 385, xMax: 430, yMin: 318, yMax: 328 },
+    { xMin: 385, xMax: 425, yMin: 578, yMax: 588 },
+  ],
+];
+
+const boxes_AFADual_ST_KWTBB = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
+    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 },
+    { xMin: 340, xMax: 380, yMin: 253, yMax: 268 },
+  ],
+];
+
+const boxes_Insentif_ST = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
+    // { xMin: 385, xMax: 430, yMin: 356, yMax: 366 },
+    { xMin: 340, xMax: 380, yMin: 267, yMax: 282 },
   ],
 ];
 
@@ -271,27 +427,25 @@ const boxes_Insentif_ST_AFA_KWTBB = [
   ],
 ];
 
-const boxes_Insentif_ST = [
+const boxes_Insentif_ST_AFA_KWTBB_S = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 250, xMax: 300, yMin: 754.68, yMax: 764.68 },
+    { xMin: 250, xMax: 350, yMin: 724.68, yMax: 734.68 },
+    { xMin: 250, xMax: 350, yMin: 714.68, yMax: 724.68 },
+    { xMin: 250, xMax: 350, yMin: 678.68, yMax: 688.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 754.68, yMax: 764.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
-    // { xMin: 385, xMax: 430, yMin: 356, yMax: 366 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 267, yMax: 282 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 387, yMax: 399 },
+    { xMin: 385, xMax: 430, yMin: 372, yMax: 384 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 370 },
+    { xMin: 385, xMax: 430, yMin: 340, yMax: 352 },
+    { xMin: 340, xMax: 380, yMin: 237, yMax: 252 },
   ],
 ];
 
-// ====================== //
-// AK + KWTBB //
-// ====================== //
 const boxes_AK_KWTBB = [
   [
     // { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
@@ -309,21 +463,17 @@ const boxes_AK_KWTBB = [
     { xMin: 340, xMax: 430, yMin: 278, yMax: 293 },
   ],
 ];
-// ====================== //
-// ====================== //
 
-// ====================== //
-// Normal //
-// ====================== //
 const boxes_Normal = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    // { xMin: 10, xMax: 210, yMin: 685.8, yMax: 765.8 },
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 782.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 747.68 },
+    { xMin: 250, xMax: 350, yMin: 672.68, yMax: 707.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 782.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 525 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 525 },
+    { xMin: 32, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 396, yMax: 406 },
@@ -331,45 +481,80 @@ const boxes_Normal = [
     { xMin: 340, xMax: 430, yMin: 278, yMax: 293 },
   ],
 ];
-// ====================== //
-// ====================== //
 
-// ====================== //
-// AFA + AK + KWTBB //
-// ====================== //
-const boxes_AFA_AK_KWTBB_BLUE = [
+// ============================================
+// AFA + AK + KWTBB Boxes
+// ============================================
+
+const boxes_AFA_AK_KWTBB = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 396, yMax: 406 },
+    { xMin: 385, xMax: 430, yMin: 380, yMax: 390 },
+    { xMin: 340, xMax: 380, yMin: 278, yMax: 293 },
+  ],
+];
+
+const boxes_AFA_AK_KWTBB_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 762.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 732.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 722.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 686.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
+    { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
+    { xMin: 340, xMax: 380, yMin: 270, yMax: 285 },
+  ],
+];
+
+const boxes_AFA_AK_KWTBB_BLUE = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 },
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 },
   ],
 ];
 
 const boxes_AFA_AK_KWTBB_BLUE_English = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 },
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 },
   ],
 ];
 
@@ -411,41 +596,39 @@ const boxes_AFA_AK_KWTBB_BLUE_Insentif = [
 
 const boxes_AFA_AK_KWTBB_BLACK = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 },
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 },
   ],
 ];
 
 const boxes_AFA_AK_KWTBB_BLACK_English = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
-    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 }, // 20, 10
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 }, // 45, 10
-    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 }, // 40, 15
+    { xMin: 385, xMax: 430, yMin: 412, yMax: 422 },
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 340, xMax: 380, yMin: 290, yMax: 305 },
   ],
 ];
-// ====================== //
-// ====================== //
 
 const boxes_Cagaran_ST_Insentif = [
   [
@@ -502,63 +685,60 @@ const boxes_Cagaran_AK = [
   ],
 ];
 
-// 3 pages bill
+// ============================================
+// Notis boxes
+// ============================================
+
 const boxes_Notis_AFADual_KWTBB = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
   ],
-  [
-    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
-  ],
+  [{ xMin: 340, xMax: 380, yMin: 558, yMax: 573 }],
 ];
 
 const boxes_Notis_AFADual_Insentif_KWTBB = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
   ],
-  [
-    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
-  ],
+  [{ xMin: 340, xMax: 380, yMin: 558, yMax: 573 }],
 ];
 
 const boxes_Notis_AFADual_Insentif_KWTBB_Surcaj = [
   [
-    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 }, // 50, 11
-    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 }, // 100, 11
-    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 }, // 100, 18
-    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 }, // 100, 15
-    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 }, // 100, 20
-    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 }, // 90, 20
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
   ],
   [
-    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 }, // 45, 10
-    { xMin: 385, xMax: 430, yMin: 343, yMax: 353 }, // 45, 10
+    { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 368 },
+    { xMin: 385, xMax: 430, yMin: 343, yMax: 353 },
   ],
-  [
-    { xMin: 340, xMax: 380, yMin: 558, yMax: 573 }, // 40, 15
-  ],
+  [{ xMin: 340, xMax: 380, yMin: 558, yMax: 573 }],
 ];
 
 // ============================================
@@ -570,10 +750,12 @@ async function extractFromPdf(pdfPath) {
   const pdf = await getDocument({
     data,
     standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
+    useWorker: false,
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
 
+  // --- Extract page for detection flags ---
   const pageTexts = [];
   for (let i = 1; i <= totalPages; i++) {
     const page = await pdf.getPage(i);
@@ -616,7 +798,7 @@ async function extractFromPdf(pdfPath) {
     .replace(/power[\s\u00A0\u2000-\u3000-]*factor/gi, "powerfactor")
     .replace(/service[\s\u00A0\u2000-\u3000-]*tax/gi, "servicetax")
     .replace(
-      /efficient[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*incentive/gi,
+      /(energy[\s\u00A0\u2000-\u3000-]*efficiency[\s\u00A0\u2000-\u3000-]*incentive|insentif[\s\u00A0\u2000-\u3000-]*cekap[\s\u00A0\u2000-\u3000-]*tenaga)/gi,
       "insentifcekaptenaga"
     )
     .replace(/diliputi[\s\u00A0\u2000-\u3000-]*cagaran/gi, "diliputicagaran")
@@ -624,7 +806,6 @@ async function extractFromPdf(pdfPath) {
       /(kumpulan[\s\u00A0\u2000-\u3000-]*wang[\s\u00A0\u2000-\u3000-]*tenaga[\s\u00A0\u2000-\u3000-]*boleh[\s\u00A0\u2000-\u3000-]*baharu|kwtbb|re[\s\u00A0\u2000-\u3000-]*fund|renewable[\s\u00A0\u2000-\u3000-]*energy[\s\u00A0\u2000-\u3000-]*fund)/gi,
       "kwtbb"
     )
-    // Dual-tarif merging
     .replace(
       /jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*lama/gi,
       "jumlahA_tariflama"
@@ -633,15 +814,10 @@ async function extractFromPdf(pdfPath) {
       /jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:]*tarif[\s\u00A0\u2000-\u3000\-]*baharu/gi,
       "jumlahB_tarifbaharu"
     )
-    // .replace(
-    //   /caj[\s\u00A0\u2000-\u3000\-]*semasa[\s\u00A0\u2000-\u3000\-]*\(?a\+b\)?[\s:;,.]*/gi,
-    //   "cajsemasajumlah"
-    // )
-    // Fallbacks
     .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?a\)?[\s:;,.]*/gi, "jumlahA")
     .replace(/jumlah[\s\u00A0\u2000-\u3000\-]*\(?b\)?[\s:;,.]*/gi, "jumlahB")
     .replace(
-      /sur[\s\u00A0\u2000-\u3000\-]*caj[\s\u00A0\u2000-\u3000\-]*lewat[\s\u00A0\u2000-\u3000\-]*bayar/gi,
+      /(late[\s\u00A0\u2000-\u3000-]*payment[\s\u00A0\u2000-\u3000-]*surcharge|surcaj[\s\u00A0\u2000-\u3000-]*lewat[\s\u00A0\u2000-\u3000-]*bayar)/gi,
       "surcajlewatbayar"
     )
     .replace(
@@ -657,40 +833,36 @@ async function extractFromPdf(pdfPath) {
       "jumlahanggaranbil"
     )
     .replace(/penggunaan[\s\u00A0\u2000-\u3000\-]*puncak/gi, "penggunaanpuncak")
-    .replace(/faktor[\s\u00A0\u2000-\u3000\-]*prorata/gi, "faktorprorata");
+    .replace(/faktor[\s\u00A0\u2000-\u3000\-]*prorata/gi, "faktorprorata")
+    .replace(
+      /permintaan[\s\u00A0\u2000-\u3000-]*maksima/gi,
+      "permintaanmaksima"
+    );
 
-
+  // 🧠 Detection Flags
   const page2Text = pageTexts[1] || "";
-
   const hasPelarasanPenggenapan_Page2 =
     /\bpelarasan[\s\u00A0\u2000-\u3000-]*penggenapan\b/i.test(page2Text);
   const hasJumlahAnggaranBil_Page2 =
     /\bjumlah[\s\u00A0\u2000-\u3000-]*anggaran[\s\u00A0\u2000-\u3000-]*bil[\s\u00A0\u2000-\u3000-]*terdahulu\b/i.test(
       page2Text
     );
-
-  // console.log("📄 Page-specific checks (page 2):", {
-  //   hasPelarasanPenggenapan_Page2,
-  //   hasJumlahAnggaranBil_Page2,
-  // });
+  const hasPermintaanMaksima_Page2 =
+    /\bpermintaan[\s\u00A0\u2000-\u3000-]*maksima\b/i.test(page2Text);
 
   const hasPelarasanPenggenapan =
     hasPelarasanPenggenapan_Page2 === true ? true : false;
   const hasJumlahAnggaranBil =
     hasJumlahAnggaranBil_Page2 === true ? true : false;
+  const hasPermintaanMaksima =
+    hasPermintaanMaksima_Page2 === true ? true : false;
 
-  // ==========================================================
-  // 🔍 Detect AFA kWh values (Blue = >0 kWh, Black = 0 kWh)
-  // ==========================================================
+  // ======================================================
+  // Detect AFA kwh values (Blue = > 0 kWh, Black = 0kWh)
+  // ======================================================
   const afaBlocks = [...text.matchAll(/afa\s*\(\s*([\d,\.]+)\s*kwh/gi)];
   let hasAFABlue = false;
   let hasAFABlack = false;
-
-  console.log("🔍 AFA text matches found:");
-  afaBlocks.forEach((m, i) => {
-    const val = parseFloat(m[1].replace(/,/g, ""));
-    console.log(`  #${i + 1} → "${m[0]}" → raw: "${m[1]}" → parsed: ${val}`);
-  });
 
   for (const match of afaBlocks) {
     const kwhValue = parseFloat(match[1].replace(/,/g, ""));
@@ -709,15 +881,6 @@ async function extractFromPdf(pdfPath) {
 
   const hasMultipleAFA = afaBlocks.length >= 2;
 
-  console.log("✅ AFA Detection Summary →", {
-    hasAFABlue,
-    hasAFABlack,
-    hasMultipleAFA,
-  });
-
-  // ==========================================================
-  // 🧠 Detection Flags
-  // ==========================================================
   const hasAngkadar = /\bangkadarkuasa\b/.test(text);
   const hasPowerFactor = /\bpowerfactor\b/.test(text);
   const hasSurcaj = /\bsurcajangkadarkuasa\b/.test(text);
@@ -741,32 +904,36 @@ async function extractFromPdf(pdfPath) {
   const hasNotisPemotongan = /\bnotispemotongan\b/.test(text);
   const hasPenggunaanPuncak = /\bpenggunaanpuncak\b/.test(text);
   const hasFaktorProrata = /\bfaktorprorata\b/.test(text);
-  // const hasPelarasanPenggenapan = /\bpelarasanpenggenapan\b/.test(text);
-  // const hasJumlahAnggaranBil = /\bjumlahanggaranbil\b/.test(text);
+  const hasEnergyEfficiencyIncentive = /\binsentifcekaptenaga\b/.test(text);
+  const hasLatePaymentSurcharge = /\bsurcajlewatbayar\b/.test(text);
+  // const hasMaksima = /\bpermintaanmaksima\b/.test(text);
 
-  // ==========================================================
-  // 📦 Select boxes based on condition flags
-  // ==========================================================
+  // --- Select boxes based on flags ---
   let selectedBoxes = [];
   let conditionUsed = "";
 
   switch (true) {
     // ======================================================
-    // ⚡️ AFA + ANGKADAR KUASA + KWTBB  (Main Malay Layouts)
+    // AFA + ANGKADAR KUASA + KWTBB  (Malay)
     // ======================================================
     case hasKWTBB && hasAngkadar:
       if (hasMultipleAFA) {
-        // 🔹 Dual AFA (2 AFA)
+        // Dual AFA (2 AFA)
         if (hasAFABlue) {
-          if (hasJumlahAnggaranBil && hasPelarasanPenggenapan && hasFaktorProrata) {
-            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata;
+          if (
+            hasJumlahAnggaranBil &&
+            hasPelarasanPenggenapan &&
+            hasFaktorProrata
+          ) {
+            selectedBoxes =
+              boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata;
             conditionUsed =
               "2 AFA + Angkadar Kuasa + KWTBB (Blue + Anggaran + Pelarasan + Prorata)";
           } else if (hasPelarasanPenggenapan) {
             if (hasInsentif) {
-              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif;
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif_PG;
               conditionUsed =
-                "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+                "2 AFA + Angkadar Kuasa + KWTBB + Insentif (Blue + Pelarasan Penggenapan)";
             } else if (hasSurcaj) {
               selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PG_Surcaj;
               conditionUsed = conditionUsed =
@@ -776,6 +943,20 @@ async function extractFromPdf(pdfPath) {
               conditionUsed =
                 "2 AFA + Angkadar Kuasa + KWTBB (Blue + Pelarasan Penggenapan)";
             }
+          } else if (hasSurcaj) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_S;
+            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)";
+          } else if (hasSurcajLewatBayar && hasInsentif) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_Insentif_Surcaj;
+            conditionUsed =
+              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif + Surcaj Lewat Bayar)";
+          } else if (hasSurcajLewatBayar && !hasInsentif) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_Blue_Surcaj;
+            conditionUsed =
+              "2 AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj Lewat Bayar)";
+          } else if (hasInsentif && !hasSurcajLewatBayar) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Insentif;
+            conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
           } else if (hasJumlahAnggaranBil) {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil;
             conditionUsed =
@@ -783,6 +964,16 @@ async function extractFromPdf(pdfPath) {
           } else if (hasFaktorProrata) {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_Prorata;
             conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue + Prorata)";
+          } else if (hasPenggunaanPuncak) {
+            if (hasPermintaanMaksima) {
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PUNCAK_MAKSIMA;
+              conditionUsed =
+                "2 AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak + Maksima)";
+            } else {
+              selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_PUNCAK;
+              conditionUsed =
+                "2 AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak)";
+            }
           } else {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE;
             conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB (Blue)";
@@ -795,15 +986,19 @@ async function extractFromPdf(pdfPath) {
           conditionUsed = "2 AFA + Angkadar Kuasa + KWTBB";
         }
       } else {
-        // 🔸 Single AFA (1 AFA)
+        // Single AFA (1 AFA)
         if (hasAFABlue) {
-          if (hasPenggunaanPuncak) {
+          if (hasPenggunaanPuncak && !hasInsentif) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak)";
-          } else if (hasInsentif) {
+          } else if (hasInsentif && !hasPenggunaanPuncak) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_Insentif;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif)";
+          } else if (hasInsentif && hasPenggunaanPuncak) {
+            selectedBoxes = boxes_AFA_AK__KWTBB_BLUE_PUNCAK_Insentif;
+            conditionUsed =
+              "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif + Penggunaan Puncak)";
           } else {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
@@ -819,14 +1014,20 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // ⚡️ AFA + POWER FACTOR + KWTBB  (English Layouts)
+    // AFA + POWER FACTOR + KWTBB  (English)
     // ======================================================
     case hasKWTBB && hasPowerFactor:
       if (hasMultipleAFA) {
-        // 🔹 Dual AFA (2 AFA)
+        // Dual AFA (2 AFA)
         if (hasAFABlue) {
-          selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_English;
-          conditionUsed = "2 AFA + Power Factor + KWTBB (Blue - English)";
+          if (hasEnergyEfficiencyIncentive && hasLatePaymentSurcharge) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_Insentif_Surcaj_English;
+            conditionUsed =
+              "2 AFA + Power Factor + KWTBB (Blue + Incentive + Late Payment Surcharge - English)";
+          } else {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_English;
+            conditionUsed = "2 AFA + Power Factor + KWTBB (Blue - English)";
+          }
         } else if (hasAFABlack) {
           selectedBoxes = boxes_AFADual_AK_KWTBB_BLACK_English;
           conditionUsed = "2 AFA + Power Factor + KWTBB (Black - English)";
@@ -835,7 +1036,7 @@ async function extractFromPdf(pdfPath) {
           conditionUsed = "2 AFA + Power Factor + KWTBB (English)";
         }
       } else {
-        // 🔸 Single AFA (1 AFA)
+        // Single AFA (1 AFA)
         if (hasAFABlue) {
           selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
           conditionUsed = "AFA + Power Factor + KWTBB (Blue - English)";
@@ -850,7 +1051,7 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // ⚡️ DUAL TARIF CASES
+    // DUAL TARIFF CASES
     // ======================================================
     case hasAngkadar && hasKWTBB && hasJumlahA && hasJumlahB:
       selectedBoxes = boxes_AK_KWTBB_2TARIF;
@@ -858,9 +1059,22 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // ⚡️ SERVICE TAX / INSENTIF / CAGARAN
+    // SERVICE TAX / INSENTIF / CAGARAN
     // ======================================================
-    case hasAFA && hasInsentif && hasServiceTax && hasKWTBB:
+    case hasAFA &&
+      hasInsentif &&
+      hasServiceTax &&
+      hasKWTBB &&
+      hasSurcajLewatBayar:
+      selectedBoxes = boxes_Insentif_ST_AFA_KWTBB_S;
+      conditionUsed = "2 AFA + Service Tax + Insentif + KWTBB + Surcaj (Black)";
+      break;
+
+    case hasAFA &&
+      hasInsentif &&
+      hasServiceTax &&
+      hasKWTBB &&
+      !hasSurcajLewatBayar:
       selectedBoxes = boxes_Insentif_ST_AFA_KWTBB;
       conditionUsed = "AFA + Service Tax + Insentif + KWTBB";
       break;
@@ -881,7 +1095,7 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // ⚡️ NOTIS PEMOTONGAN (Disconnection Notice)
+    // NOTIS PEMOTONGAN (Disconnection Notice)
     // ======================================================
     case hasNotisPemotongan:
       if (hasMultipleAFA && hasInsentif && hasKWTBB && hasSurcajLewatBayar) {
@@ -900,7 +1114,7 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // ⚡️ OTHER GENERIC FALLBACKS
+    // OTHER GENERIC FALLBACKS
     // ======================================================
     case hasCagaran && hasKWTBB && hasAngkadar:
       selectedBoxes = boxes_Cagaran_KWTBB_AK;
@@ -923,14 +1137,13 @@ async function extractFromPdf(pdfPath) {
       break;
 
     // ======================================================
-    // 🧱 DEFAULT CASE
+    // DEFAULT CASE
     // ======================================================
     default:
       selectedBoxes = boxes_Normal;
       conditionUsed = "Default (Normal)";
       break;
   }
-
   // --- Extract text inside boxes ---
   const results = [];
 
@@ -954,15 +1167,9 @@ async function extractFromPdf(pdfPath) {
 
       if (hits.length > 0) {
         let combinedText = hits.map((h) => h.text).join(" ");
-
-        // Extract "(30 Hari)" or "(31 days)" etc.
         const hariMatch = combinedText.match(/\((\d+)\s*(?:Hari|Days?)\)/i);
         if (hariMatch) {
-          // Option 1: Replace full text with just the number
           combinedText = hariMatch[1];
-
-          // Option 2 (if you prefer to *append* a separate key later)
-          // result["Bilangan Hari"] = hariMatch[1];
         }
 
         results.push({
@@ -998,6 +1205,7 @@ async function extractFromPdf(pdfPath) {
     "2_3": "PENGGUNAAN",
   };
 
+  // --- Apply special mapping for specific condition ---
   if (conditionUsed === "Notis + AFA Dual + Insentif + KWTBB + Surcaj") {
     boxNameMap = {
       ...boxNameMap,
@@ -1045,7 +1253,6 @@ async function extractFromPdf(pdfPath) {
     };
   }
 
-  // --- Apply special mapping for specific condition ---
   if (conditionUsed === "Insentif + Service Tax + Cagaran") {
     boxNameMap = {
       ...boxNameMap, // keep all existing mappings
@@ -1083,6 +1290,19 @@ async function extractFromPdf(pdfPath) {
       "3_1": "KWHR",
       "3_2": "KWTBB",
       "3_3": "PENGGUNAAN",
+    };
+  }
+
+  if (
+    conditionUsed === "2 AFA + Service Tax + Insentif + KWTBB + Surcaj (Black)"
+  ) {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "SERVICE TAX",
+      "2_3": "KWTBB",
+      "2_4": "SURCAJ",
+      "2_5": "PENGGUNAAN",
     };
   }
 
