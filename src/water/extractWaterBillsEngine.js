@@ -169,6 +169,11 @@ async function detectSelangorLayout(region, imagePath) {
   await sharp(imagePath).extract(invoisBox).toFile(invoisCropPath);
   const invoisRes = await worker.recognize(invoisCropPath);
   const invoisText = invoisRes.data.text.toUpperCase();
+  const alamatPremisCropPath = path.join(debugDir, "layout_alamat_premis.png");
+  const alamatPremixBox = { left: 1500, top: 900, width: 500, height: 300 };
+  await sharp(imagePath).extract(alamatPremixBox).toFile(alamatPremisCropPath);
+  const alamatPremisRes = await worker.recognize(alamatPremisCropPath);
+  const alamatPremisText = alamatPremisRes.data.text.toUpperCase();
 
   if (
     qrText.includes("qr") ||
@@ -187,6 +192,9 @@ async function detectSelangorLayout(region, imagePath) {
   }
   await worker.terminate();
   if (ocr.includes("baharu") && ocr.includes("lama")) {
+    if (!alamatPremisText.includes("ALAMAT") && !alamatPremisText.includes("PREMIS")) {
+      return "Selangor2NoAlamat";
+    }
     if (!invoisText.includes("INVOIS")) {
       return "Selangor2Half";
     }

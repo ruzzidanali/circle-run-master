@@ -250,10 +250,26 @@ export async function processTemplateOCR(
 
   if (region.toLowerCase().includes("selangor") && final["No. Akaun"]) {
     final["No. Akaun"] = final["No. Akaun"]
-      .replace(/\(.*?\)/g, "") // remove "(Baharu)"
-      .replace(/\bBaharu\b/gi, "") // remove word Baharu
-      .replace(/\s+/g, "") // remove spaces
+      .replace(/\(.*?\)/g, "")
+      .replace(/\bBaharu\b/gi, "")
+      .replace(/\s+/g, "")
       .trim();
+  }
+
+  if (final["No. Meter"]) {
+    let meter = final["No. Meter"]
+      .replace(/\s+/g, "")
+      .replace(/[^A-Za-z0-9]/g, "")
+      .trim();
+    meter = meter
+      .replace(/^AlI?s/i, "AIS")
+      .replace(/^A1S/i, "AIS")
+      .replace(/^AIS/i, "AIS");
+    if (!meter.startsWith("AIS")) {
+      meter = "AIS" + meter.replace(/^A+|^I+|^S+/i, "");
+    }
+
+    final["No. Meter"] = meter;
   }
 
   // 🧾 Standardize keys & fill defaults
