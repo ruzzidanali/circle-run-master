@@ -164,6 +164,12 @@ async function detectSelangorLayout(region, imagePath) {
   await sharp(imagePath).extract(qrBox).toFile(qrCropPath);
   const qrRes = await worker.recognize(qrCropPath);
   const qrText = qrRes.data.text.toLowerCase();
+  const invoisCropPath = path.join(debugDir, "layout_invois.png");
+  const invoisBox = { left: 1600, top: 100, width: 800, height: 300 };
+  await sharp(imagePath).extract(invoisBox).toFile(invoisCropPath);
+  const invoisRes = await worker.recognize(invoisCropPath);
+  const invoisText = invoisRes.data.text.toUpperCase();
+
   if (
     qrText.includes("qr") ||
     qrText.includes("kod qr") ||
@@ -180,7 +186,15 @@ async function detectSelangorLayout(region, imagePath) {
     return "SelangorQr";
   }
   await worker.terminate();
-  if (ocr.includes("baharu") && ocr.includes("lama")) return "Selangor2";
+  if (ocr.includes("baharu") && ocr.includes("lama")) {
+    if (!invoisText.includes("INVOIS")) {
+      return "Selangor2Half";
+    }
+    return "Selangor2";
+  }
+  if (ocr.includes("baharu")) {
+    return "Selangor";
+  }
   return "Selangor";
 }
 
