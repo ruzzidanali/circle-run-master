@@ -103,34 +103,36 @@ export function parseJohorFields(results) {
   // 🧾 Meter / Tarikh Bacaan / Penggunaan
   const meterRaw = results["No Meter, Tarikh, Penggunaan(m3) Section"] || "";
   if (meterRaw) {
-    const meterMatch = meterRaw.match(/(SAJ[0-9A-Z]+)/i);
+    // ✅ Handle both SAJ and SAI prefixes (OCR inconsistency)
+    const meterMatch = meterRaw.match(/(SA[J|I][0-9A-Z]+)/i);
     out["No. Meter"] = meterMatch ? meterMatch[1].trim() : "";
-    // // No Meter
-    // // 🧾 No. Meter (handle spaces like "SAJ22A 131046")
-    // const meterMatch = meterRaw.match(/(SAJ\s*[0-9A-Z]+\s*[0-9A-Z]*)/i);
-    // if (meterMatch) {
-    //   out["No. Meter"] = meterMatch[1].replace(/\s+/g, "").trim(); // remove spaces
-    // } else {
-    //   // fallback: if "SAJ" not found, try shorter pattern
-    //   const altMeter = meterRaw.match(/(S[A-Z0-9]{3,}\s*[0-9A-Z]+)/i);
-    //   out["No. Meter"] = altMeter ? altMeter[1].replace(/\s+/g, "").trim() : "";
-    // }
 
-    // // 🔍 Try to get line that contains the meter number
-    // const meterLine = meterRaw
-    //   .split("\n")
-    //   .find(l => l.match(/SAJ/i)) || meterRaw;
-    const meterLine = meterRaw.split("\n").find((l) => l.includes("SAJ"));
+    if (out["No. Meter"]) {
+      out["No. Meter"] = out["No. Meter"]
+        .toUpperCase()
+        .replace(/^SAI/, "SAJ")
+        .replace(/[^A-Z0-9]/g, "");
+    }
 
-    // 💧 Extract Penggunaan (supports 184.00 / 184 00 / 184)
-    const usageMatch = meterLine.match(/(\d{1,5}(?:[.,\s]\d{1,2})?)\s*(?:m3|$)/i);
+    // ✅ Find the first line with meter prefix, fallback if not found
+    const meterLine =
+      meterRaw.split("\n").find((l) => /SA[J|I]/i.test(l)) ||
+      meterRaw.split("\n")[0];
+
+    // ✅ Only run .match() if meterLine is defined
+    const usageMatch =
+      typeof meterLine === "string"
+        ? meterLine.match(/(\d{1,5}(?:[.,\s]\d{1,2})?)\s*(?:m3|$)/i)
+        : null;
+
     if (usageMatch) {
       let val = usageMatch[1].replace(/\s+/g, "").replace(",", ".");
-      if (!val.includes(".")) val = val + ".00";
+      if (!val.includes(".")) val += ".00";
       out["Penggunaan (m3)"] = val;
     } else {
-      // Fallback: search whole block if meter line failed
-      const fallbackUsage = meterRaw.match(/(\d{2,4}(?:[.,]\d{1,2})?)\s*(?:m3|$)/i);
+      const fallbackUsage = meterRaw.match(
+        /(\d{2,4}(?:[.,]\d{1,2})?)\s*(?:m3|$)/i
+      );
       out["Penggunaan (m3)"] = fallbackUsage
         ? fallbackUsage[1].replace(",", ".")
         : "0.00";
@@ -145,7 +147,9 @@ export function parseJohorFields(results) {
 
       const d1 = new Date(start.split("/").reverse().join("-"));
       const d2 = new Date(end.split("/").reverse().join("-"));
-      out["Bilangan Hari"] = Math.abs(Math.round((d2 - d1) / 86400000)).toString();
+      out["Bilangan Hari"] = Math.abs(
+        Math.round((d2 - d1) / 86400000)
+      ).toString();
     }
   }
 

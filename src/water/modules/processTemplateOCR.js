@@ -250,13 +250,13 @@ export async function processTemplateOCR(
 
   if (region.toLowerCase().includes("selangor") && final["No. Akaun"]) {
     final["No. Akaun"] = final["No. Akaun"]
-      .replace(/\(.*?\)/g, "")
-      .replace(/\bBaharu\b/gi, "")
-      .replace(/\s+/g, "")
+      .replace(/\(.*?\)/g, "") 
+      .replace(/\bBaharu\b/gi, "") 
+      .replace(/\s+/g, "") 
       .trim();
   }
 
-  if (final["No. Meter"]) {
+  if (region.toLowerCase().includes("selangor") && final["No. Meter"]) {
     let meter = final["No. Meter"]
       .replace(/\s+/g, "")
       .replace(/[^A-Za-z0-9]/g, "")
