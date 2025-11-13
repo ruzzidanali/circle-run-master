@@ -645,6 +645,27 @@ const boxes_AFA_AK_KWTBB_BLUE_PUNCAK = [
   ],
 ];
 
+const boxes_AFA_AK_KWTBB_BLUE_PUNCAK_SURCAJ = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 335, yMax: 345 },
+    { xMin: 385, xMax: 430, yMin: 320, yMax: 330 },
+    { xMin: 385, xMax: 430, yMin: 360, yMax: 375 },
+    { xMin: 385, xMax: 425, yMin: 545, yMax: 560 },
+  ],
+];
+
+
 const boxes_AFA_AK_KWTBB_BLUE_Insentif = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
@@ -1063,7 +1084,7 @@ async function extractFromPdf(pdfPath) {
       } else {
         // Single AFA (1 AFA)
         if (hasAFABlue) {
-          if (hasPenggunaanPuncak && !hasInsentif) {
+          if (hasPenggunaanPuncak && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak)";
@@ -1078,9 +1099,12 @@ async function extractFromPdf(pdfPath) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_Insentif_S;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif + Penggunaan Puncak + Surcaj)";
-          } else if (hasSurcaj && !hasInsentif && !hasPenggunaanPuncak) {
+          } else if (!hasInsentif && !hasPenggunaanPuncak && hasSurcaj ) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_S;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)";
+          } else if (!hasInsentif && hasPenggunaanPuncak && hasSurcaj ) {
+            selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_SURCAJ;
+            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)";
           } else {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
@@ -1331,6 +1355,16 @@ async function extractFromPdf(pdfPath) {
   }
 
   if (conditionUsed === "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "2_3": "SURCAJ",
+      "2_4": "PENGGUNAAN",
+    };
+  }
+
+  if (conditionUsed === "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)") {
     boxNameMap = {
       ...boxNameMap,
       "2_1": "KWHR",
