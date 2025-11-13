@@ -386,7 +386,7 @@ const boxes_AFADual_ST_KWTBB = [
   [
     { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
     { xMin: 385, xMax: 430, yMin: 375, yMax: 385 },
-    { xMin: 385, xMax: 430, yMin: 360, yMax: 370 },
+    { xMin: 385, xMax: 430, yMin: 358, yMax: 371 },
     { xMin: 340, xMax: 380, yMin: 253, yMax: 268 },
   ],
 ];
