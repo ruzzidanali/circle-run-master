@@ -18,6 +18,7 @@ const boxes_AFA_AK = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -36,6 +37,7 @@ const boxes_AFA_AK_DUAL = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -58,6 +60,7 @@ const boxes_AFADual_AK_KWTBB_BLACK = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -76,6 +79,7 @@ const boxes_AFADual_AK_KWTBB_BLACK_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -94,6 +98,7 @@ const boxes_AFADual_AK_KWTBB_BLUE = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -112,6 +117,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -130,6 +136,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_PG = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -148,6 +155,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -166,6 +174,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_Insentif_PG = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -184,6 +193,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_PG_Surcaj = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -202,6 +212,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_Prorata = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -220,6 +231,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_JumlahAnggaranBil_PG_Prorata = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -238,6 +250,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_PUNCAK_MAKSIMA = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -256,6 +269,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_PUNCAK = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -274,6 +288,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_S = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -292,6 +307,7 @@ const boxes_AFADual_AK_KWTBB_Blue_Surcaj = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -310,6 +326,7 @@ const boxes_AFADual_AK_KWTBB_BLUE_Insentif = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -328,6 +345,7 @@ const boxes_AFADual_AK_KWTBB_Insentif_Surcaj = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -346,6 +364,7 @@ const boxes_AFADual_AK_KWTBB_Insentif_Surcaj_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -364,6 +383,7 @@ const boxes_AFA_AK__KWTBB_BLUE_PUNCAK_Insentif = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -382,6 +402,7 @@ const boxes_AFA_AK_KWTBB_BLUE_PUNCAK_Insentif_S = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -401,6 +422,7 @@ const boxes_AFADual_ST_KWTBB = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 390, yMax: 400 },
@@ -419,6 +441,7 @@ const boxes_Insentif_ST = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },
@@ -437,6 +460,7 @@ const boxes_Insentif_ST_AFA_KWTBB = [
     { xMin: 396.96, xMax: 496.96, yMin: 754.68, yMax: 764.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 382, yMax: 394 },
@@ -455,6 +479,7 @@ const boxes_Insentif_ST_AFA_KWTBB_S = [
     { xMin: 396.96, xMax: 496.96, yMin: 754.68, yMax: 764.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 387, yMax: 399 },
@@ -514,6 +539,7 @@ const boxes_AFA_AK_KWTBB = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -532,6 +558,7 @@ const boxes_AFA_AK_KWTBB_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 762.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -550,6 +577,7 @@ const boxes_AFA_AK_KWTBB_BLUE = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -568,6 +596,7 @@ const boxes_AFA_AK_KWTBB_BLUE_S = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -587,6 +616,7 @@ const boxes_AFA_AK_KWTBB_BLUE_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -605,6 +635,7 @@ const boxes_AFA_AK_KWTBB_BLUE_PUNCAK = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -623,6 +654,7 @@ const boxes_AFA_AK_KWTBB_BLUE_Insentif = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -641,6 +673,7 @@ const boxes_AFA_AK_KWTBB_BLACK = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -659,6 +692,7 @@ const boxes_AFA_AK_KWTBB_BLACK_English = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
     { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
   ],
   [
@@ -736,6 +770,7 @@ const boxes_Notis_AFADual_KWTBB = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 388, yMax: 398 },
@@ -753,6 +788,7 @@ const boxes_Notis_AFADual_Insentif_KWTBB = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
@@ -770,6 +806,7 @@ const boxes_Notis_AFADual_Insentif_KWTBB_Surcaj = [
     { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
     { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
     { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
   ],
   [
     { xMin: 385, xMax: 430, yMin: 374, yMax: 384 },
@@ -1244,7 +1281,8 @@ async function extractFromPdf(pdfPath) {
     "1_5": "NO AKAUN",
     "1_6": "BAKI TERDAHULU",
     "1_7": "CAJ SEMASA",
-    "1_8": "ANGKADAR KUASA",
+    "1_8": "PELARASAN",
+    "1_9": "ANGKADAR KUASA",
     "2_1": "KWHR",
     "2_2": "KWTBB",
     "2_3": "PENGGUNAAN",
