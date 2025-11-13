@@ -559,6 +559,25 @@ const boxes_AFA_AK_KWTBB_BLUE = [
   ],
 ];
 
+const boxes_AFA_AK_KWTBB_BLUE_S = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 397, yMax: 407 },
+    { xMin: 385, xMax: 430, yMin: 381, yMax: 391 },
+    { xMin: 385, xMax: 430, yMin: 424, yMax: 434 },
+    { xMin: 340, xMax: 380, yMin: 274, yMax: 289 },
+  ],
+];
+
 const boxes_AFA_AK_KWTBB_BLUE_English = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
@@ -1022,6 +1041,9 @@ async function extractFromPdf(pdfPath) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_Insentif_S;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif + Penggunaan Puncak + Surcaj)";
+          } else if (hasSurcaj && !hasInsentif && !hasPenggunaanPuncak) {
+            selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_S;
+            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)";
           } else {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
@@ -1265,7 +1287,17 @@ async function extractFromPdf(pdfPath) {
       ...boxNameMap,
       "2_1": "KWHR",
       "2_2": "KWTBB",
-      "2_3": "SURCJ",
+      "2_3": "SURCAJ",
+      "2_4": "PENGGUNAAN",
+    };
+  }
+
+  if (conditionUsed === "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "2_3": "SURCAJ",
       "2_4": "PENGGUNAAN",
     };
   }
