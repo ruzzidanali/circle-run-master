@@ -53,13 +53,39 @@ const countAddressLines = (t) =>
         .map((l) => l.trim())
         .filter((l) => l.length > 0).length;
 
-const normalizeDate = (d) => {
+// const normalizeDate = (d) => {
+//   if (!d) return null;
+//   const m = d.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+//   if (!m) return null;
+//   const [, dd, mm, yy] = m;
+//   const yyyy = yy.length === 2 ? "20" + yy : yy;
+//   return `${dd.padStart(2, "0")}/${mm.padStart(2, "0")}/${yyyy}`;
+// };
+
+const normalizeDate = (d, region = "") => {
   if (!d) return null;
-  const m = d.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+
+  d = d.replace(/[^\d\/]/g, "").trim();
+
+  const m = d.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
   if (!m) return null;
-  const [, dd, mm, yy] = m;
-  const yyyy = yy.length === 2 ? "20" + yy : yy;
-  return `${dd.padStart(2, "0")}/${mm.padStart(2, "0")}/${yyyy}`;
+
+  let [_, dd, mm, yy] = m;
+
+  //Selangor
+  if (region.toLowerCase().includes("selangor")) {
+    if (mm === "1") {
+      mm = "11";
+    }
+  }
+
+  if (mm.length === 1) {
+    mm = "0" + mm;
+  }
+
+  if (yy.length === 2) yy = "20" + yy;
+
+  return `${dd.padStart(2, "0")}/${mm}/${yy}`; 
 };
 
 /* --------------------------------------------------
@@ -200,11 +226,11 @@ export async function processTemplateOCR(
 
   // 🧮 Compute Tempoh Bil / Bilangan Hari
   const start =
-    normalizeDate(results["Bilangan Hari - Start"]) ||
-    normalizeDate(results["Bilangan_Hari_-_Start"]);
+    normalizeDate(results["Bilangan Hari - Start"], region) ||
+    normalizeDate(results["Bilangan_Hari_-_Start"], region);
   const end =
-    normalizeDate(results["Bilangan Hari - End"]) ||
-    normalizeDate(results["Bilangan_Hari_-_End"]);
+    normalizeDate(results["Bilangan Hari - End"], region) ||
+    normalizeDate(results["Bilangan_Hari_-_End"], region);
 
   let bilDays = null,
     tempohBil = null;
