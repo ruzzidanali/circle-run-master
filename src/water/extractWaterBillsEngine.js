@@ -187,7 +187,7 @@ async function detectSelangorLayout(region, imagePath) {
       return "Selangor2NoMeter";
     }
   }
-  
+
   if (
     qrText.includes("qr") ||
     qrText.includes("kod qr") ||
@@ -206,6 +206,9 @@ async function detectSelangorLayout(region, imagePath) {
   await worker.terminate();
   if (ocr.includes("baharu") && ocr.includes("lama")) {
     if (!alamatPremisText.includes("ALAMAT") && !alamatPremisText.includes("PREMIS")) {
+      return "Selangor2NoAlamat";
+    }
+    if (!alamatPremisText.includes("JOMPAY")) {
       return "Selangor2NoAlamat";
     }
     if (!invoisText.includes("INVOIS")) {
