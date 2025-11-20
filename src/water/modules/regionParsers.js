@@ -48,9 +48,7 @@ export function parseJohorFields(results) {
       : "0.00";
 
     // Find any date near JUMLAH BIL SEMASA or JUMLAH PERLU DIBAYAR
-    const dateMatch = tunggakanRaw.match(
-      /(\d{2}[\/\-]\d{2}[\/\-]\d{4})/g
-    );
+    const dateMatch = tunggakanRaw.match(/(\d{2}[\/\-]\d{2}[\/\-]\d{4})/g);
     if (dateMatch && dateMatch.length >= 1) {
       out["Tarikh"] = dateMatch[0];
       if (dateMatch.length >= 2) {
@@ -73,18 +71,34 @@ export function parseJohorFields(results) {
 
   // 🧾 Normalize No. Bil & No. Akaun
   // out["No. Bil"] = (results["No. Bil"] || "")
-  //     .replace(/\s+/g, "")
-  //     .replace(/[^A-Za-z0-9\-]/g, "");
-  // out["No. Akaun"] = (results["No. Akaun"] || "")
-  //     .replace(/\s+/g, "")
-  //     .replace(/[^A-Za-z0-9\-]/g, "");
-  out["No. Bil"] = (results["No. Bil"] || "")
-    .replace(/\s+/g, "")
-    .replace(/[^A-Za-z0-9\-]/g, "");
-  // out["No. Akaun"] = normalizeAccountNumber(
-  //   "Johor",
-  //   results["No. Akaun"] || ""
-  // );
+  //   .replace(/\s+/g, "")
+  //   .replace(/[^A-Za-z0-9\-]/g, "");
+
+  //New
+  // 🧾 Normalize No. Bil (Johor forces: PREFIX(NO XX))
+  let bilRaw = results["No. Bil"] || "";
+
+  // Clean noise but keep (), spaces, letters, digits, dash
+  bilRaw = bilRaw
+    .replace(/[^\w\s()\-]/g, "") // remove weird chars
+    .replace(/\s+/g, " ") // collapse spaces
+    .trim();
+
+  // Extract main prefix: L25111
+  const prefixMatch = bilRaw.match(/^[A-Za-z]\d{5,}/);
+  const prefix = prefixMatch ? prefixMatch[0] : "";
+
+  // Extract NO number
+  const noMatch = bilRaw.match(/NO\s*(\d+)/i);
+  const noNumber = noMatch ? noMatch[1] : "";
+
+  // Build final format EXACTLY like required: L25111(NO 46)
+  if (prefix && noNumber) {
+    out["No. Bil"] = `${prefix}(NO ${noNumber})`; // 👈 NO SPACE before "("
+  } else {
+    out["No. Bil"] = bilRaw;
+  }
+
   // 🧾 Normalize No. Akaun (with smart Johor fixes)
   let accRaw = (results["No. Akaun"] || "").trim();
   let acc = accRaw.replace(/[^\w\-]/g, ""); // keep letters, digits, dash
@@ -172,17 +186,15 @@ export function parseJohorFields(results) {
   return out;
 }
 
-
 export function parseKedahFields(results, fileName) {
   const section =
-    results["Jumlah Caj Semasa, Jumlah Tunggakan dan Jumlah Perlu Dibayar Section"] || "";
+    results[
+      "Jumlah Caj Semasa, Jumlah Tunggakan dan Jumlah Perlu Dibayar Section"
+    ] || "";
 
   // 🧾 Helper: extract numeric values (robust against missing RM / newlines)
   const getValue = (label) => {
-    const regex = new RegExp(
-      label + "[^0-9]*([0-9]+(?:[.,][0-9]{1,2})?)",
-      "i"
-    );
+    const regex = new RegExp(label + "[^0-9]*([0-9]+(?:[.,][0-9]{1,2})?)", "i");
     const match = section.match(regex);
     return match ? match[1].replace(",", ".") : "0.00";
   };
@@ -190,17 +202,17 @@ export function parseKedahFields(results, fileName) {
   // 🧾 Build clean structured output
   return {
     "File Name": fileName,
-    "Region": "Kedah",
+    Region: "Kedah",
     "Nombor Akaun": results["No. Akaun"] || "",
     "No. Invois": results["No. Bil"] || "",
-    "Tarikh": results["Tarikh"] || "",
+    Tarikh: results["Tarikh"] || "",
     "Tempoh Bil": results["Tempoh Bil"] || "",
     "Nombor Meter": results["No. Meter"] || "",
     "Penggunaan Semasa": results["Penggunaan Semasa"] || "",
     "Jumlah Caj Semasa": getValue("JUMLAH CAJ SEMASA"),
     "Jumlah Tunggakan": getValue("JUMLAH TUNGGAKAN"),
     "Jumlah Perlu Dibayar": getValue("JUMLAH PERLU DIBAYAR"),
-    "Cagaran": results["Cagaran"] || "0.00"
+    Cagaran: results["Cagaran"] || "0.00",
   };
 }
 
@@ -301,24 +313,28 @@ export function standardizeOutput(data) {
   // 🧹 Helper: Clean text string, default null
   const cleanText = (v) => {
     if (!v || v === "" || v === null) return null;
-    return v.toString().trim().replace(/[^\w\s\/\-\.,]/g, "");
+    return v
+      .toString()
+      .trim()
+      .replace(/[^\w\s\/\-\.,]/g, "");
   };
 
   return {
     File_Name: cleanText(data["File Name"] || data["File_Name"]),
     Region: cleanText(data["Region"]),
-    No_Invois: cleanText(
-      data["No. Invois"] ||
-      data["No. Bil"] ||
-      data["No_Invois"] ||
-      data["No_Bil"]
-    ),
+    No_Invois:
+      data["Region"] && data["Region"].toLowerCase() === "johor"
+        ? (data["No. Bil"] || data["No. Invois"] || "").trim() // DO NOT cleanText
+        : cleanText(
+            data["No. Invois"] ||
+              data["No. Bil"] ||
+              data["No_Invois"] ||
+              data["No_Bil"]
+          ),
     No_Akaun: cleanText(
       normalizeAccountNumber(
         data["Region"] || "",
-        data["No. Akaun"] ||
-        data["Nombor Akaun"] ||
-        data["Nombor_Akaun"]
+        data["No. Akaun"] || data["Nombor Akaun"] || data["Nombor_Akaun"]
       )
     ),
     // No_Akaun: cleanText(
@@ -327,42 +343,35 @@ export function standardizeOutput(data) {
     //     data["Nombor_Akaun"]
     // ),
     Tarikh: cleanText(
-      (data["Tarikh"] || "")
-        .toString()
-        .replace(/-/g, "/")
-        .trim()
+      (data["Tarikh"] || "").toString().replace(/-/g, "/").trim()
     ),
     Tempoh_Bil: cleanText(data["Tempoh Bil"] || data["Tempoh_Bil"]),
     Bilangan_Hari: cleanText(data["Bilangan Hari"] || data["Bilangan_Hari"]),
     No_Meter: cleanText(
-      data["No. Meter"] ||
-      data["Nombor Meter"] ||
-      data["Nombor_Meter"]
+      data["No. Meter"] || data["Nombor Meter"] || data["Nombor_Meter"]
     ),
     Penggunaan: cleanNum(
-      data["Penggunaan"] ||
-      data["Penggunaan (m3)"] ||
-      data["Penggunaan Semasa"]
+      data["Penggunaan"] || data["Penggunaan (m3)"] || data["Penggunaan Semasa"]
     ),
     Caj_Semasa: cleanNum(
       data["Caj Semasa"] ||
-      data["Jumlah Bil Semasa"] ||
-      data["Jumlah Caj Semasa"] ||
-      data["Jumlah Caj Air Semasa"] ||
-      data["Bil Semasa"] ||
-      data["Jumlah Perlu Dibayar"] ||
-      data["Jumlah_Perlu_Dibayar"]
+        data["Jumlah Bil Semasa"] ||
+        data["Jumlah Caj Semasa"] ||
+        data["Jumlah Caj Air Semasa"] ||
+        data["Bil Semasa"] ||
+        data["Jumlah Perlu Dibayar"] ||
+        data["Jumlah_Perlu_Dibayar"]
     ),
     Tunggakan: cleanNum(data["Tunggakan"] || data["Jumlah Tunggakan"]),
     Jumlah_Perlu_Dibayar: cleanNum(
       data["Caj Semasa"] ||
-      data["Jumlah Bil Semasa"] ||
-      data["Jumlah Caj Semasa"] ||
-      data["Jumlah Caj Air Semasa"] ||
-      data["Bil Semasa"] ||
-      data["Jumlah Perlu Dibayar"] ||
-      data["Jumlah_Perlu_Dibayar"]
+        data["Jumlah Bil Semasa"] ||
+        data["Jumlah Caj Semasa"] ||
+        data["Jumlah Caj Air Semasa"] ||
+        data["Bil Semasa"] ||
+        data["Jumlah Perlu Dibayar"] ||
+        data["Jumlah_Perlu_Dibayar"]
     ),
-    Deposit: cleanNum(data["Deposit"] || data["Cagaran"])
+    Deposit: cleanNum(data["Deposit"] || data["Cagaran"]),
   };
 }

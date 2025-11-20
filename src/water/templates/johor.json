@@ -1,6 +1,6 @@
 {
   "No. Akaun": { "x": 120, "y": 350, "w": 380, "h": 55 },
-  "No. Bil": { "x": 1880, "y": 350, "w": 135, "h": 55 },
+  "No. Bil": { "x": 1880, "y": 350, "w": 300, "h": 55 },
   "Deposit": { "x": 1880, "y": 500, "w": 400, "h": 160 },
   "Tunggakan dan Tarikh Section": { "x": 120, "y": 710, "w": 2300, "h": 300 },
   "Jumlah Bil Semasa Section": { "x": 120, "y": 1100, "w": 2300, "h": 600 },
