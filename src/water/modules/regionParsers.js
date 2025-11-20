@@ -23,6 +23,16 @@ function normalizeAccountNumber(region, accRaw) {
   }
 }
 
+function formatMelakaInvoice(raw) {
+  if (!raw) return "";
+
+  let v = raw.trim();
+
+  v = v.replace(/[^\w()]/g, "");
+
+  return v;
+}
+
 // regionParsers.js
 export function parseJohorFields(results) {
   const out = {};
@@ -324,7 +334,9 @@ export function standardizeOutput(data) {
     Region: cleanText(data["Region"]),
     No_Invois:
       data["Region"] && data["Region"].toLowerCase() === "johor"
-        ? (data["No. Bil"] || data["No. Invois"] || "").trim() // DO NOT cleanText
+        ? (data["No. Bil"] || data["No. Invois"] || "").trim()
+      : data["Region"] && data["Region"].toLowerCase() === "melaka"
+        ? formatMelakaInvoice(data["No. Invois"] || data["No. Bil"] || "")
         : cleanText(
             data["No. Invois"] ||
               data["No. Bil"] ||
