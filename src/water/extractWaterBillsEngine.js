@@ -180,13 +180,13 @@ async function detectSelangorLayout(region, imagePath) {
   const twoNoMeterRes = await worker.recognize(twoNoMeterCropPath);
   const twoNoMeterText = twoNoMeterRes.data.text.toUpperCase();
 
-  if (twoNoMeterText) {
-    const meterMatches = twoNoMeterText.match(/A[A-Z0-9]{2,}[A-Z0-9]{6,}/gi);
-    if (meterMatches && meterMatches.length >= 2) {
-      console.log("Deteced 2 No. Meter -> Selangor2NoMeter.json");
-      return "Selangor2NoMeter";
-    }
-  }
+  // if (twoNoMeterText) {
+  //   const meterMatches = twoNoMeterText.match(/A[A-Z0-9]{2,}[A-Z0-9]{6,}/gi);
+  //   if (meterMatches && meterMatches.length >= 2) {
+  //     console.log("Deteced 2 No. Meter -> Selangor2NoMeter.json");
+  //     return "Selangor2NoMeter";
+  //   }
+  // }
 
   if (
     qrText.includes("qr") ||
@@ -205,7 +205,10 @@ async function detectSelangorLayout(region, imagePath) {
   }
   await worker.terminate();
   if (ocr.includes("baharu") && ocr.includes("lama")) {
-    if (!alamatPremisText.includes("ALAMAT") && !alamatPremisText.includes("PREMIS")) {
+    if (
+      !alamatPremisText.includes("ALAMAT") &&
+      !alamatPremisText.includes("PREMIS")
+    ) {
       return "Selangor2NoAlamat";
     }
     if (!alamatPremisText.includes("JOMPAY")) {
@@ -214,10 +217,23 @@ async function detectSelangorLayout(region, imagePath) {
     if (!invoisText.includes("INVOIS")) {
       return "Selangor2Half";
     }
+    if (twoNoMeterText) {
+      const meterMatches = twoNoMeterText.match(/A[A-Z0-9]{2,}[A-Z0-9]{6,}/gi);
+      if (meterMatches && meterMatches.length >= 2) {
+        return "Selangor2NoMeter2Akaun";
+      }
+    }
     return "Selangor2";
   }
   if (ocr.includes("baharu")) {
-    return "Selangor";
+    if (twoNoMeterText) {
+      const meterMatches = twoNoMeterText.match(/A[A-Z0-9]{2,}[A-Z0-9]{6,}/gi);
+      if (meterMatches && meterMatches.length >= 2) {
+        return "Selangor2NoMeter";
+      }
+    } else {
+      return "Selangor";
+    }
   }
   return "Selangor";
 }
