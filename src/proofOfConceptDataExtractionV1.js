@@ -374,6 +374,25 @@ const boxes_AFADual_AK_KWTBB_Insentif_Surcaj_English = [
   ],
 ];
 
+const boxes_AFADual_AK_KWTBB_Insentif_Blue_English = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 480, yMax: 500 },
+    { xMin: 349, xMax: 439, yMin: 480, yMax: 500 },
+    { xMin: 480, xMax: 570, yMin: 480, yMax: 500 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 352, yMax: 362 },
+    { xMin: 385, xMax: 430, yMin: 336, yMax: 346 },
+    { xMin: 340, xMax: 380, yMin: 230, yMax: 245 },
+  ],
+]
+
 const boxes_AFA_AK__KWTBB_BLUE_PUNCAK_Insentif = [
   [
     { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
@@ -1099,12 +1118,13 @@ async function extractFromPdf(pdfPath) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_Insentif_S;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Insentif + Penggunaan Puncak + Surcaj)";
-          } else if (!hasInsentif && !hasPenggunaanPuncak && hasSurcaj ) {
+          } else if (!hasInsentif && !hasPenggunaanPuncak && hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_S;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj)";
-          } else if (!hasInsentif && hasPenggunaanPuncak && hasSurcaj ) {
+          } else if (!hasInsentif && hasPenggunaanPuncak && hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_SURCAJ;
-            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)";
+            conditionUsed =
+              "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)";
           } else {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
@@ -1130,6 +1150,10 @@ async function extractFromPdf(pdfPath) {
             selectedBoxes = boxes_AFADual_AK_KWTBB_Insentif_Surcaj_English;
             conditionUsed =
               "2 AFA + Power Factor + KWTBB (Blue + Incentive + Late Payment Surcharge - English)";
+          } else if (hasEnergyEfficiencyIncentive && !hasLatePaymentSurcharge) {
+            selectedBoxes = boxes_AFADual_AK_KWTBB_Insentif_Blue_English;
+            conditionUsed =
+              "2 AFA + Power Factor + KWTBB (Blue + Incentive - English)";
           } else {
             selectedBoxes = boxes_AFADual_AK_KWTBB_BLUE_English;
             conditionUsed = "2 AFA + Power Factor + KWTBB (Blue - English)";
