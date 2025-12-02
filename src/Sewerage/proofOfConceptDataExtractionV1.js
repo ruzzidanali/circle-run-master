@@ -18,9 +18,9 @@ const boxesPerPage = [
     { xMin: 370, xMax: 415, yMin: 455, yMax: 475 },
     { xMin: 45, xMax: 125, yMin: 542, yMax: 569 },
     { xMin: 160, xMax: 210, yMin: 210, yMax: 232 },
+    { xMin: 315, xMax: 360, yMin: 448, yMax: 468 },
   ],
 ];
-
 
 
 // ============================================
@@ -114,6 +114,7 @@ async function extractFromPdf(pdfPath) {
     "1_5": "CAJ SEMASA",
     "1_6": "BAKI TERDAHULU",
     "1_7": "JUMLAH SELEPAS PENGGENAPAN",
+    "1_8": "PELARASAN",
   };
 
 
