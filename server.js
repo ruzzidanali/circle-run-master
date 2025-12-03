@@ -3,6 +3,7 @@ import fs from "fs";
 import processAllPdfs from "./src/proofOfConceptDataExtractionV1.js";
 import processAllPdfsCelcomDigi from "./src/CELCOMDIGI/proofOfConceptDataExtractionV1.js";
 import { waterRouter } from "./src/water/extractWaterBillsAPI.js";
+import processAllPdfsMaxis from "./src/Maxis/proofOfConceptDataExtractionV1.js";
 
 const app = express();
 
@@ -25,6 +26,32 @@ app.post("/run", async (req, res) => {
     // fs.writeFileSync("uploaded.pdf", pdfBuffer);
 
     const result = await processAllPdfs([{ data: pdfBuffer }]);
+
+    res.json({ success: true, data: result });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.use("/MAXIS", express.raw({ type: "application/pdf", limit: "200mb" }));
+
+app.post("/MAXIS", async (req, res) => {
+  try {
+    console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`);
+
+    // req.body is a Buffer containing PDF binary
+    const pdfBuffer = req.body;
+
+    if (!pdfBuffer || !Buffer.isBuffer(pdfBuffer)) {
+      return res.status(400).json({ success: false, error: "No valid PDF binary received." });
+    }
+
+    
+    // Optionally, write file to disk (for debug)
+    // fs.writeFileSync("uploaded.pdf", pdfBuffer);
+
+    const result = await processAllPdfsMaxis([{ data: pdfBuffer }]);
 
     res.json({ success: true, data: result });
   } catch (err) {

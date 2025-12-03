@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getDocument } from "../Utils/pdfSetup.js";
+import { getDocument } from "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 
 const outputFolder = "../uploads";
 if (!fs.existsSync(outputFolder))
@@ -10,17 +10,89 @@ if (!fs.existsSync(outputFolder))
 // if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
 
 const boxesPerPage = [
-     [
-  { xMin: 50,  xMax: 150, yMin: 652, yMax: 664 },
-  { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
-  { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
-  { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
-  { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
-  { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
-],
+  [
+    { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
+    { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
+    { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
+    { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
+    { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
+    { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
+  ],
+  [
+    { xMin: 480, xMax: 550, yMin: 638, yMax: 653 },
+    { xMin: 480, xMax: 550, yMin: 590, yMax: 605 },
+  ],
 ];
 
+// 1 NUMBER
+const boxes_1Num_Normal = [
+  [
+    { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
+    { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
+    { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
+    { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
+    { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
+    { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
+  ],
+  [
+    { xMin: 480, xMax: 550, yMin: 638, yMax: 653 },
+    { xMin: 480, xMax: 550, yMin: 590, yMax: 605 },
+  ],
+];
 
+const boxes_1Num_Discount = [[]];
+
+const boxes_1Num_Monthly = [[]];
+
+const boxes_1Num_Monthly_Discount = [[]];
+
+// 2 NUMBERS
+const boxes_2Num_Normal = [[]];
+
+const boxes_2Num_Discount = [[]];
+
+const boxes_2Num_Monthly = [
+  [
+    { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
+    { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
+    { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
+    { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
+    { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
+    { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
+  ],
+  [
+    { xMin: 480, xMax: 550, yMin: 638, yMax: 653 },
+    { xMin: 480, xMax: 550, yMin: 622, yMax: 637 },
+    { xMin: 480, xMax: 550, yMin: 536, yMax: 551 },
+  ],
+];
+
+const boxes_2Num_Monthly_Discount = [[]];
+
+// 3 NUMBERS
+const boxes_3Num_Normal = [[]];
+
+const boxes_3Num_Discount = [
+  [
+    { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
+    { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
+    { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
+    { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
+    { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
+    { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
+  ],
+  [
+    { xMin: 480, xMax: 550, yMin: 638, yMax: 653 },
+    { xMin: 480, xMax: 550, yMin: 622, yMax: 637 },
+    { xMin: 480, xMax: 550, yMin: 608, yMax: 623 },
+    { xMin: 480, xMax: 550, yMin: 587, yMax: 602 },
+    { xMin: 480, xMax: 550, yMin: 508, yMax: 523 },
+  ],
+];
+
+const boxes_3Num_Monthly = [[]];
+
+const boxes_3Num_Monthly_Discount = [[]];
 
 // ============================================
 // 🔍 Process a single PDF
@@ -34,24 +106,100 @@ async function extractFromPdf(pdfPath) {
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
-  // --- Extract text for detection flags ---
-  let text = "";
-  for (let i = 1; i <= totalPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    text +=
-      " " +
-      content.items
-        .map((i) => i.str)
-        .join(" ")
-        .toLowerCase();
-  }
- // ===== DEFAULT =====
-      let selectedBoxes = boxesPerPage;
-      let conditionUsed = "Default (Normal)";
- 
 
- 
+  // --- Get Page 2 properly ---
+  let text = "";
+
+  if (totalPages >= 2) {
+    const page2 = await pdf.getPage(2);
+
+    // Force render operators so textContent is complete
+    await page2.getOperatorList();
+
+    const page2Content = await page2.getTextContent();
+
+    text = page2Content.items
+      .map((i) => i.str)
+      .join(" ")
+      .toLowerCase()
+      .normalize("NFKC")
+      .replace(/\s+/g, " ");
+  }
+
+  // --- FIXED service number regex ---
+  const serviceNumbers = [...text.matchAll(/\b60\d{1,3}\s*\d{5,8}\b/g)];
+  const lineCount = serviceNumbers.length;
+
+  // --- FIXED detection flags ---
+  const hasDiscount = /discount|rebate|off-net|on-net|waiver|limitless/i.test(
+    text
+  );
+  const hasMonthly = /monthly charges/i.test(text);
+  const hasServiceTax = /service tax|svc\. tax|servicetax/i.test(text);
+  const hasCajSemasa = /caj semasa/i.test(text);
+
+  let selectedBoxes = boxesPerPage;
+  let conditionUsed = "Default (Normal)";
+
+  // --- Condition Engine ---
+  switch (lineCount) {
+    case 1:
+      if (hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_1Num_Monthly_Discount;
+        conditionUsed =
+          "1 number + monthly + discount + service tax + caj semasa";
+      } else if (hasMonthly && !hasDiscount) {
+        selectedBoxes = boxes_1Num_Monthly;
+        conditionUsed = "1 number + monthly + service tax + caj semasa";
+      } else if (!hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_1Num_Discount;
+        conditionUsed = "1 number + discount + service tax + caj semasa";
+      } else {
+        selectedBoxes = boxes_1Num_Normal;
+        conditionUsed = "1 number + service tax + caj semasa";
+      }
+      break;
+
+    case 2:
+      if (hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_2Num_Monthly_Discount;
+        conditionUsed =
+          "2 number + monthly + discount + service tax + caj semasa";
+      } else if (hasMonthly && !hasDiscount) {
+        selectedBoxes = boxes_2Num_Monthly;
+        conditionUsed = "2 number + monthly + service tax + caj semasa";
+      } else if (!hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_2Num_Discount;
+        conditionUsed = "2 number + discount + service tax + caj semasa";
+      } else {
+        selectedBoxes = boxes_2Num_Normal;
+        conditionUsed = "2 number + service tax + caj semasa";
+      }
+      break;
+
+    case 3:
+      if (hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_3Num_Monthly_Discount;
+        conditionUsed =
+          "3 number + monthly + discount + service tax + caj semasa";
+      } else if (hasMonthly && !hasDiscount) {
+        selectedBoxes = boxes_3Num_Monthly;
+        conditionUsed = "3 number + monthly + service tax + caj semasa";
+      } else if (!hasMonthly && hasDiscount) {
+        selectedBoxes = boxes_3Num_Discount;
+        conditionUsed = "3 number + discount + service tax + caj semasa";
+      } else {
+        selectedBoxes = boxes_3Num_Normal;
+        conditionUsed = "3 number + service tax + caj semasa";
+      }
+      break;
+
+    default:
+      selectedBoxes = boxesPerPage;
+      conditionUsed = "Default (Normal)";
+      break;
+  }
+
   // --- Extract text inside boxes ---
   const results = [];
 
@@ -86,6 +234,12 @@ async function extractFromPdf(pdfPath) {
           // result["Bilangan Hari"] = hariMatch[1];
         }
 
+        const trimmed = combinedText.trim();
+        const negativeMatch = trimmed.match(/^\((\d+(\.\d+)?)\)$/);
+        if (negativeMatch) {
+          combinedText = `-${negativeMatch[1]}`;
+        }
+
         results.push({
           file: path.basename(pdfPath),
           page: pageIndex + 1,
@@ -114,6 +268,41 @@ async function extractFromPdf(pdfPath) {
     "1_6": "BILL REFERENCE",
   };
 
+  if (conditionUsed === "3 number + discount + service tax + caj semasa") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "ITEM 1",
+      "2_2": "ITEM 2",
+      "2_3": "ITEM 3",
+      "2_4": "DISCOUNT",
+      "2_5": "SERVICE TAX",
+    };
+  }
+
+  if (conditionUsed === "Default (Normal)") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "ITEM 1",
+      "2_2": "SERVICE TAX",
+    };
+  }
+
+  if (conditionUsed === "2 number + monthly + service tax + caj semasa") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "ITEM 1",
+      "2_2": "ITEM 2",
+      "2_3": "SERVICE TAX",
+    };
+  }
+
+  if (conditionUsed === "1 number + service tax + caj semasa") {
+    boxNameMap = {
+      ...boxNameMap,
+      "2_1": "ITEM 1",
+      "2_2": "SERVICE TAX",
+    };
+  }
 
   // --- Aggregate results into structured variable names ---
   const boxMap = {};
