@@ -7,6 +7,10 @@ import processAllPdfsMaxis from "./src/Maxis/proofOfConceptDataExtractionV1.js";
 
 const app = express();
 
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 // Use raw body parser for PDFs
 app.use("/run", express.raw({ type: "application/pdf", limit: "200mb" }));
 
