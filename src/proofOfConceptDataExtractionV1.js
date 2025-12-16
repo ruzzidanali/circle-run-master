@@ -1194,7 +1194,7 @@ async function extractFromPdf(pdfPath) {
           if (hasPenggunaanPuncak && hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLACK_PUNCAK_MAKSIMA
             conditionUsed = 
-              "AFA + Angkadar Kuasa + KWTBB (Black + Penggunaan Puncak)"
+              "AFA + Angkadar Kuasa + KWTBB (Black + Penggunaan Puncak + Permintaan Maksima)"
           } else if (hasPenggunaanPuncak && !hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLACK_PUNCAK;
             conditionUsed = 
