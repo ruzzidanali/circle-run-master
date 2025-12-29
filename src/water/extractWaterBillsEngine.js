@@ -160,7 +160,7 @@ async function detectSelangorLayout(region, imagePath) {
   const res = await worker.recognize(tempCrop);
   const ocr = res.data.text.toLowerCase();
   const qrCropPath = path.join(debugDir, "layout_qr.png");
-  const qrBox = { left: 1140, top: 450, width: 350, height: 450 };
+  const qrBox = { left: 1140, top: 450, width: 350, height: 640 };
   await sharp(imagePath).extract(qrBox).toFile(qrCropPath);
   const qrRes = await worker.recognize(qrCropPath);
   const qrText = qrRes.data.text.toLowerCase();
@@ -198,7 +198,8 @@ async function detectSelangorLayout(region, imagePath) {
     qrText.includes("e-lnvois") ||
     qrText.includes("e lnvois") ||
     qrText.includes("e lnvoise") ||
-    qrText.includes("invois elektronik")
+    qrText.includes("invois elektronik") ||
+    qrText.includes("e-Invois")
   ) {
     await worker.terminate();
     return "SelangorQr";
