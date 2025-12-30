@@ -16,9 +16,10 @@ const boxesPerPage = [
     { xMin: 460, xMax: 530, yMin: 783, yMax: 793 },
     { xMin: 365, xMax: 410, yMin: 410, yMax: 420 },
     { xMin: 370, xMax: 415, yMin: 455, yMax: 475 },
-    { xMin: 45, xMax: 125, yMin: 542, yMax: 569 },
+    { xMin: 45,  xMax: 125, yMin: 542, yMax: 569 },
     { xMin: 160, xMax: 210, yMin: 210, yMax: 232 },
     { xMin: 315, xMax: 360, yMin: 448, yMax: 468 },
+    { xMin: 370, xMax: 450, yMin: 542, yMax: 569 },
   ],
 ];
 
@@ -33,9 +34,10 @@ const withoutCetakan = [
     { xMin: 435, xMax: 505, yMin: 702, yMax: 712 },
     { xMin: 365, xMax: 410, yMin: 352, yMax: 362 },
     { xMin: 370, xMax: 415, yMin: 385, yMax: 405 },
-    { xMin: 60, xMax: 140, yMin: 492, yMax: 512 },
+    { xMin: 60,  xMax: 140, yMin: 492, yMax: 512 },
     { xMin: 160, xMax: 210, yMin: 140, yMax: 167 },
     { xMin: 315, xMax: 360, yMin: 380, yMax: 400 },
+    { xMin: 370, xMax: 450, yMin: 492, yMax: 512 },
   ],
 ];
 
@@ -153,6 +155,7 @@ async function extractFromPdf(pdfPath) {
     "1_6": "BAKI TERDAHULU",
     "1_7": "JUMLAH SELEPAS PENGGENAPAN",
     "1_8": "PELARASAN",
+    "1_9": "JUMLAH SEMASA"
   };
 
   // --- Aggregate results into structured variable names ---
