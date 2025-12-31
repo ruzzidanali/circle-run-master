@@ -72,7 +72,7 @@ const boxes_2Num_Monthly_Discount = [[]];
 // 3 NUMBERS
 const boxes_3Num_Normal = [[]];
 
-const boxes_3Num_Discount = [
+const boxes_3Num_2Discount = [
   [
     { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
     { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
@@ -87,6 +87,24 @@ const boxes_3Num_Discount = [
     { xMin: 480, xMax: 550, yMin: 608, yMax: 623 },
     { xMin: 480, xMax: 550, yMin: 587, yMax: 602 },
     { xMin: 480, xMax: 550, yMin: 508, yMax: 523 },
+  ],
+];
+
+const boxes_3Num_1Discount = [
+  [
+    { xMin: 50, xMax: 150, yMin: 652, yMax: 664 },
+    { xMin: 480, xMax: 550, yMin: 535, yMax: 552 },
+    { xMin: 230, xMax: 370, yMin: 687, yMax: 697 },
+    { xMin: 230, xMax: 370, yMin: 665, yMax: 675 },
+    { xMin: 480, xMax: 550, yMin: 592, yMax: 604 },
+    { xMin: 230, xMax: 370, yMin: 642, yMax: 652 },
+  ],
+  [
+    { xMin: 480, xMax: 550, yMin: 638, yMax: 653 },
+    { xMin: 480, xMax: 550, yMin: 622, yMax: 637 },
+    { xMin: 480, xMax: 550, yMin: 608, yMax: 623 },
+    { xMin: 480, xMax: 550, yMin: 587, yMax: 602 },
+    { xMin: 480, xMax: 550, yMin: 522, yMax: 537 },
   ],
 ];
 
@@ -135,25 +153,37 @@ async function extractFromPdf(pdfPath) {
     text
   );
   const hasMonthly = /monthly charges/i.test(text);
+
+  const hasOffNet = /\boff-?net\b/i.test(text);
+  const hasOnNet = /\bon-?net\b/i.test(text);
+
   const hasServiceTax = /service tax|svc\. tax|servicetax/i.test(text);
   const hasCajSemasa = /caj semasa/i.test(text);
 
   let selectedBoxes = boxesPerPage;
   let conditionUsed = "Default (Normal)";
 
+  //Discount
+  let discountType = "none";
+  if (hasDiscount) {
+    if (hasOffNet && hasOnNet) discountType = "off+on";
+    else if (hasOffNet) discountType = "off-only";
+    else if (hasOnNet) discountType = "on-only";
+    else discountType = "other-discount";
+  }
+
   // --- Condition Engine ---
   switch (lineCount) {
     case 1:
       if (hasMonthly && hasDiscount) {
         selectedBoxes = boxes_1Num_Monthly_Discount;
-        conditionUsed =
-          "1 number + monthly + discount + service tax + caj semasa";
+        conditionUsed = `1 number + monthly + discount(${discountType}) + service tax + caj semasa`;
       } else if (hasMonthly && !hasDiscount) {
         selectedBoxes = boxes_1Num_Monthly;
         conditionUsed = "1 number + monthly + service tax + caj semasa";
       } else if (!hasMonthly && hasDiscount) {
         selectedBoxes = boxes_1Num_Discount;
-        conditionUsed = "1 number + discount + service tax + caj semasa";
+        conditionUsed = `1 number + discount(${discountType}) + service tax + caj semasa`;
       } else {
         selectedBoxes = boxes_1Num_Normal;
         conditionUsed = "1 number + service tax + caj semasa";
@@ -163,14 +193,13 @@ async function extractFromPdf(pdfPath) {
     case 2:
       if (hasMonthly && hasDiscount) {
         selectedBoxes = boxes_2Num_Monthly_Discount;
-        conditionUsed =
-          "2 number + monthly + discount + service tax + caj semasa";
+        conditionUsed = `2 number + monthly + discount(${discountType}) + service tax + caj semasa`;
       } else if (hasMonthly && !hasDiscount) {
         selectedBoxes = boxes_2Num_Monthly;
         conditionUsed = "2 number + monthly + service tax + caj semasa";
       } else if (!hasMonthly && hasDiscount) {
         selectedBoxes = boxes_2Num_Discount;
-        conditionUsed = "2 number + discount + service tax + caj semasa";
+        conditionUsed = `2 number + discount(${discountType}) + service tax + caj semasa`;
       } else {
         selectedBoxes = boxes_2Num_Normal;
         conditionUsed = "2 number + service tax + caj semasa";
@@ -180,14 +209,17 @@ async function extractFromPdf(pdfPath) {
     case 3:
       if (hasMonthly && hasDiscount) {
         selectedBoxes = boxes_3Num_Monthly_Discount;
-        conditionUsed =
-          "3 number + monthly + discount + service tax + caj semasa";
+        conditionUsed = `3 number + monthly + discount(${discountType}) + service tax + caj semasa`;
       } else if (hasMonthly && !hasDiscount) {
         selectedBoxes = boxes_3Num_Monthly;
         conditionUsed = "3 number + monthly + service tax + caj semasa";
       } else if (!hasMonthly && hasDiscount) {
-        selectedBoxes = boxes_3Num_Discount;
-        conditionUsed = "3 number + discount + service tax + caj semasa";
+        if (discountType === "off+on") selectedBoxes = boxes_3Num_2Discount;
+        else if (discountType === "off-only" || discountType === "on-only")
+          selectedBoxes = boxes_3Num_1Discount;
+        else selectedBoxes = boxes_3Num_1Discount;
+
+        conditionUsed = `3 number + discount(${discountType}) + service tax + caj semasa`;
       } else {
         selectedBoxes = boxes_3Num_Normal;
         conditionUsed = "3 number + service tax + caj semasa";
@@ -268,7 +300,7 @@ async function extractFromPdf(pdfPath) {
     "1_6": "BILL REFERENCE",
   };
 
-  if (conditionUsed === "3 number + discount + service tax + caj semasa") {
+  if (conditionUsed.includes("3 number + discount(")) {
     boxNameMap = {
       ...boxNameMap,
       "2_1": "ITEM 1",
@@ -278,6 +310,17 @@ async function extractFromPdf(pdfPath) {
       "2_5": "SERVICE TAX",
     };
   }
+
+  // if (conditionUsed === "3 number + discount + service tax + caj semasa") {
+  //   boxNameMap = {
+  //     ...boxNameMap,
+      // "2_1": "ITEM 1",
+      // "2_2": "ITEM 2",
+      // "2_3": "ITEM 3",
+      // "2_4": "DISCOUNT",
+      // "2_5": "SERVICE TAX",
+  //   };
+  // }
 
   if (conditionUsed === "Default (Normal)") {
     boxNameMap = {
