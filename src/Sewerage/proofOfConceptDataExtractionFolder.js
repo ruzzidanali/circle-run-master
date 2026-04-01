@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument } from "../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 
 // Folder path — update to your desired folder
 const folderPath = "Z://System//01 Utility Bill//05 Sewerage//2507//";

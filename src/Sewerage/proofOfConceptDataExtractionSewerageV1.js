@@ -173,6 +173,7 @@ async function extractFromPdf(pdfPath) {
 
       // const val = typeof match.text === "string" ? match.text.trim() : null;
       // boxMap[variable] = val ? val : null;
+      
       let val = typeof match.text === "string" ? match.text.trim() : null;
 
       if (variable === "NOMBOR AKAUN" && val) {

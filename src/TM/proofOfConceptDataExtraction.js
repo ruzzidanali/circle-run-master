@@ -1,5 +1,5 @@
 import fs from "fs";
-import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument } from  "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 
 // PDF path
 const inputPath = "Z://System//01 Utility Bill//06 TM/2508//TM_2508_PUJ.pdf";

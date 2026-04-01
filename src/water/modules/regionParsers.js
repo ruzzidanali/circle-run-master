@@ -23,13 +23,11 @@ function normalizeAccountNumber(region, accRaw) {
   }
 }
 
-function formatMelakaInvoice(raw) {
+//Only for Melaka
+function formatInvoice(raw) {
   if (!raw) return "";
-
   let v = raw.trim();
-
   v = v.replace(/[^\w()]/g, "");
-
   return v;
 }
 
@@ -37,7 +35,7 @@ function formatMelakaInvoice(raw) {
 export function parseJohorFields(results) {
   const out = {};
 
-  // 🧾 Deposit
+  /* ---------------------- 🧾 Deposit ---------------------- */
   const depositRaw = results["Deposit"];
   if (depositRaw) {
     const match = depositRaw.match(/(\d+(?:[.,]\d{1,2})?)/);
@@ -46,10 +44,9 @@ export function parseJohorFields(results) {
     out["Deposit"] = "0.00";
   }
 
-  // 🧾 Tunggakan + Tarikh Section
+  /* ---------------------- 🧾 Tunggakan + Tarikh ---------------------- */
   const tunggakanRaw = results["Tunggakan dan Tarikh Section"] || "";
   if (tunggakanRaw) {
-    // Try to find any numeric amount after TUNGGAKAN
     const tunggakanMatch = tunggakanRaw.match(
       /TUNGGAKAN(?:\s+\d{2}\/\d{2}\/\d{2,4})?(?:\s+[A-Z0-9\/]+)?\s+([0-9]+(?:[.,][0-9]{1,2})?)/i
     );
@@ -57,19 +54,16 @@ export function parseJohorFields(results) {
       ? tunggakanMatch[1].replace(",", ".")
       : "0.00";
 
-    // Find any date near JUMLAH BIL SEMASA or JUMLAH PERLU DIBAYAR
     const dateMatch = tunggakanRaw.match(/(\d{2}[\/\-]\d{2}[\/\-]\d{4})/g);
     if (dateMatch && dateMatch.length >= 1) {
       out["Tarikh"] = dateMatch[0];
-      if (dateMatch.length >= 2) {
-        out["Tarikh Tamat"] = dateMatch[1]; // next date if exists
-      }
+      if (dateMatch.length >= 2) out["Tarikh Tamat"] = dateMatch[1];
     }
   } else {
     out["Tunggakan"] = "0.00";
   }
 
-  // 🧾 Jumlah Bil Semasa
+  /* ---------------------- 🧾 Jumlah Bil Semasa ---------------------- */
   const jumlahBilRaw = results["Jumlah Bil Semasa Section"];
   if (jumlahBilRaw) {
     const match = jumlahBilRaw.match(/(\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?)/);
@@ -79,58 +73,105 @@ export function parseJohorFields(results) {
     }
   }
 
-  // 🧾 Normalize No. Bil & No. Akaun
-  // out["No. Bil"] = (results["No. Bil"] || "")
-  //   .replace(/\s+/g, "")
-  //   .replace(/[^A-Za-z0-9\-]/g, "");
+  /* ---------------------- 🧽 Cleaners ---------------------- */
+  function cleanNoBil(rawText) {
+    if (!rawText) return "";
+    let normalized = rawText.replace(/\s+/g, "").trim();
+    normalized = normalized.replace(/[^A-Z0-9]/gi, "");
+    normalized = normalized.replace(/([A-Z]?\d{5,6}).*/, "$1");
 
-  //New
-  // 🧾 Normalize No. Bil (Johor forces: PREFIX(NO XX))
-  let bilRaw = results["No. Bil"] || "";
+    // ✅ Proper like N25082 or L25071
+    const match = normalized.match(/\b([A-Z]{1,2}\d{5,6})\b/);
+    if (match) normalized = match[1];
 
-  // Clean noise but keep (), spaces, letters, digits, dash
-  bilRaw = bilRaw
-    .replace(/[^\w\s()\-]/g, "") // remove weird chars
-    .replace(/\s+/g, " ") // collapse spaces
-    .trim();
+    // ✅ Wrong extra “1” (L125071 → L25071)
+    if (/^[LN]1\d{5,6}$/i.test(normalized)) {
+      normalized = normalized[0] + normalized.slice(2);
+    }
 
-  // Extract main prefix: L25111
-  const prefixMatch = bilRaw.match(/^[A-Za-z]\d{5,}/);
-  const prefix = prefixMatch ? prefixMatch[0] : "";
+    // ✅ Only digits (OCR lost prefix)
+    if (/^\d{5,6}$/.test(normalized)) {
+      if (normalized.startsWith("1")) normalized = normalized.slice(1);
+      normalized = "L" + normalized;
+    }
 
-  // Extract NO number
-  const noMatch = bilRaw.match(/NO\s*(\d+)/i);
-  const noNumber = noMatch ? noMatch[1] : "";
+    // ✅ Fix OCR ‘O’ to ‘0’
+    normalized = normalized.replace(/O/g, "0");
 
-  // Build final format EXACTLY like required: L25111(NO 46)
-  if (prefix && noNumber) {
-    out["No. Bil"] = `${prefix}(NO ${noNumber})`; // 👈 NO SPACE before "("
-  } else {
-    out["No. Bil"] = bilRaw;
+    return normalized;
   }
 
-  // 🧾 Normalize No. Akaun (with smart Johor fixes)
-  let accRaw = (results["No. Akaun"] || "").trim();
-  let acc = accRaw.replace(/[^\w\-]/g, ""); // keep letters, digits, dash
+  function cleanMeter(rawText) {
+    if (!rawText) return "";
 
-  // Handle common OCR issues:
-  // 1️⃣ "86392904-1L6451225" → "86392904-L6451225"
-  // 2️⃣ "863929041L6451225" → "86392904-L6451225"
-  // 3️⃣ "863929041.6451225" → "86392904-L6451225"
+    let text = rawText.toUpperCase();
+
+    // Fix common OCR misreads
+    text = text
+      .replace(/SAI/g, "SAJ")
+      .replace(/SAL/g, "SAJ")
+      .replace(/SAl/g, "SAJ")
+      .replace(/I/g, "1")
+      .replace(/L(?=\d)/g, "1")
+      .replace(/HO/g, "H0")
+      .replace(/A0/g, "H0")
+      .replace(/0O/g, "00")
+      .replace(/O0/g, "00");
+
+    // Remove unnecessary symbols but keep spaces for pattern context
+    text = text.replace(/[^\w\s]/g, " ");
+
+    // Handle weird “SAJ1A” or “SAJ1S” duplication
+    text = text.replace(/SAJ1S([A-Z])/, "SAJ1$1");
+    if (/^SAJ1A\d+/.test(text)) text = text.replace(/^SAJ1A/, "SAJ15A");
+    if (/^SAJ1[A-Z]/.test(text) && !text.includes("15"))
+      text = text.replace(/^SAJ1/, "SAJ15");
+
+    // Find proper pattern like SAJ23H087385 or SAJ22A131046
+    const match = text.match(
+      /SAJ\d{2}[AH]\d{4,7}(?!\d{2}(\s*\/|\s*-)?\d{2}(\s*\/|\s*-)?\d{2,4})/
+    );
+
+    let result = "";
+    if (match) result = match[0];
+    else {
+      const alt = text.match(/SAJ[A-Z0-9]{6,12}/);
+      if (alt) result = alt[0].replace(/(\d{5,7})(\d{2,}|$).*/, "$1");
+      else result = text;
+    }
+
+    // ✅ Remove any remaining spaces, tabs, or stray characters
+    return result.replace(/\s+/g, "").trim();
+  }
+
+  /* ---------------------- 🧾 Normalize No. Bil & Akaun ---------------------- */
+  function formatNoBil(raw) {
+    if (!raw) return "";
+    let cleaned = raw.replace(/[^\w]/g, "").toUpperCase();
+    const prefixMatch = cleaned.match(/^[A-Za-z]\d{5,}/);
+    const prefix = prefixMatch ? prefixMatch[0] : "";
+
+    const noMatch = cleaned.match(/NO\s*(\d+)/i);
+    const noNum = noMatch ? noMatch[1] : "";
+
+    if (prefix && noNum) return `${prefix}(NO ${noNum})`;
+
+    return raw.trim();
+  }
+  out["No. Bil"] = formatNoBil(results["No. Bil"]);
+
+  let accRaw = (results["No. Akaun"] || "").trim();
+  let acc = accRaw.replace(/[^\w\-]/g, "");
   acc = acc
     .replace(/^(\d{8})[-1Iil\.]+L?(\d{5,})$/i, "$1-L$2")
     .replace(/^(\d{8})([A-Z])(\d{5,})$/i, "$1-$2$3");
-
-  // Final cleanup and remove dash for SQL consistency
   out["No. Akaun"] = acc.replace(/-/g, "");
 
-  // 🧾 Meter / Tarikh Bacaan / Penggunaan
+  /* ---------------------- 🧾 Meter / Tarikh / Penggunaan ---------------------- */
   const meterRaw = results["No Meter, Tarikh, Penggunaan(m3) Section"] || "";
   if (meterRaw) {
-    // ✅ Handle both SAJ and SAI prefixes (OCR inconsistency)
     const meterMatch = meterRaw.match(/(SA[J|I][0-9A-Z]+)/i);
     out["No. Meter"] = meterMatch ? meterMatch[1].trim() : "";
-
     if (out["No. Meter"]) {
       out["No. Meter"] = out["No. Meter"]
         .toUpperCase()
@@ -138,17 +179,13 @@ export function parseJohorFields(results) {
         .replace(/[^A-Z0-9]/g, "");
     }
 
-    // ✅ Find the first line with meter prefix, fallback if not found
     const meterLine =
       meterRaw.split("\n").find((l) => /SA[J|I]/i.test(l)) ||
       meterRaw.split("\n")[0];
-
-    // ✅ Only run .match() if meterLine is defined
     const usageMatch =
       typeof meterLine === "string"
         ? meterLine.match(/(\d{1,5}(?:[.,\s]\d{1,2})?)\s*(?:m3|$)/i)
         : null;
-
     if (usageMatch) {
       let val = usageMatch[1].replace(/\s+/g, "").replace(",", ".");
       if (!val.includes(".")) val += ".00";
@@ -162,13 +199,11 @@ export function parseJohorFields(results) {
         : "0.00";
     }
 
-    // Tarikh (2 dates)
     const dateMatches = meterRaw.match(/(\d{2}[\/\-]\d{2}[\/\-]\d{4})/g);
     if (dateMatches && dateMatches.length >= 2) {
       const start = dateMatches[1];
       const end = dateMatches[0];
       out["Tempoh Bil"] = `${start} - ${end}`;
-
       const d1 = new Date(start.split("/").reverse().join("-"));
       const d2 = new Date(end.split("/").reverse().join("-"));
       out["Bilangan Hari"] = Math.abs(
@@ -177,7 +212,7 @@ export function parseJohorFields(results) {
     }
   }
 
-  // 🧾 Jumlah Caj Air Semasa
+  /* ---------------------- 🧾 Jumlah Caj Air Semasa ---------------------- */
   const cajRaw = results["Jumlah Caj Air Semasa Section"];
   if (cajRaw) {
     const match = cajRaw.match(/(\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?)/);
@@ -185,11 +220,8 @@ export function parseJohorFields(results) {
       const num = match[1].replace(/,/g, "");
       out["Jumlah Caj Air Semasa"] = num;
     }
-
-    // out["Jumlah Caj Air Semasa"] = match ? match[1].replace(",", ".") : "";
   }
 
-  // Default fallback
   if (!out["Jumlah Caj Air Semasa"])
     out["Jumlah Caj Air Semasa"] = out["Jumlah Bil Semasa"] || "0.00";
 
@@ -335,14 +367,14 @@ export function standardizeOutput(data) {
     No_Invois:
       data["Region"] && data["Region"].toLowerCase() === "johor"
         ? (data["No. Bil"] || data["No. Invois"] || "").trim()
-      : data["Region"] && data["Region"].toLowerCase() === "melaka"
-        ? formatMelakaInvoice(data["No. Invois"] || data["No. Bil"] || "")
-        : cleanText(
-            data["No. Invois"] ||
-              data["No. Bil"] ||
-              data["No_Invois"] ||
-              data["No_Bil"]
-          ),
+        : data["Region"] && data["Region"].toLowerCase() === "melaka"
+          ? formatInvoice(data["No. Invois"] || data["No. Bil"] || "")
+          : cleanText(
+              data["No. Invois"] ||
+                data["No. Bil"] ||
+                data["No_Invois"] ||
+                data["No_Bil"]
+            ),
     No_Akaun: cleanText(
       normalizeAccountNumber(
         data["Region"] || "",

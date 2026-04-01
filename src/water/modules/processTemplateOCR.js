@@ -53,18 +53,8 @@ const countAddressLines = (t) =>
         .map((l) => l.trim())
         .filter((l) => l.length > 0).length;
 
-// const normalizeDate = (d) => {
-//   if (!d) return null;
-//   const m = d.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
-//   if (!m) return null;
-//   const [, dd, mm, yy] = m;
-//   const yyyy = yy.length === 2 ? "20" + yy : yy;
-//   return `${dd.padStart(2, "0")}/${mm.padStart(2, "0")}/${yyyy}`;
-// };
-
 const normalizeDate = (d, region = "") => {
   if (!d) return null;
-
   d = d.replace(/[^\d\/]/g, "").trim();
 
   const m = d.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
@@ -72,7 +62,6 @@ const normalizeDate = (d, region = "") => {
 
   let [_, dd, mm, yy] = m;
 
-  //Selangor
   if (region.toLowerCase().includes("selangor")) {
     if (mm === "1") {
       mm = "11";
@@ -85,7 +74,7 @@ const normalizeDate = (d, region = "") => {
 
   if (yy.length === 2) yy = "20" + yy;
 
-  return `${dd.padStart(2, "0")}/${mm}/${yy}`; 
+  return `${dd.padStart(2, "0")}/${mm}/${yy}`;
 };
 
 /* --------------------------------------------------
@@ -152,7 +141,7 @@ export async function processTemplateOCR(
       const r2 = await worker.recognize(addrCropRetry);
       const retryText = r2.data.text.trim();
 
-      // 🧩 Keep retry only if better (more lines & valid stop word)
+      // 🧩 Keep retry only if better (more lines & valid stop word) New
       const cleanRaw = cleanAddress(rawText);
       const cleanRetry = cleanAddress(retryText);
       const stopRegion = /selangor|kuala lumpur|putrajaya|labuan/i;
