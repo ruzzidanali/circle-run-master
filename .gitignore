@@ -23,5 +23,5 @@ logs/
 Thumbs.db
 .vscode/
 .idea/
-processTemplateOCRold.js
-regionParsersold.js
+
+regionParsersOld.js
