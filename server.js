@@ -4,7 +4,7 @@ import processAllPdfs from "./src/proofOfConceptDataExtractionV1.js";
 import processAllPdfsSewerage from "./src/Sewerage/proofOfConceptDataExtractionSewerageV1.js";
 import processAllPdfsTM from "./src/TM/proofOfConceptDataExtractionTMV1.js";
 import processAllPdfsMaxis from "./src/Maxis/proofOfConceptDataExtractionMaxisV1.js";
-import processAllPdfsCelcomDigi from "./src/CelcomDigi/proofOfConceptDataExtractionCelcomDigiV1.js";
+import processAllPdfsCelcomDigi from "./src/CELCOMDIGI/proofOfConceptDataExtractionCelcomDigiV1.js";
 
 import { waterRouter } from "./src/water/extractWaterBillsAPI.js";
 
