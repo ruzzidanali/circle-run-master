@@ -11,52 +11,35 @@ if (!fs.existsSync(outputFolder))
 
 const boxesPerPage = [
   [
-    { xMin: 385, xMax: 485, yMin: 810, yMax: 820 },
-    { xMin: 385, xMax: 485, yMin: 800, yMax: 810 },
-    { xMin: 460, xMax: 530, yMin: 783, yMax: 793 },
-    { xMin: 365, xMax: 410, yMin: 410, yMax: 420 },
-    { xMin: 370, xMax: 415, yMin: 455, yMax: 475 },
-    { xMin: 45, xMax: 125, yMin: 542, yMax: 569 },
-    { xMin: 160, xMax: 210, yMin: 210, yMax: 232 },
-    { xMin: 315, xMax: 360, yMin: 448, yMax: 468 },
-    { xMin: 370, xMax: 450, yMin: 542, yMax: 569 },
+    { xMin: 450, xMax: 600, yMin: 628, yMax: 635 }, // No. Akaun
+    { xMin: 420, xMax: 580, yMin: 618, yMax: 625 }, // No. Bil
+    { xMin: 470, xMax: 610, yMin: 607, yMax: 612 }, // Tarikh
+    { xMin: 410, xMax: 580, yMin: 597, yMax: 603 }, // Tempoh Bil dan Bilangan Hari
+    { xMin: 510, xMax: 580, yMin: 575, yMax: 580 }, // Deposit
+    { xMin: 565, xMax: 585, yMin: 198, yMax: 200 }, // Total Current Charges (79.50)
+    { xMin: 565, xMax: 585, yMin: 217, yMax: 218 }, // Service Tax (4.50)
+    { xMin: 565, xMax: 585, yMin: 238, yMax: 239 }, // Discount (-54.00)
+    { xMin: 565, xMax: 585, yMin: 335, yMax: 336 }, // Monthly Fee (129.00)
+    { xMin: 65, xMax: 110, yMin: 373, yMax: 375 }, // Tunggakan
   ],
 ];
-
-const withoutCetakan = [
-  [
-    { xMin: 375, xMax: 475, yMin: 735, yMax: 745 },
-    { xMin: 375, xMax: 475, yMin: 725, yMax: 735 },
-    { xMin: 435, xMax: 505, yMin: 702, yMax: 712 },
-    { xMin: 365, xMax: 410, yMin: 352, yMax: 362 },
-    { xMin: 370, xMax: 415, yMin: 385, yMax: 405 },
-    { xMin: 60, xMax: 140, yMin: 492, yMax: 512 },
-    { xMin: 160, xMax: 210, yMin: 140, yMax: 167 },
-    { xMin: 315, xMax: 360, yMin: 380, yMax: 400 },
-    { xMin: 370, xMax: 450, yMin: 492, yMax: 512 },
-  ],
-];
-
-const CETAKAN_TEXT = "cetakan dalam talian";
 
 // ============================================
 // 🔍 Process a single PDF
 // ============================================
+
 async function extractFromPdf(pdfPath) {
   const data = new Uint8Array(fs.readFileSync(pdfPath));
   const pdf = await getDocument({
     data,
     standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
   }).promise;
-
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
-
   // --- Extract text for detection flags ---
   let text = "";
   for (let i = 1; i <= totalPages; i++) {
     const page = await pdf.getPage(i);
-    await page.getOperatorList();
     const content = await page.getTextContent();
     text +=
       " " +
@@ -66,63 +49,63 @@ async function extractFromPdf(pdfPath) {
         .toLowerCase();
   }
 
-  text = text.replace (/\s+/g, " ").trim();
-
-  const isWithoutCetakan = !text.includes(CETAKAN_TEXT);
-
   // ===== DEFAULT =====
   let selectedBoxes = boxesPerPage;
   let conditionUsed = "Default (Normal)";
 
-  // ===== CONDITIONS =====
-  switch (true) {
-    case isWithoutCetakan:
-      selectedBoxes = withoutCetakan;
-      conditionUsed = 'WITHOUT CETAKAN DALAM TALIAN';
-      break;
-
-    default:
-      selectedBoxes = boxesPerPage;
-      conditionUsed = 'NORMAL';
-      break;
-  }
- 
   // --- Extract text inside boxes ---
   const results = [];
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
     const page = await pdf.getPage(pageIndex + 1);
-    await page.getOperatorList();
     const content = await page.getTextContent();
     const boxes = selectedBoxes[pageIndex] || [];
+
+    const viewport = page.getViewport({ scale: 1.0 });
+    const pageHeight = viewport.height;
 
     boxes.forEach((box, boxIndex) => {
       const hits = [];
 
+      const toleranceY = 3;
+      const toleranceX = 150;
+
       for (const item of content.items) {
         const x = item.transform[4];
         const y = item.transform[5];
+        const text = item.str.trim();
+        // if (text) console.log(`Page ${pageIndex + 1}: (${x}, ${y}) => ${text}`);
+        if (!text) continue;
 
-        const itemText = (item.str ?? "").replace(/\s+/g, " ").trim();
-        if (!itemText) continue;
-
-        if (x >= box.xMin && x <= box.xMax && y >= box.yMin && y <= box.yMax) {
-          hits.push({ x, y, text: itemText });
+        if (
+          y >= box.yMin - toleranceY &&
+          y <= box.yMax + toleranceY &&
+          x >= box.xMin - 50 &&
+          x <= box.xMax + toleranceX
+        ) {
+          hits.push({ x, y, text });
         }
       }
 
       if (hits.length > 0) {
-        let combinedText = hits.map((h) => h.text).join(" ");
+        hits.sort((a, b) => a.x - b.x);
+        let combinedText = hits
+          .map((h) => h.text)
+          .join(" ")
+          .replace(/\s+/g, " ")
+          .trim();
 
         // Extract "(30 Hari)" or "(31 days)" etc.
         const hariMatch = combinedText.match(/\((\d+)\s*(?:Hari|Days?)\)/i);
         if (hariMatch) {
-          // Option 1: Replace full text with just the number
           combinedText = hariMatch[1];
-
-          // Option 2 (if you prefer to *append* a separate key later)
-          // result["Bilangan Hari"] = hariMatch[1];
         }
+
+        // 🧹 Clean labels and RM prefix
+        combinedText = combinedText
+          .replace(/^[A-Za-z\s:]+:?/i, "") // remove label like "Account Number :"
+          .replace(/^RM\s*/i, "") // remove RM prefix
+          .trim();
 
         results.push({
           file: path.basename(pdfPath),
@@ -144,17 +127,17 @@ async function extractFromPdf(pdfPath) {
 
   // --- Base mapping for all conditions ---
   let boxNameMap = {
-    "1_1": "NO BIL",
-    "1_2": "TARIKH BIL",
-    "1_3": "NOMBOR AKAUN",
-    "1_4": "JUMLAH BIL",
-    "1_5": "CAJ SEMASA",
-    "1_6": "BAKI TERDAHULU",
-    "1_7": "JUMLAH SELEPAS PENGGENAPAN",
-    "1_8": "PELARASAN",
-    "1_9": "JUMLAH SEMASA"
+    "1_1": "ACCOUNT NO",
+    "1_2": "BILL NO",
+    "1_3": "BILL DATE",
+    "1_4": "TEMPOH BILL",
+    "1_5": "DEPOSIT",
+    "1_6": "CAJ SEMASA",
+    "1_7": "SERVICE TAX",
+    "1_8": "DISCOUNT REBATE",
+    "1_9": "MONTHLY FEE",
+    "1_10": "TUNGGAKAN",
   };
-
 
   // --- Aggregate results into structured variable names ---
   const boxMap = {};
@@ -171,17 +154,26 @@ async function extractFromPdf(pdfPath) {
             `BOX_${r.page}_${r.box}` === `BOX_${key}`
         ) || {};
 
-      // const val = typeof match.text === "string" ? match.text.trim() : null;
-      // boxMap[variable] = val ? val : null;
-      let val = typeof match.text === "string" ? match.text.trim() : null;
-
-      if (variable === "NOMBOR AKAUN" && val) {
-        val = val.replace(/\s*\(.*?\)/g, "").trim();
-      }
-
-      boxMap[variable] = val ? val : null;
+      boxMap[variable] = match.text ?? null;
     });
   });
+
+  // 1️⃣ Format "BILL DATE" and any other date fields
+  // 2️⃣ Calculate total days (Bilangan Hari) from "TEMPOH BILL"
+  if (boxMap["TEMPOH BILL"]) {
+    const tempoh = boxMap["TEMPOH BILL"].trim();
+    const match = tempoh.match(
+      /(\d{2}[\/-]\d{2}[\/-]\d{4})\s*-\s*(\d{2}[\/-]\d{2}[\/-]\d{4})/
+    );
+    if (match) {
+      const [_, startStr, endStr] = match;
+      const [d1, m1, y1] = startStr.split(/[\/-]/).map(Number);
+      const [d2, m2, y2] = endStr.split(/[\/-]/).map(Number);
+      const diffMs = new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
+      const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+      boxMap["BILANGAN HARI"] = diffDays.toString();
+    }
+  }
 
   // --- Final JSON structure for this file ---
   const outputJson = {
@@ -200,12 +192,11 @@ async function extractFromPdf(pdfPath) {
   console.log(`✅ Processed ${path.basename(pdfPath)} → ${conditionUsed}`);
   return outputJson;
 }
-
 // ============================================
 // 🚀 Main Folder Runner
 // ============================================
 
-async function processAllPdfsSewerage(files) {
+async function processAllPdfs(files) {
   if (!files || !Array.isArray(files) || files.length === 0) {
     throw new Error("No files received in request.");
   }
@@ -256,4 +247,4 @@ async function processAllPdfsSewerage(files) {
   return { processed: allResults.length, results: allResults };
 }
 
-export default processAllPdfsSewerage;
+export default processAllPdfs;

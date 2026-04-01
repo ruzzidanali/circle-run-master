@@ -391,7 +391,7 @@ const boxes_AFADual_AK_KWTBB_Insentif_Blue_English = [
     { xMin: 385, xMax: 430, yMin: 336, yMax: 346 },
     { xMin: 340, xMax: 380, yMin: 230, yMax: 245 },
   ],
-]
+];
 
 const boxes_AFA_AK__KWTBB_BLUE_PUNCAK_Insentif = [
   [
@@ -721,7 +721,6 @@ const boxes_AFA_AK_KWTBB_BLUE_PUNCAK_SURCAJ = [
     { xMin: 385, xMax: 425, yMin: 545, yMax: 560 },
   ],
 ];
-
 
 const boxes_AFA_AK_KWTBB_BLUE_Insentif = [
   [
@@ -1182,21 +1181,11 @@ async function extractFromPdf(pdfPath) {
       } else {
         // Single AFA (1 AFA)
         if (hasAFABlue) {
-          if (
-            hasPenggunaanPuncak &&
-            hasPermintaanMaksima &&
-            !hasInsentif &&
-            !hasSurcaj
-          ) {
+          if (hasPenggunaanPuncak && hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK_MAKSIMA;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak + Permintaan Maksima)";
-          } else if (
-            hasPenggunaanPuncak &&
-            !hasPermintaanMaksima &&
-            !hasInsentif &&
-            !hasSurcaj
-          ) {
+          } else if (hasPenggunaanPuncak && !hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLUE_PUNCAK;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Blue + Penggunaan Puncak)";
@@ -1223,27 +1212,17 @@ async function extractFromPdf(pdfPath) {
             conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Blue)";
           }
         } else if (hasAFABlack) {
-          if (
-            hasPenggunaanPuncak &&
-            hasPermintaanMaksima &&
-            !hasInsentif &&
-            !hasSurcaj
-          ) {
+          if (hasPenggunaanPuncak && hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLACK_PUNCAK_MAKSIMA;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Black + Penggunaan Puncak + Permintaan Maksima)";
-          } else if (
-            hasPenggunaanPuncak &&
-            !hasPermintaanMaksima &&
-            !hasInsentif &&
-            !hasSurcaj
-          ) {
+          } else if (hasPenggunaanPuncak && !hasPermintaanMaksima && !hasInsentif && !hasSurcaj) {
             selectedBoxes = boxes_AFA_AK_KWTBB_BLACK_PUNCAK;
             conditionUsed =
               "AFA + Angkadar Kuasa + KWTBB (Black + Penggunaan Puncak)";
           } else {
-            selectedBoxes = boxes_AFA_AK_KWTBB_BLACK;
-            conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Black)";
+          selectedBoxes = boxes_AFA_AK_KWTBB_BLACK;
+          conditionUsed = "AFA + Angkadar Kuasa + KWTBB (Black)";
           }
         } else {
           selectedBoxes = boxes_AFA_AK_KWTBB_BLUE;
@@ -1495,7 +1474,7 @@ async function extractFromPdf(pdfPath) {
       ...boxNameMap,
       "2_1": "KWHR",
       "2_2": "KWTBB",
-      "2_3": "SURCAJ",
+      "2_3": "SURCJ",
       "2_4": "PENGGUNAAN",
     };
   }
@@ -1510,7 +1489,10 @@ async function extractFromPdf(pdfPath) {
     };
   }
 
-  if (conditionUsed === "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)") {
+  if (
+    conditionUsed ===
+    "AFA + Angkadar Kuasa + KWTBB (Blue + Surcaj + Penggunaan Puncak)"
+  ) {
     boxNameMap = {
       ...boxNameMap,
       "2_1": "KWHR",

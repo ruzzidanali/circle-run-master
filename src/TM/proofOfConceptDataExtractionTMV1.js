@@ -11,52 +11,35 @@ if (!fs.existsSync(outputFolder))
 
 const boxesPerPage = [
   [
-    { xMin: 385, xMax: 485, yMin: 810, yMax: 820 },
-    { xMin: 385, xMax: 485, yMin: 800, yMax: 810 },
-    { xMin: 460, xMax: 530, yMin: 783, yMax: 793 },
-    { xMin: 365, xMax: 410, yMin: 410, yMax: 420 },
-    { xMin: 370, xMax: 415, yMin: 455, yMax: 475 },
-    { xMin: 45, xMax: 125, yMin: 542, yMax: 569 },
-    { xMin: 160, xMax: 210, yMin: 210, yMax: 232 },
-    { xMin: 315, xMax: 360, yMin: 448, yMax: 468 },
-    { xMin: 370, xMax: 450, yMin: 542, yMax: 569 },
-  ],
+  { xMin: 410, xMax: 573, yMin: 639, yMax: 654 },
+  { xMin: 410, xMax: 590, yMin: 657, yMax: 673 },
+  { xMin: 475, xMax: 575, yMin: 280, yMax: 315 },
+  { xMin: 475, xMax: 575, yMin: 365, yMax: 387 },
+  { xMin: 475, xMax: 575, yMin: 390, yMax: 412 },
+  { xMin: 430, xMax: 560, yMin: 617, yMax: 636 },
+  { xMin: 475, xMax: 575, yMin: 420, yMax: 442 },
+],
+[
+  { xMin: 180, xMax: 335, yMin: 315, yMax: 335 },
+],
 ];
-
-const withoutCetakan = [
-  [
-    { xMin: 375, xMax: 475, yMin: 735, yMax: 745 },
-    { xMin: 375, xMax: 475, yMin: 725, yMax: 735 },
-    { xMin: 435, xMax: 505, yMin: 702, yMax: 712 },
-    { xMin: 365, xMax: 410, yMin: 352, yMax: 362 },
-    { xMin: 370, xMax: 415, yMin: 385, yMax: 405 },
-    { xMin: 60, xMax: 140, yMin: 492, yMax: 512 },
-    { xMin: 160, xMax: 210, yMin: 140, yMax: 167 },
-    { xMin: 315, xMax: 360, yMin: 380, yMax: 400 },
-    { xMin: 370, xMax: 450, yMin: 492, yMax: 512 },
-  ],
-];
-
-const CETAKAN_TEXT = "cetakan dalam talian";
 
 // ============================================
 // 🔍 Process a single PDF
 // ============================================
+
 async function extractFromPdf(pdfPath) {
   const data = new Uint8Array(fs.readFileSync(pdfPath));
   const pdf = await getDocument({
     data,
     standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
   }).promise;
-
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
-
   // --- Extract text for detection flags ---
   let text = "";
   for (let i = 1; i <= totalPages; i++) {
     const page = await pdf.getPage(i);
-    await page.getOperatorList();
     const content = await page.getTextContent();
     text +=
       " " +
@@ -66,33 +49,15 @@ async function extractFromPdf(pdfPath) {
         .toLowerCase();
   }
 
-  text = text.replace (/\s+/g, " ").trim();
-
-  const isWithoutCetakan = !text.includes(CETAKAN_TEXT);
-
-  // ===== DEFAULT =====
-  let selectedBoxes = boxesPerPage;
-  let conditionUsed = "Default (Normal)";
-
-  // ===== CONDITIONS =====
-  switch (true) {
-    case isWithoutCetakan:
-      selectedBoxes = withoutCetakan;
-      conditionUsed = 'WITHOUT CETAKAN DALAM TALIAN';
-      break;
-
-    default:
-      selectedBoxes = boxesPerPage;
-      conditionUsed = 'NORMAL';
-      break;
-  }
- 
+    // ===== DEFAULT =====
+      let selectedBoxes = boxesPerPage;
+      let conditionUsed = "Default (Normal)";
+  
   // --- Extract text inside boxes ---
   const results = [];
 
   for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
     const page = await pdf.getPage(pageIndex + 1);
-    await page.getOperatorList();
     const content = await page.getTextContent();
     const boxes = selectedBoxes[pageIndex] || [];
 
@@ -102,12 +67,10 @@ async function extractFromPdf(pdfPath) {
       for (const item of content.items) {
         const x = item.transform[4];
         const y = item.transform[5];
-
-        const itemText = (item.str ?? "").replace(/\s+/g, " ").trim();
-        if (!itemText) continue;
+        const text = item.str.trim();
 
         if (x >= box.xMin && x <= box.xMax && y >= box.yMin && y <= box.yMax) {
-          hits.push({ x, y, text: itemText });
+          hits.push({ x, y, text });
         }
       }
 
@@ -144,15 +107,14 @@ async function extractFromPdf(pdfPath) {
 
   // --- Base mapping for all conditions ---
   let boxNameMap = {
-    "1_1": "NO BIL",
-    "1_2": "TARIKH BIL",
-    "1_3": "NOMBOR AKAUN",
-    "1_4": "JUMLAH BIL",
-    "1_5": "CAJ SEMASA",
-    "1_6": "BAKI TERDAHULU",
-    "1_7": "JUMLAH SELEPAS PENGGENAPAN",
-    "1_8": "PELARASAN",
-    "1_9": "JUMLAH SEMASA"
+    "1_1": "BILL NO",
+    "1_2": "ACCOUNT NO",
+    "1_3": "TOTAL AMOUNT PAYABLE",
+    "1_4": "SERVICE TAX",
+    "1_5": "THIS MONTH'S CHARGE",
+    "1_6": "BILL DATE",
+    "1_7": "PREVIOUS OUTSTANDING",
+    "2_1": "TEMPOH BIL",
   };
 
 
@@ -171,15 +133,7 @@ async function extractFromPdf(pdfPath) {
             `BOX_${r.page}_${r.box}` === `BOX_${key}`
         ) || {};
 
-      // const val = typeof match.text === "string" ? match.text.trim() : null;
-      // boxMap[variable] = val ? val : null;
-      let val = typeof match.text === "string" ? match.text.trim() : null;
-
-      if (variable === "NOMBOR AKAUN" && val) {
-        val = val.replace(/\s*\(.*?\)/g, "").trim();
-      }
-
-      boxMap[variable] = val ? val : null;
+      boxMap[variable] = match.text ?? null;
     });
   });
 
@@ -200,12 +154,11 @@ async function extractFromPdf(pdfPath) {
   console.log(`✅ Processed ${path.basename(pdfPath)} → ${conditionUsed}`);
   return outputJson;
 }
-
 // ============================================
 // 🚀 Main Folder Runner
 // ============================================
 
-async function processAllPdfsSewerage(files) {
+async function processAllPdfsTM(files) {
   if (!files || !Array.isArray(files) || files.length === 0) {
     throw new Error("No files received in request.");
   }
@@ -256,4 +209,4 @@ async function processAllPdfsSewerage(files) {
   return { processed: allResults.length, results: allResults };
 }
 
-export default processAllPdfsSewerage;
+export default processAllPdfsTM;

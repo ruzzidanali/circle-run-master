@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getDocument } from "../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
+import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
 const outputFolder = "../uploads";
 if (!fs.existsSync(outputFolder))
@@ -199,7 +199,6 @@ async function extractFromPdf(pdfPath) {
   const pdf = await getDocument({
     data,
     standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
-    useWorker: false
   }).promise;
   console.log("Reading PDF data length:", data.length);
   const totalPages = pdf.numPages;
