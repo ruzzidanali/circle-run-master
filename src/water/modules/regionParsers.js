@@ -10,7 +10,7 @@ function normalizeAccountNumber(region, accRaw) {
       return acc;
 
     case "selangor":
-      acc = acc.replace(/^0+/, "");
+      // acc = acc.replace(/^0+/, "");
       return acc;
 
     case "johor":
