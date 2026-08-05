@@ -17,6 +17,7 @@ const boxesPerPage = [
     { xMin: 410, xMax: 580, yMin: 597, yMax: 603 }, // Tempoh Bil dan Bilangan Hari
     { xMin: 510, xMax: 580, yMin: 575, yMax: 580 }, // Deposit
     { xMin: 565, xMax: 585, yMin: 198, yMax: 200 }, // Total Current Charges (79.50)
+    { xMin: 565, xMax: 585, yMin: 210, yMax: 211 }, // Rounding Adjustment
     { xMin: 565, xMax: 585, yMin: 217, yMax: 218 }, // Service Tax (4.50)
     { xMin: 565, xMax: 585, yMin: 238, yMax: 239 }, // Discount (-54.00)
     { xMin: 565, xMax: 585, yMin: 335, yMax: 336 }, // Monthly Fee (129.00)
@@ -133,10 +134,11 @@ async function extractFromPdf(pdfPath) {
     "1_4": "TEMPOH BILL",
     "1_5": "DEPOSIT",
     "1_6": "CAJ SEMASA",
-    "1_7": "SERVICE TAX",
-    "1_8": "DISCOUNT REBATE",
-    "1_9": "MONTHLY FEE",
-    "1_10": "TUNGGAKAN",
+    "1_7": "ROUNDING ADJUSTMENT",
+    "1_8": "SERVICE TAX",
+    "1_9": "DISCOUNT REBATE",
+    "1_10": "MONTHLY FEE",
+    "1_11": "TUNGGAKAN",
   };
 
   // --- Aggregate results into structured variable names ---
