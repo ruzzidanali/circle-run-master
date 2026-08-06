@@ -3,67 +3,223 @@ import path from "path";
 import { getDocument } from "../../node_modules/pdfjs-dist/legacy/build/pdf.mjs";
 
 const outputFolder = "../uploads";
-if (!fs.existsSync(outputFolder))
-  fs.mkdirSync(outputFolder, { recursive: true });
 
-// create output folder if missing
-// if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder, { recursive: true });
+if (!fs.existsSync(outputFolder)) {
+  fs.mkdirSync(outputFolder, { recursive: true });
+}
+
+// ======================================================
+// Normal CelcomDigi boxes
+// ======================================================
 
 const boxesPerPage = [
   [
-    { xMin: 450, xMax: 600, yMin: 628, yMax: 635 }, // No. Akaun
-    { xMin: 420, xMax: 580, yMin: 618, yMax: 625 }, // No. Bil
-    { xMin: 470, xMax: 610, yMin: 607, yMax: 612 }, // Tarikh
-    { xMin: 410, xMax: 580, yMin: 597, yMax: 603 }, // Tempoh Bil dan Bilangan Hari
-    { xMin: 510, xMax: 580, yMin: 575, yMax: 580 }, // Deposit
-    { xMin: 565, xMax: 585, yMin: 198, yMax: 200 }, // Total Current Charges (79.50)
-    { xMin: 565, xMax: 585, yMin: 210, yMax: 211 }, // Rounding Adjustment
-    { xMin: 565, xMax: 585, yMin: 217, yMax: 218 }, // Service Tax (4.50)
-    { xMin: 565, xMax: 585, yMin: 238, yMax: 239 }, // Discount (-54.00)
-    { xMin: 565, xMax: 585, yMin: 335, yMax: 336 }, // Monthly Fee (129.00)
-    { xMin: 65, xMax: 110, yMin: 373, yMax: 375 }, // Tunggakan
+    { xMin: 450, xMax: 600, yMin: 628, yMax: 635 }, // ACCOUNT NO
+    { xMin: 420, xMax: 580, yMin: 618, yMax: 625 }, // BILL NO
+    { xMin: 470, xMax: 610, yMin: 607, yMax: 612 }, // BILL DATE
+    { xMin: 410, xMax: 580, yMin: 597, yMax: 603 }, // TEMPOH BILL
+    { xMin: 510, xMax: 580, yMin: 575, yMax: 580 }, // DEPOSIT
+    { xMin: 565, xMax: 585, yMin: 198, yMax: 200 }, // CAJ SEMASA
+    { xMin: 565, xMax: 585, yMin: 210, yMax: 211 }, // ROUNDING ADJUSTMENT
+    { xMin: 565, xMax: 585, yMin: 217, yMax: 218 }, // SERVICE TAX
+    { xMin: 565, xMax: 585, yMin: 238, yMax: 239 }, // DISCOUNT REBATE
+    { xMin: 565, xMax: 585, yMin: 335, yMax: 336 }, // MONTHLY FEE
+    { xMin: 65, xMax: 110, yMin: 373, yMax: 375 }, // TUNGGAKAN
   ],
 ];
 
-// ============================================
-// 🔍 Process a single PDF
-// ============================================
+// ======================================================
+// Portable WiFi page 1 boxes
+// ======================================================
 
-async function extractFromPdf(pdfPath) {
-  const data = new Uint8Array(fs.readFileSync(pdfPath));
-  const pdf = await getDocument({
-    data,
-    standardFontDataUrl: "../node_modules/pdfjs-dist/standard_fonts/",
-  }).promise;
-  console.log("Reading PDF data length:", data.length);
-  const totalPages = pdf.numPages;
-  // --- Extract text for detection flags ---
-  let text = "";
-  for (let i = 1; i <= totalPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    text +=
-      " " +
-      content.items
-        .map((i) => i.str)
-        .join(" ")
-        .toLowerCase();
+const boxesPortableWifi = [
+  [
+    { xMin: 450, xMax: 600, yMin: 640, yMax: 647 }, // ACCOUNT NO
+    { xMin: 420, xMax: 580, yMin: 630, yMax: 637 }, // BILL NO
+    { xMin: 470, xMax: 610, yMin: 619, yMax: 626 }, // BILL DATE
+    { xMin: 410, xMax: 580, yMin: 609, yMax: 616 }, // TEMPOH BILL
+    { xMin: 510, xMax: 580, yMin: 586, yMax: 592 }, // DEPOSIT
+    { xMin: 565, xMax: 585, yMin: 198, yMax: 200 }, // CAJ SEMASA
+    { xMin: 565, xMax: 585, yMin: 210, yMax: 211 }, // ROUNDING ADJUSTMENT
+    { xMin: 565, xMax: 585, yMin: 217, yMax: 218 }, // SERVICE TAX
+    { xMin: 565, xMax: 585, yMin: 238, yMax: 239 }, // DISCOUNT REBATE
+    { xMin: 565, xMax: 585, yMin: 335, yMax: 336 }, // MONTHLY FEE
+    { xMin: 65, xMax: 110, yMin: 373, yMax: 375 }, // TUNGGAKAN
+  ],
+];
+
+// ======================================================
+// Helpers
+// ======================================================
+
+function normalizeWhitespace(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeNumericValue(value) {
+  if (value === null || value === undefined) {
+    return null;
   }
 
-  // ===== DEFAULT =====
+  const cleaned = String(value)
+    .replace(/RM/gi, "")
+    .replace(/,/g, "")
+    .replace(/\s+/g, "")
+    .trim();
+
+  return cleaned || null;
+}
+
+function extractPortableWifiRows(page3Text) {
+  const normalizedText = normalizeWhitespace(page3Text);
+
+  /*
+    Page 3 row structure:
+
+    Mobile Number
+    Credit Limit
+    One Time Amount
+    Monthly Amount
+    Usage Amount
+    Discount & Rebates
+    Amount
+  */
+
+  const rowRegex =
+    /\b(01\d-\d{7,8})\s+(-?[\d,]+(?:\.\d+)?)\s+(-?[\d,]+(?:\.\d+)?)\s+(-?[\d,]+(?:\.\d+)?)\s+(-?[\d,]+(?:\.\d+)?)\s+(-?[\d,]+(?:\.\d+)?)\s+(-?[\d,]+(?:\.\d+)?)/g;
+
+  const rows = [];
+
+  for (const match of normalizedText.matchAll(rowRegex)) {
+    rows.push({
+      "MOBILE NUMBER": match[1],
+      "MONTHLY FEE": normalizeNumericValue(match[4]),
+      "USAGE AMOUNT": normalizeNumericValue(match[5]),
+      "DISCOUNT REBATE": normalizeNumericValue(match[6]),
+    });
+  }
+
+  const uniqueRows = [];
+  const seenMobileNumbers = new Set();
+
+  for (const row of rows) {
+    const mobileNumber = row["MOBILE NUMBER"];
+
+    if (seenMobileNumbers.has(mobileNumber)) {
+      continue;
+    }
+
+    seenMobileNumbers.add(mobileNumber);
+    uniqueRows.push(row);
+  }
+
+  return uniqueRows;
+}
+
+// ======================================================
+// Process a single PDF
+// ======================================================
+
+async function extractFromPdf(pdfPath) {
+  const data = new Uint8Array(
+    fs.readFileSync(pdfPath)
+  );
+
+  const pdf = await getDocument({
+    data,
+    standardFontDataUrl:
+      "../node_modules/pdfjs-dist/standard_fonts/",
+  }).promise;
+
+  console.log(
+    "Reading PDF data length:",
+    data.length
+  );
+
+  const totalPages = pdf.numPages;
+
+  // Store all page contents and text.
+  const pageContents = [];
+  const pageTexts = [];
+
+  for (
+    let pageNumber = 1;
+    pageNumber <= totalPages;
+    pageNumber += 1
+  ) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+
+    pageContents.push(content);
+
+    pageTexts.push(
+      content.items
+        .map((item) => item.str)
+        .join(" ")
+    );
+  }
+
+  // ====================================================
+  // Detect Portable WiFi bill from page 3
+  // ====================================================
+
+  const page3Text = pageTexts[2] || "";
+
+  const hasRegisteredMobileNumber =
+    /registered\s+mobile\s+number/i.test(
+      page3Text
+    );
+
+  const portableWifiRows =
+    hasRegisteredMobileNumber
+      ? extractPortableWifiRows(page3Text)
+      : [];
+
+  const hasMultipleRegisteredMobileNumbers =
+    hasRegisteredMobileNumber &&
+    portableWifiRows.length > 1;
+
+  // ====================================================
+  // Select page 1 template
+  // ====================================================
+
   let selectedBoxes = boxesPerPage;
   let conditionUsed = "Default (Normal)";
 
-  // --- Extract text inside boxes ---
+  if (hasMultipleRegisteredMobileNumbers) {
+    selectedBoxes = boxesPortableWifi;
+
+    conditionUsed =
+      "Portable WiFi - Multiple Registered Mobile Numbers";
+  }
+
+  console.log(
+    `Detected condition: ${conditionUsed}`
+  );
+
+  if (hasMultipleRegisteredMobileNumbers) {
+    console.log(
+      `Registered mobile numbers: ${portableWifiRows.length}`
+    );
+  }
+
+  // ====================================================
+  // Extract text inside selected boxes
+  // ====================================================
+
   const results = [];
 
-  for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-    const page = await pdf.getPage(pageIndex + 1);
-    const content = await page.getTextContent();
-    const boxes = selectedBoxes[pageIndex] || [];
+  for (
+    let pageIndex = 0;
+    pageIndex < totalPages;
+    pageIndex += 1
+  ) {
+    const content = pageContents[pageIndex];
 
-    const viewport = page.getViewport({ scale: 1.0 });
-    const pageHeight = viewport.height;
+    const boxes =
+      selectedBoxes[pageIndex] || [];
 
     boxes.forEach((box, boxIndex) => {
       const hits = [];
@@ -74,9 +230,11 @@ async function extractFromPdf(pdfPath) {
       for (const item of content.items) {
         const x = item.transform[4];
         const y = item.transform[5];
-        const text = item.str.trim();
-        // if (text) console.log(`Page ${pageIndex + 1}: (${x}, ${y}) => ${text}`);
-        if (!text) continue;
+        const itemText = item.str.trim();
+
+        if (!itemText) {
+          continue;
+        }
 
         if (
           y >= box.yMin - toleranceY &&
@@ -84,28 +242,35 @@ async function extractFromPdf(pdfPath) {
           x >= box.xMin - 50 &&
           x <= box.xMax + toleranceX
         ) {
-          hits.push({ x, y, text });
+          hits.push({
+            x,
+            y,
+            text: itemText,
+          });
         }
       }
 
       if (hits.length > 0) {
         hits.sort((a, b) => a.x - b.x);
+
         let combinedText = hits
-          .map((h) => h.text)
+          .map((hit) => hit.text)
           .join(" ")
           .replace(/\s+/g, " ")
           .trim();
 
-        // Extract "(30 Hari)" or "(31 days)" etc.
-        const hariMatch = combinedText.match(/\((\d+)\s*(?:Hari|Days?)\)/i);
+        const hariMatch =
+          combinedText.match(
+            /\((\d+)\s*(?:Hari|Days?)\)/i
+          );
+
         if (hariMatch) {
           combinedText = hariMatch[1];
         }
 
-        // 🧹 Clean labels and RM prefix
         combinedText = combinedText
-          .replace(/^[A-Za-z\s:]+:?/i, "") // remove label like "Account Number :"
-          .replace(/^RM\s*/i, "") // remove RM prefix
+          .replace(/^[A-Za-z\s:]+:?/i, "")
+          .replace(/^RM\s*/i, "")
           .trim();
 
         results.push({
@@ -119,15 +284,11 @@ async function extractFromPdf(pdfPath) {
     });
   }
 
-  // Normalize BOX_ prefix from results
-  results.forEach((r) => {
-    if (/^BOX_/.test(r.box)) {
-      r.box = r.box.replace(/^BOX_/, "");
-    }
-  });
+  // ====================================================
+  // Field mapping
+  // ====================================================
 
-  // --- Base mapping for all conditions ---
-  let boxNameMap = {
+  const boxNameMap = {
     "1_1": "ACCOUNT NO",
     "1_2": "BILL NO",
     "1_3": "BILL DATE",
@@ -141,112 +302,325 @@ async function extractFromPdf(pdfPath) {
     "1_11": "TUNGGAKAN",
   };
 
-  // --- Aggregate results into structured variable names ---
+  // ====================================================
+  // Aggregate normal page 1 results
+  // ====================================================
+
   const boxMap = {};
-  selectedBoxes.forEach((boxesOnPage, pageIndex) => {
-    boxesOnPage.forEach((b, boxIndex) => {
-      const key = `${pageIndex + 1}_${boxIndex + 1}`;
-      const variable = boxNameMap[key] || `BOX_${key}`;
 
-      // 🔧 normalize lookup
-      const match =
-        results.find(
-          (r) =>
-            `${r.page}_${r.box}` === key ||
-            `BOX_${r.page}_${r.box}` === `BOX_${key}`
-        ) || {};
+  selectedBoxes.forEach(
+    (boxesOnPage, pageIndex) => {
+      boxesOnPage.forEach(
+        (box, boxIndex) => {
+          const key =
+            `${pageIndex + 1}_${boxIndex + 1}`;
 
-      boxMap[variable] = match.text ?? null;
-    });
-  });
+          const variable =
+            boxNameMap[key] ||
+            `BOX_${key}`;
 
-  // 1️⃣ Format "BILL DATE" and any other date fields
-  // 2️⃣ Calculate total days (Bilangan Hari) from "TEMPOH BILL"
+          const match =
+            results.find(
+              (result) =>
+                `${result.page}_${result.box}` ===
+                key
+            ) || {};
+
+          boxMap[variable] =
+            match.text ?? null;
+        }
+      );
+    }
+  );
+
+  // ====================================================
+  // Calculate Bilangan Hari
+  // ====================================================
+
   if (boxMap["TEMPOH BILL"]) {
-    const tempoh = boxMap["TEMPOH BILL"].trim();
+    const tempoh =
+      boxMap["TEMPOH BILL"].trim();
+
     const match = tempoh.match(
       /(\d{2}[\/-]\d{2}[\/-]\d{4})\s*-\s*(\d{2}[\/-]\d{2}[\/-]\d{4})/
     );
+
     if (match) {
-      const [_, startStr, endStr] = match;
-      const [d1, m1, y1] = startStr.split(/[\/-]/).map(Number);
-      const [d2, m2, y2] = endStr.split(/[\/-]/).map(Number);
-      const diffMs = new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
-      const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-      boxMap["BILANGAN HARI"] = diffDays.toString();
+      const [
+        ,
+        startString,
+        endString,
+      ] = match;
+
+      const [d1, m1, y1] =
+        startString
+          .split(/[\/-]/)
+          .map(Number);
+
+      const [d2, m2, y2] =
+        endString
+          .split(/[\/-]/)
+          .map(Number);
+
+      const difference =
+        new Date(
+          y2,
+          m2 - 1,
+          d2
+        ) -
+        new Date(
+          y1,
+          m1 - 1,
+          d1
+        );
+
+      const differenceDays =
+        Math.round(
+          difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+      boxMap["BILANGAN HARI"] =
+        differenceDays.toString();
     }
   }
 
-  // --- Final JSON structure for this file ---
-  const outputJson = {
-    file: path.basename(pdfPath),
-    conditionUsed,
-    boxes: boxMap,
-  };
+  // ====================================================
+  // Portable WiFi multi-row output
+  // ====================================================
 
-  // --- Save one JSON per PDF ---
+  let outputJson;
+
+  if (hasMultipleRegisteredMobileNumbers) {
+    const rows = portableWifiRows.map(
+      (mobileRow, index) => {
+        const isFirstRow =
+          index === 0;
+
+        return {
+          "ACCOUNT NO":
+            boxMap["ACCOUNT NO"],
+
+          "BILL NO":
+            boxMap["BILL NO"],
+
+          "BILL DATE":
+            boxMap["BILL DATE"],
+
+          "TEMPOH BILL":
+            boxMap["TEMPOH BILL"],
+
+          "DEPOSIT":
+            isFirstRow
+              ? boxMap["DEPOSIT"]
+              : null,
+
+          "CAJ SEMASA":
+            isFirstRow
+              ? boxMap["CAJ SEMASA"]
+              : null,
+
+          "ROUNDING ADJUSTMENT":
+            isFirstRow
+              ? boxMap[
+                  "ROUNDING ADJUSTMENT"
+                ]
+              : null,
+
+          "SERVICE TAX":
+            isFirstRow
+              ? boxMap["SERVICE TAX"]
+              : null,
+
+          // Page 3
+          "DISCOUNT REBATE":
+            mobileRow[
+              "DISCOUNT REBATE"
+            ],
+
+          // Page 3
+          "MONTHLY FEE":
+            mobileRow["MONTHLY FEE"],
+
+          "TUNGGAKAN":
+            isFirstRow
+              ? boxMap["TUNGGAKAN"]
+              : null,
+
+          "MOBILE NUMBER":
+            mobileRow[
+              "MOBILE NUMBER"
+            ],
+
+          // Page 3
+          "USAGE AMOUNT":
+            mobileRow[
+              "USAGE AMOUNT"
+            ],
+
+          "BILANGAN HARI":
+            boxMap["BILANGAN HARI"],
+        };
+      }
+    );
+
+    outputJson = {
+      file: path.basename(pdfPath),
+      conditionUsed,
+      mobileNumberCount: rows.length,
+      rows,
+    };
+  } else {
+    outputJson = {
+      file: path.basename(pdfPath),
+      conditionUsed,
+      boxes: boxMap,
+    };
+  }
+
+  // ====================================================
+  // Save one JSON per PDF
+  // ====================================================
+
   const outputFile = path.join(
     outputFolder,
-    path.basename(pdfPath).replace(/\.pdf$/i, "_output.json")
+    path
+      .basename(pdfPath)
+      .replace(
+        /\.pdf$/i,
+        "_output.json"
+      )
   );
-  fs.writeFileSync(outputFile, JSON.stringify(outputJson, null, 2));
 
-  console.log(`✅ Processed ${path.basename(pdfPath)} → ${conditionUsed}`);
+  fs.writeFileSync(
+    outputFile,
+    JSON.stringify(
+      outputJson,
+      null,
+      2
+    )
+  );
+
+  console.log(
+    `✅ Processed ${path.basename(
+      pdfPath
+    )} → ${conditionUsed}`
+  );
+
   return outputJson;
 }
-// ============================================
-// 🚀 Main Folder Runner
-// ============================================
+
+// ======================================================
+// Live API file runner
+// ======================================================
 
 async function processAllPdfs(files) {
-  if (!files || !Array.isArray(files) || files.length === 0) {
-    throw new Error("No files received in request.");
+  if (
+    !files ||
+    !Array.isArray(files) ||
+    files.length === 0
+  ) {
+    throw new Error(
+      "No files received in request."
+    );
   }
-  console.log("processed all pdf function called");
+
+  console.log(
+    "processed all pdf function called"
+  );
 
   const allResults = [];
 
   for (const file of files) {
     let { name, data } = file;
-    if (!data) continue;
 
-    // fallback name if none provided
-    name = name || `upload_${Date.now()}.pdf`;
+    if (!data) {
+      continue;
+    }
 
-    const pdfPath = path.join(outputFolder, name);
+    name =
+      name ||
+      `upload_${Date.now()}.pdf`;
+
+    const pdfPath = path.join(
+      outputFolder,
+      name
+    );
 
     let buffer;
+
     if (Buffer.isBuffer(data)) {
-      buffer = data; // already binary
-    } else if (typeof data === "string") {
-      buffer = Buffer.from(data, "base64"); // convert base64 to binary
+      buffer = data;
+    } else if (
+      typeof data === "string"
+    ) {
+      buffer = Buffer.from(
+        data,
+        "base64"
+      );
     } else {
       throw new Error(
         "Invalid file data format — must be Buffer or base64 string."
       );
     }
 
-    fs.writeFileSync(pdfPath, buffer);
-    console.log("Saved PDF:", pdfPath, "Size:", fs.statSync(pdfPath).size);
+    fs.writeFileSync(
+      pdfPath,
+      buffer
+    );
 
-    // Process this PDF safely
-    console.log(files + " files before sending it in");
+    console.log(
+      "Saved PDF:",
+      pdfPath,
+      "Size:",
+      fs.statSync(pdfPath).size
+    );
+
     try {
-      const result = await extractFromPdf(pdfPath);
-      console.log("files after sending it awaiting extract from pdf");
-      allResults.push(result);
+      const result =
+        await extractFromPdf(
+          pdfPath
+        );
+
+      allResults.push(
+        result
+      );
     } catch (err) {
-      console.error("❌ extractFromPdf failed for", pdfPath, "=>", err);
-      allResults.push({ file: name, error: err.message });
+      console.error(
+        "❌ extractFromPdf failed for",
+        pdfPath,
+        "=>",
+        err
+      );
+
+      allResults.push({
+        file: name,
+        error: err.message,
+      });
     }
   }
 
-  // Optionally save summary for debugging
-  console.log("before summary file");
-  const summaryFile = path.join(outputFolder, "summary_all.json");
-  fs.writeFileSync(summaryFile, JSON.stringify(allResults, null, 2));
+  const summaryFile = path.join(
+    outputFolder,
+    "summary_all.json"
+  );
 
-  return { processed: allResults.length, results: allResults };
+  fs.writeFileSync(
+    summaryFile,
+    JSON.stringify(
+      allResults,
+      null,
+      2
+    )
+  );
+
+  return {
+    processed:
+      allResults.length,
+
+    results:
+      allResults,
+  };
 }
 
 export default processAllPdfs;
