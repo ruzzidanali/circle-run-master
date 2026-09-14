@@ -1187,6 +1187,27 @@ const boxes_2AFABlack_AK_KWTBB_Insentif_1Line = [
   ],
 ];
 
+// New 14/9/2026
+const boxes_2AFABlack_AK_KWTBB_SurcajLewatBayar = [
+  [
+    { xMin: 250, xMax: 300, yMin: 752.68, yMax: 763.68 },
+    { xMin: 250, xMax: 350, yMin: 722.68, yMax: 733.68 },
+    { xMin: 250, xMax: 350, yMin: 712.68, yMax: 723.68 },
+    { xMin: 250, xMax: 350, yMin: 676.68, yMax: 694.68 },
+    { xMin: 396.96, xMax: 496.96, yMin: 752.68, yMax: 767.68 },
+    { xMin: 208, xMax: 308, yMin: 470, yMax: 490 },
+    { xMin: 349, xMax: 439, yMin: 470, yMax: 490 },
+    { xMin: 480, xMax: 570, yMin: 470, yMax: 490 },
+    { xMin: 242, xMax: 262, yMin: 61, yMax: 71 },
+  ],
+  [
+    { xMin: 385, xMax: 430, yMin: 395, yMax: 405 },
+    { xMin: 385, xMax: 430, yMin: 380, yMax: 390 },
+    { xMin: 385, xMax: 430, yMin: 365, yMax: 375 },
+    { xMin: 385, xMax: 425, yMin: 570, yMax: 580 },
+  ],
+];
+
 // English
 
 const boxes_2AFABlack_PowerFactor_Incentive_2Line_KWTBB = [
@@ -2193,6 +2214,22 @@ async function extractFromPdf(pdfPath) {
     !hasServiceTax_Page2 &&
     !hasPowerFactor;
 
+  const is2AFABlack_AK_KWTBB_SurcajLewatBayar =
+    hasAngkadar &&
+    hasKWTBB_Page2 &&
+    hasSurcajLewatBayar &&
+    has2AFAOnPage2 &&
+    allAFAAre1Line &&
+    hasAFA1Line &&
+    !hasAFA2Line &&
+    !hasUnknownAFALine &&
+    !hasPenggunaanPuncak_Page2 &&
+    !hasPenggunaanLuarPuncak_Page2 &&
+    !hasPermintaanMaksima_Page2 &&
+    !hasServiceTax_Page2 &&
+    !hasInsentifCekapTenaga_Page2 &&
+    !hasPowerFactor;
+
   // --- Select boxes based on flags ---
   let selectedBoxes = [];
   let conditionUsed = "";
@@ -2259,6 +2296,9 @@ async function extractFromPdf(pdfPath) {
 
   const CONDITION_2AFA_BLACK_AK_KWTBB_INSENTIF_1LINE =
     "2 AFA Black + Both AFA 1 Line + Angkadar Kuasa + KWTBB + Insentif";
+
+  const CONDITION_2AFA_BLACK_AK_KWTBB_SURCAJ_LEWAT_BAYAR =
+    "2 AFA Black + Both AFA 1 Line + Angkadar Kuasa + KWTBB + Surcaj Lewat Bayar";
 
   switch (true) {
     // ======================================================
@@ -2332,6 +2372,14 @@ async function extractFromPdf(pdfPath) {
     case is2AFABlack_AK_KWTBB_Insentif_1Line:
       selectedBoxes = boxes_2AFABlack_AK_KWTBB_Insentif_1Line;
       conditionUsed = CONDITION_2AFA_BLACK_AK_KWTBB_INSENTIF_1LINE;
+      break;
+
+    // ======================================================
+    // 2 AFA + Angkadar Kuasa + KWTBB + Surcaj Lewat Bayar
+    // ======================================================
+    case is2AFABlack_AK_KWTBB_SurcajLewatBayar:
+      selectedBoxes = boxes_2AFABlack_AK_KWTBB_SurcajLewatBayar;
+      conditionUsed = CONDITION_2AFA_BLACK_AK_KWTBB_SURCAJ_LEWAT_BAYAR;
       break;
 
     // ======================================================
@@ -3229,6 +3277,27 @@ async function extractFromPdf(pdfPath) {
       "2_1": "KWHR",
       "2_2": "KWTBB",
       "2_3": "PENGGUNAAN",
+    };
+  }
+
+  if (conditionUsed === CONDITION_2AFA_BLACK_AK_KWTBB_SURCAJ_LEWAT_BAYAR) {
+    boxNameMap = {
+      ...boxNameMap,
+
+      "1_1": "TARIKH BIL",
+      "1_2": "TEMPOH BIL",
+      "1_3": "BILANGAN HARI",
+      "1_4": "NO INVOIS",
+      "1_5": "NO AKAUN",
+      "1_6": "BAKI TERDAHULU",
+      "1_7": "CAJ SEMASA",
+      "1_8": "PELARASAN",
+      "1_9": "ANGKADAR KUASA",
+
+      "2_1": "KWHR",
+      "2_2": "KWTBB",
+      "2_3": "SURCAJ",
+      "2_4": "PENGGUNAAN",
     };
   }
 
